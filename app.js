@@ -10,7 +10,10 @@ var ECT = require('ect');
 var ectRenderer = ECT({ watch: true, cache: false, root: __dirname + '/views', ext: '.ect' });
 app.engine('.ect', ectRenderer.render);
 
-var port = process.env.PORT || 3000;
+//var port = process.env.PORT || 3000;
+//var port = process.env.VMC_APP_POR || 1337;
+var port = process.env.OPENSHIFT_NODEJS_PORT
+var ipaddr  = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
 
 app.configure(function(){
   app.set('port', port);
@@ -32,6 +35,6 @@ app.get('/', function(req, res){
     res.render('index.ect', {title: 'Imagerate'}, null);
 });
 
-app.listen(port);
+app.listen(port, ipaddr);
 console.log('Listening on port ' + port);
 
