@@ -10,7 +10,8 @@ var ECT = require('ect');
 var ectRenderer = ECT({ watch: true, cache: false, root: __dirname + '/views', ext: '.ect' });
 app.engine('.ect', ectRenderer.render);
 
-var port = process.env.PORT || 3000;
+// var port = process.env.PORT || 3000;
+var port = process.env.VCAP_APP_PORT || 3000;
 
 app.configure(function(){
   app.set('port', port);
