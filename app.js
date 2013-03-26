@@ -10,8 +10,10 @@ var ECT = require('ect');
 var ectRenderer = ECT({ watch: true, cache: false, root: __dirname + '/views', ext: '.ect' });
 app.engine('.ect', ectRenderer.render);
 
+var port = process.env.PORT || 3000;
+
 app.configure(function(){
-  app.set('port', process.env.PORT || 3000);
+  app.set('port', port);
   app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
@@ -30,6 +32,6 @@ app.get('/', function(req, res){
     res.render('index.ect', {title: 'Imagerate'}, null);
 });
 
-app.listen(3000);
-console.log('Listening on port 3000');
+app.listen(port);
+console.log('Listening on port ' + port);
 
