@@ -12,7 +12,7 @@ module.exports = function (app, passport, auth) {
     app.get('/logout', auth.requiresLogin, users.logout);
     app.post('/users', users.create);
     app.post('/users/session', passport.authenticate('local', {failureRedirect: '/login', failureFlash: 'Invalid email or password.'}), users.session);
-    app.get('/users/:userId', users.show);
+    app.get('/users/:userId', users.profile);
     app.get('/auth/google', passport.authenticate('google', { failureRedirect: '/login', scope: 'https://www.google.com/m8/feeds' }), users.signin)
     app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login', scope: 'https://www.google.com/m8/feeds' }), users.authCallback)
 

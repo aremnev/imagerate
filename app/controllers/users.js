@@ -52,7 +52,7 @@ exports.logout = function (req, res) {
  */
 
 exports.session = function (req, res) {
-    res.redirect('/');
+    res.redirect('/users/' + res.profile.id);
 }
 
 /**
@@ -68,7 +68,7 @@ exports.create = function (req, res) {
         }
         req.logIn(user, function(err) {
             if (err) return next(err)
-            return res.redirect('/')
+            return res.redirect('/users/' + user.id);
         })
   })
 }
@@ -77,9 +77,9 @@ exports.create = function (req, res) {
  *  Show profile
  */
 
-exports.show = function (req, res) {
+exports.profile = function (req, res) {
     var user = req.profile
-    res.render('users/show', {
+    res.render('users/profile.ect', {
         title: user.name,
         user: user
     })

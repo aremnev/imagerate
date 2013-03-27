@@ -3,12 +3,12 @@
 <head>
     <title><%- @title %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
-    <link href="css/style.css" rel="stylesheet" type="text/css"/>
-    <script src="js/libs/jquery.min.js" type="text/javascript"></script>
-    <script src="js/libs/bootstrap.min.js" type="text/javascript"></script>
-    <script src="js/common.js" type="text/javascript"></script>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/style.css" rel="stylesheet" type="text/css"/>
+    <script src="/js/libs/jquery.min.js" type="text/javascript"></script>
+    <script src="/js/libs/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/js/common.js" type="text/javascript"></script>
     <% content 'scripts' %>
 </head>
 <body>
@@ -37,7 +37,7 @@
             </ul>
             <% if @req.isAuthenticated() : %>
               <p class="navbar-text pull-right">
-                  Logged in as <%= @req.user.username %> (<a href="/logout" class="navbar-link">logout</a>)
+                  Logged in as <a href="/users/<%= @req.user.id %>" class="navbar-link"><%= @req.user.username %></a> (<a href="/logout" class="navbar-link">logout</a>)
               </p>
             <% else : %>
                 <form class="navbar-form pull-right" action="/users/session" method="post">
