@@ -1,20 +1,21 @@
+/* Main application entry file. Please note, the order of loading is important.
+ * Configuration loading and booting of controllers and custom error handlers */
 
-/**
- * Module dependencies.
- */
+var express = require('express'),
+    fs = require('fs'),
+    passport = require('passport');
 
-var express = require('express');
-var app = express();
+// Load configurations
+var env = process.env.NODE_ENV || 'development',
+    config = require('./config/config')[env],
+    auth = require('./config/middlewares/authorization'),
+    mongoose = require('mongoose');
 
-var ECT = require('ect');
-var ectRenderer = ECT({ watch: true, cache: false, root: __dirname + '/views', ext: '.ect' });
-app.engine('.ect', ectRenderer.render);
-
-// var port = process.env.PORT || 3000;
-var port = process.env.VCAP_APP_PORT || 3000;
+// Bootstrap db connection
+mongoose.connect(config.db);
 
 app.configure(function(){
-  app.set('port', port);
+  app.set('port', process.env.PORT || 3000);
   app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
@@ -25,14 +26,17 @@ app.configure(function(){
   app.use(express.static(__dirname + '/public'));
 });
 
-app.configure('development', function(){
-  app.use(express.errorHandler());
-});
+// bootstrap passport config
+require('./config/passport')(passport, config);
 
-app.get('/', function(req, res){
-    res.render('index.ect', {title: 'Imagerate'}, null);
-});
+var app = express();
+// express settings
+require('./config/express')(app, config, passport);
 
+// Initialize routes
+require('./config/routes')(app, passport, auth);
+
+// Start the app by listening on <port>
+var port = process.env.PORT || 3000;
 app.listen(port);
-console.log('Listening on port ' + port);
-
+console.log('Express app started on port ' + port);
