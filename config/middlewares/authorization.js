@@ -10,6 +10,13 @@ exports.requiresLogin = function (req, res, next) {
     next();
 };
 
+exports.requiresLogout = function (req, res, next) {
+    if (req.isAuthenticated()) {
+        return res.redirect('/')
+    }
+    next();
+};
+
 
 /*
  *  User authorizations routing middleware

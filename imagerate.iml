@@ -5,6 +5,7 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Node.js v0.6.12 Core Modules" level="application" />
+    <orderEntry type="library" name="Node.js v0.10.1 Core Modules" level="application" />
   </component>
 </module>
 

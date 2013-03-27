@@ -35,11 +35,17 @@
                 </ul>
               </li>
             </ul>
-            <form class="navbar-form pull-right" action="/users/session" method="post">
-              <input class="span2" type="text" placeholder="Email">
-              <input class="span2" type="password" placeholder="Password">
-              <button type="submit" class="btn">Sign in</button>
-            </form>
+            <% if @req.isAuthenticated() : %>
+              <p class="navbar-text pull-right">
+                  Logged in as <%= @req.user.username %> (<a href="/logout" class="navbar-link">logout</a>)
+              </p>
+            <% else : %>
+                <form class="navbar-form pull-right" action="/users/session" method="post">
+                  <input name="email" class="span2" type="text" placeholder="Email">
+                  <input name="password" class="span2" type="password" placeholder="Password">
+                  <button type="submit" class="btn">Sign in</button>
+                </form>
+            <% end %>
           </div><!--/.nav-collapse -->
         </div>
       </div>

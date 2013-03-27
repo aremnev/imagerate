@@ -24,6 +24,7 @@
         "gzippo": "latest",
         "async": "latest",
         "nodemon": "latest",
-        "view-helpers": "latest"
+        "view-helpers": "latest" ,
+        "forms-mongoose": "latest"
     }
 }
