@@ -1,35 +1,36 @@
+/* Main application entry file. Please note, the order of loading is important.
+ * Configuration loading and booting of controllers and custom error handlers */
 
-/**
- * Module dependencies.
- */
+var express = require('express'),
+    fs = require('fs'),
+    passport = require('passport');
 
-var express = require('express');
+// Load configurations
+var env = process.env.NODE_ENV || 'development',
+    config = require('./config/config')[env],
+    auth = require('./config/middlewares/authorization'),
+    mongoose = require('mongoose');
+
+// Bootstrap db connection
+mongoose.connect(config.db);
+
+// Bootstrap models
+var models_path = __dirname + '/app/models';
+fs.readdirSync(models_path).forEach(function (file) {
+    require(models_path + '/' + file)
+})
+
+// bootstrap passport config
+require('./config/passport')(passport, config);
+
 var app = express();
+// express settings
+require('./config/express')(app, config, passport);
 
-var ECT = require('ect');
-var ectRenderer = ECT({ watch: true, cache: false, root: __dirname + '/views', ext: '.ect' });
-app.engine('.ect', ectRenderer.render);
+// Initialize routes
+require('./config/routes')(app, passport, auth);
 
-app.configure(function(){
-  app.set('port', process.env.PORT || 3000);
-  app.use(express.favicon());
-  app.use(express.logger('dev'));
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(express.cookieParser('your secret here'));
-  app.use(express.session());
-  app.use(app.router);
-  app.use(express.static(__dirname + '/public'));
-});
-
-app.configure('development', function(){
-  app.use(express.errorHandler());
-});
-
-app.get('/', function(req, res){
-    res.render('index.ect', {title: 'Imagerate'}, null);
-});
-
-app.listen(3000);
-console.log('Listening on port 3000');
-
+// Start the app by listening on <port>
+var port = process.env.PORT || 3000;
+app.listen(port);
+console.log('Express app started on port ' + port);

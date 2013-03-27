@@ -1,0 +1,20 @@
+<!-- login.ect -->
+<% extend 'layouts/layout.ect' %>
+<form class="login form-horizontal" action="/users/session" method="post">
+    <p class="error"><%= @message %></p>
+    <div class="control-group">
+        <label class="control-label" for="email">Email</label>
+        <div class="controls">
+            <input id="email" type="text" name="email", placeholder="Email" />
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="password">Password</label>
+        <div class="controls">
+            <input id="password" type="password" name="password", placeholder="Password" />
+        </div>
+    </div>
+    <div class="form-actions">
+        <button class="btn btn-primary" type="submit">login</button>&nbsp;<a class="show-signup" href="/signup">Sign up</a>
+    </div>
+</form>
