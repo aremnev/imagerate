@@ -4,7 +4,6 @@
     <p class="error"><%= @message %></p>
     <% include 'includes/form/element.ect', {id: 'email', value: @user.email, type: 'email', label: 'Email'} %>
     <% include 'includes/form/element.ect', {id: 'password', type: 'password', label: 'Password'} %>
-    <% include 'includes/form/element.ect', {id: 'username', value: @user.username, label: 'Username'} %>
     <% include 'includes/form/element.ect', {id: 'name', value: @user.name, label: 'Full name'} %>
     <div class="form-actions">
         <button class="btn btn-primary" type="submit">Sign in</button>

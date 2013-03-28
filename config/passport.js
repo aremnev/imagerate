@@ -1,7 +1,8 @@
 
 var mongoose = require('mongoose')
     LocalStrategy = require('passport-local').Strategy,
-    GoogleStrategy = require('passport-google-oauth').Strategy,
+    GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
+    _ = require('underscore'),
     User = mongoose.model('User');
 
 
@@ -39,27 +40,26 @@ module.exports = function (passport, config) {
 
     // use google strategy
     passport.use(new GoogleStrategy({
-        consumerKey: config.google.clientID,
-        consumerSecret: config.google.clientSecret,
+        clientID: config.google.clientID,
+        clientSecret: config.google.clientSecret,
         callbackURL: config.google.callbackURL
     },
     function(accessToken, refreshToken, profile, done) {
-        User.findOne({ 'google.id': profile.id }, function (err, user) {
-        if (!user) {
-            user = new User({
-                name: profile.displayName,
-                email: profile.emails[0].value,
-                username: profile.username,
-                provider: 'google',
-                google: profile._json
-            })
-            user.save(function (err) {
-            if (err) console.log(err)
-                return done(err, user);
-            })
-        } else {
-            return done(err, user)
+        var profile = profile._json;
+        User.findOne({$or:[
+            { 'google.id': profile.id },
+            { 'email': profile.email }]}, function (err, user) {
+        if(!user) user = new User({email: profile.email});
+        if(user.google && _.isEqual(user.google, profile)) {
+            return done(err, user);
         }
+        user.name = profile.name;
+        user.provider = 'google';
+        user.google = profile;
+        user.save(function (err) {
+            if (err) console.log(err)
+            return done(err, user);
+        })
         });
     }
     ));

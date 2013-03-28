@@ -7,11 +7,12 @@ module.exports = {
         },
         port: 3000,
         root: require('path').normalize(__dirname + '/..'),
-        mongo: { hostname: "localhost", port: 27017, username: "", password: "", name: "", db: "test" },
+        mongo: { hostname: 'localhost', port: 27017, username: '', password: '', name: '', db: 'test' },
         google: {
-            clientID: "APP_ID",
-            clientSecret: "APP_SECRET",
-            callbackURL: "http://localhost:3000/auth/google/callback"
+            clientID: '163368963370.apps.googleusercontent.com',
+            clientSecret: 'rSsPMMP6MyWsIcnW6ksTg2dR',
+            callbackURL: 'http://localhost:3000/auth/google/callback',
+            scope: 'https://www.google.com/m8/feeds https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile'
         }
     },
 
@@ -25,11 +26,12 @@ module.exports = {
         },
         port : process.env.VCAP_APP_PORT,
         root: require('path').normalize(__dirname + '/..'),
-        mongo: { hostname: "localhost", port: 27017, username: "", password: "", name: "", db: "test" },
+        mongo: { hostname: 'localhost', port: 27017, username: '', password: '', name: '', db: 'test' },
         google: {
-            clientID: "APP_ID",
-            clientSecret: "APP_SECRET",
-            callbackURL: "http://localhost:3000/auth/google/callback"
+            clientID: '163368963370.apps.googleusercontent.com',
+            clientSecret: 'rSsPMMP6MyWsIcnW6ksTg2dR',
+            callbackURL: 'http://localhost:3000/auth/google/callback',
+            scope: 'https://www.google.com/m8/feeds https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile'
         }
     },
 
@@ -44,10 +46,10 @@ module.exports = {
         mongo.db = (mongo.db || 'test');
 
         if(mongo.username && mongo.password){
-            return "mongodb://" + mongo.username + ":" + mongo.password + "@" + mongo.hostname + ":" + mongo.port + "/" + mongo.db;
+            return 'mongodb://' + mongo.username + ':' + mongo.password + '@' + mongo.hostname + ':' + mongo.port + '/' + mongo.db;
         }
         else{
-            return "mongodb://" + mongo.hostname + ":" + mongo.port + "/" + mongo.db;
+            return 'mongodb://' + mongo.hostname + ':' + mongo.port + '/' + mongo.db;
         }
     }
 

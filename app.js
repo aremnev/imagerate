@@ -32,7 +32,7 @@ var app = express();
 require('./config/express')(app, cfg, passport);
 
 // Initialize routes
-require('./config/routes')(app, passport, auth);
+require('./config/routes')(app, passport, auth, cfg);
 
 // Start the app by listening on <port>
 app.listen(port);

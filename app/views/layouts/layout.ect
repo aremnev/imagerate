@@ -23,7 +23,6 @@
           <a class="brand" href="/">Imegerate</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -37,14 +36,17 @@
             </ul>
             <% if @req.isAuthenticated() : %>
               <p class="navbar-text pull-right">
-                  Logged in as <a href="/users/<%= @req.user.id %>" class="navbar-link"><%= @req.user.username %></a> (<a href="/logout" class="navbar-link">logout</a>)
+                  Logged in as <a href="/users/<%= @req.user.id %>" class="navbar-link"><%= @req.user.name %></a> (<a href="/logout" class="navbar-link">logout</a>)
               </p>
             <% else : %>
                 <form class="navbar-form pull-right" action="/users/session" method="post">
-                  <input name="email" class="span2" type="text" placeholder="Email">
-                  <input name="password" class="span2" type="password" placeholder="Password">
-                  <button type="submit" class="btn">Sign in</button>
+                    <input name="email" class="span2" type="text" placeholder="Email">
+                    <input name="password" class="span2" type="password" placeholder="Password">
+                    <button type="submit" class="btn">Sign in</button>
                 </form>
+                <p class="navbar-text pull-right">
+                    <a href="/auth/google"><img height="40" width="40" src="/img/google.png" alt="google" /></a>
+                </p>
             <% end %>
           </div><!--/.nav-collapse -->
         </div>
