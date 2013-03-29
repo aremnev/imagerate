@@ -28,9 +28,9 @@ module.exports = {
         root: require('path').normalize(__dirname + '/..'),
         mongo: { hostname: 'localhost', port: 27017, username: '', password: '', name: '', db: 'test' },
         google: {
-            clientID: '163368963370.apps.googleusercontent.com',
-            clientSecret: 'rSsPMMP6MyWsIcnW6ksTg2dR',
-            callbackURL: 'http://localhost:3000/auth/google/callback',
+            clientID: '163368963370-5qcnvj9oorl0cjmn5noi8jpj0tgriid9.apps.googleusercontent.com',
+            clientSecret: '3WsFl4iXUpI4KyrqZi7fp6ZU',
+            callbackURL: 'https://imagerate.ap01.aws.af.cm/auth/google/callback',
             scope: 'https://www.google.com/m8/feeds https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile'
         }
     },
