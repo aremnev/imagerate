@@ -6,7 +6,8 @@
 var express = require('express'),
     mongoStore = require('connect-mongo')(express),
     flash = require('connect-flash'),
-    helpers = require('view-helpers');
+    helpers = require('view-helpers'),
+    forms = require('../app/forms');
 
 module.exports = function (app, config, passport) {
 
@@ -30,6 +31,7 @@ module.exports = function (app, config, passport) {
     });
     app.engine('.ect', ectRenderer.render);
     app.set('views', config.root + '/app/views');
+    app.locals.forms = forms;
 
     app.configure(function () {
         // dynamic helpers

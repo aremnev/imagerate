@@ -25,6 +25,6 @@
         "async": "latest",
         "nodemon": "latest",
         "view-helpers": "latest" ,
-        "forms-mongoose": "latest"
+        "forms": "*"
     }
 }

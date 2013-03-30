@@ -4,7 +4,8 @@
  */
 
 var mongoose = require('mongoose'),
-    User = mongoose.model('User')
+    User = mongoose.model('User'),
+    Image = mongoose.model('Image');
 
 exports.signin = function (req, res) {}
 
@@ -79,10 +80,26 @@ exports.create = function (req, res) {
 
 exports.profile = function (req, res) {
     var user = req.profile
-    res.render('users/profile.ect', {
-        title: user.name,
-        user: user
+    var page = req.param('page') > 0 ? req.param('page') : 0
+    var perPage = 5
+    var options = {
+        perPage: perPage,
+        page: page,
+        user: req.profile.id
+    }
+
+    Image.list(options, function(err, images) {
+        if (err) return res.render('500')
+        Image.count().exec(function (err, count) {
+            res.render('users/profile.ect', {
+                title: user.name,
+                images: images,
+                page: page,
+                pages: count / perPage
+            })
+        })
     })
+
 }
 
 /**

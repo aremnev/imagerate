@@ -17,8 +17,11 @@ module.exports = function (app, passport, auth, config) {
     app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login', scope: 'https://www.google.com/m8/feeds' }), users.authCallback)
 
     app.param('userId', users.user);
-    
-    
+
+    // image routes
+    var images = require('../app/controllers/images');
+    app.post('/images', images.create);
+
     // home route
     var root = require('../app/controllers/root');
     app.get('/', root.index);
