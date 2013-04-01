@@ -40,8 +40,8 @@ module.exports = {
         },
         cloudinary: {
             cloud_name: 'imagerate-local',
-            key: '451142758477939',
-            secret: 'mz_x6GCybvpFlpFRF5phG4VN8fU'
+            api_key: '451142758477939',
+            api_secret: 'mz_x6GCybvpFlpFRF5phG4VN8fU'
         }
     },
 
