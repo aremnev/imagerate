@@ -4,6 +4,7 @@
 
 var mongoose = require('mongoose'),
     fs = require('fs'),
+    cloudinary = require('cloudinary'),
     Schema = mongoose.Schema;
 
 
@@ -27,7 +28,7 @@ var ImageSchema = new Schema({
     }],
     image: {
         cdnUri: String,
-        file: Object
+        data: {}
     },
     createdAt  : {type : Date, default : Date.now}
 });
@@ -37,15 +38,13 @@ var ImageSchema = new Schema({
  */
 
 ImageSchema.pre('remove', function (next) {
-//    var imager = new Imager(imagerConfig, 'S3')
-//    var file = this.image.file
-//
-//    // if there are files associated with the item, remove from the cloud too
-//    imager.remove(file, function (err) {
-//        if (err) return next(err)
-//    }, 'image')
+    if(!this.image.data || !this.image.data.public_id) {
+        return next();
+    }
+    cloudinary.uploader.destroy(this.image.data.public_id, function(data){
+        next();
+    });
 
-    next()
 })
 
 
@@ -60,22 +59,20 @@ ImageSchema.methods = {
      */
 
     uploadAndSave: function (image, cb) {
-        var self = this;
-        if (!image.length) {
-            self.save(cb);
-        }
-        var image = image[0];
-        fs.readFile(image.path, function (err, data) {
-            var newPath = '/img/users/' +
-                    new Date().getTime() + '.' +
-                    image.type.replace('image/', '');
-            fs.writeFile(__dirname + '/../../public' + newPath, data, function (err) {
-                if(!err) {
-                    self.image = {cdnUri: newPath }
+        var self = this,
+            transformation = {format: 'png', width: 1024, height: 1024, crop: 'limit'};
+
+        var imageStream = fs.createReadStream(image.path, { encoding: 'binary' }),
+            cloudStream = cloudinary.uploader.upload_stream(function(data) {
+                if(data) {
+                    self.image.cdnUri = data.secure_url;
+                    self.image.data = data;
                     self.save(cb);
                 }
-            });
-        });
+
+            }, {transformation: transformation});
+
+        imageStream.on('data', cloudStream.write).on('end', cloudStream.end);
     }
 
 }

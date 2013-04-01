@@ -7,6 +7,7 @@ var express = require('express'),
     mongoStore = require('connect-mongo')(express),
     flash = require('connect-flash'),
     helpers = require('view-helpers'),
+    cloudinary = require('cloudinary'),
     forms = require('../app/forms');
 
 module.exports = function (app, config, passport) {
@@ -61,6 +62,9 @@ module.exports = function (app, config, passport) {
         app.use(passport.session());
 
         app.use(express.favicon());
+
+        //Config cloudinary
+        cloudinary.config(config.cloudinary);
 
         // routes should be at the last
         app.use(app.router);

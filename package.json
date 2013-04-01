@@ -25,6 +25,7 @@
         "async": "latest",
         "nodemon": "latest",
         "view-helpers": "latest" ,
-        "forms": "*"
+        "forms": "*",
+        "cloudinary": "*"
     }
 }

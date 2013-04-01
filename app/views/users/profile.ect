@@ -5,18 +5,17 @@
 <div class="navbar-inner">
     <form class="navbar-form pull-left" action="/images" method="post" enctype="multipart/form-data">
         <input type="text" id="image_title" name="title" placeholder="Title" />
-        <input type="file" id="image" name="image[]" placeholder="Image" />
+        <input type="file" id="image" name="image" placeholder="Image" />
         <button class="btn" type="submit">Upload</button>
     </form>
 </div>
 </div>
 <ul class="thumbnails">
     <% for image in @images : %>
-        <% if image.image && image.image.cdnUri : %>
         <li class="span3">
+            <span data-action="/images/<%- image.id %>/remove" class="remove"><i class="icon-remove"></i></span>
             <img class="img-polaroid" src="<%- image.image.cdnUri %>" alt="<%= image.title %> [<%= image.user.name %>]" />
         </li>
-        <% end %>
     <% end %>
 </ul>
 

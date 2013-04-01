@@ -13,6 +13,11 @@ module.exports = {
             clientSecret: 'rSsPMMP6MyWsIcnW6ksTg2dR',
             callbackURL: 'http://localhost:3000/auth/google/callback',
             scope: 'https://www.google.com/m8/feeds https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile'
+        },
+        cloudinary: {
+            cloud_name: 'imagerate-local',
+            api_key: '451142758477939',
+            api_secret: 'mz_x6GCybvpFlpFRF5phG4VN8fU'
         }
     },
 
@@ -32,6 +37,11 @@ module.exports = {
             clientSecret: '3WsFl4iXUpI4KyrqZi7fp6ZU',
             callbackURL: 'https://imagerate.ap01.aws.af.cm/auth/google/callback',
             scope: 'https://www.google.com/m8/feeds https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile'
+        },
+        cloudinary: {
+            cloud_name: 'imagerate-local',
+            key: '451142758477939',
+            secret: 'mz_x6GCybvpFlpFRF5phG4VN8fU'
         }
     },
 

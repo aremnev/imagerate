@@ -1,16 +1,12 @@
 $(document).ready(function () {
 
-  // confirmations
-  $('.confirm').submit(function (e) {
-    e.preventDefault();
-    var self = this;
-    var msg = 'Are you sure?';
-    bootbox.confirm(msg, 'cancel', 'Yes! I am sure', function (action) {
-      if (action) {
-        $(self).unbind('submit');
-        $(self).trigger('submit');
-      }
+    $('.remove').on('click', function(e) {
+        var $self = $(this),
+           action = $self.data('action');
+
+        $.post(action, function(d) {
+            $self.parent().remove();
+        });
     });
-  });
 
 });
