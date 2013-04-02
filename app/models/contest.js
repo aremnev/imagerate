@@ -13,8 +13,11 @@ var mongoose = require('mongoose'),
 var ContestSchema = new Schema({
     title: {type : String, default : '', trim : true},
     description: {type : String, default : '', trim : true},
-    started : {type : Boolean, default : true},
-    dueDate: {type : Date}
+    startDate : {type : Date},
+    dueDate: {type : Date},
+    raters: [{
+        user: { type : Schema.ObjectId, ref : 'User' }
+    }]
 });
 
 /**

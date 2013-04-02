@@ -12,7 +12,8 @@ module.exports = {
             clientID: '163368963370.apps.googleusercontent.com',
             clientSecret: 'rSsPMMP6MyWsIcnW6ksTg2dR',
             callbackURL: 'http://localhost:3000/auth/google/callback',
-            scope: 'https://www.google.com/m8/feeds https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile'
+            scope: 'https://www.google.com/m8/feeds https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
+            photoLink: 'https://lh4.googleusercontent.com/-LnOLxLmyDbM/AAAAAAAAAAI/AAAAAAAAAAA/VYIuGGjpm4o/s{0}-c/photo.jpg'
         },
         cloudinary: {
             cloud_name: 'imagerate-local',
@@ -36,7 +37,8 @@ module.exports = {
             clientID: '163368963370-5qcnvj9oorl0cjmn5noi8jpj0tgriid9.apps.googleusercontent.com',
             clientSecret: '3WsFl4iXUpI4KyrqZi7fp6ZU',
             callbackURL: 'https://imagerate.ap01.aws.af.cm/auth/google/callback',
-            scope: 'https://www.google.com/m8/feeds https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile'
+            scope: 'https://www.google.com/m8/feeds https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
+            photoLink: 'https://lh4.googleusercontent.com/-LnOLxLmyDbM/AAAAAAAAAAI/AAAAAAAAAAA/VYIuGGjpm4o/s{0}-c/photo.jpg'
         },
         cloudinary: {
             cloud_name: 'imagerate-local',

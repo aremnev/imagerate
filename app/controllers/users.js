@@ -14,7 +14,7 @@ exports.signin = function (req, res) {}
  */
 
 exports.authCallback = function (req, res, next) {
-    res.redirect('/')
+    res.redirect('/users/' + req.user.id);
 }
 
 /**
@@ -85,12 +85,12 @@ exports.profile = function (req, res) {
     var options = {
         perPage: perPage,
         page: page,
-        user: req.profile.id
+        criteria: { user: req.profile.id }
     }
 
     Image.list(options, function(err, images) {
         if (err) return res.render('500')
-        Image.count().exec(function (err, count) {
+        Image.count(options.criteria).exec(function (err, count) {
             res.render('users/profile.ect', {
                 title: user.name,
                 images: images,

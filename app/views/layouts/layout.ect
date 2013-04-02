@@ -13,44 +13,44 @@
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="/">Imegerate</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li class="divider"></li>
-                  <li class="nav-header">Nav header</li>
-                  <li><a href="#">Separated link</a></li>
-                </ul>
-              </li>
-            </ul>
-            <% if @req.isAuthenticated() : %>
-              <p class="navbar-text pull-right">
-                  Logged in as <a href="/users/<%= @req.user.id %>" class="navbar-link"><%= @req.user.name %></a> (<a href="/logout" class="navbar-link">logout</a>)
-              </p>
-            <% else : %>
-                <form class="navbar-form pull-right" action="/users/session" method="post">
-                    <input name="email" class="span2" type="text" placeholder="Email">
-                    <input name="password" class="span2" type="password" placeholder="Password">
-                    <button type="submit" class="btn">Sign in</button>
-                </form>
-                <p class="navbar-text pull-right">
+        <div class="navbar-inner">
+            <div class="container">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="brand" href="/">Imagerate</a>
+                <div class="nav-collapse collapse">
+                    <ul class="nav">
+                        <% if @req.isAuthenticated() : %>
+                            <li>
+                                <a href="/users/<%= @req.user.id %>">My profile</a>
+                            </li>
+                        <% end %>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li class="divider"></li>
+                                <li class="nav-header">Nav header</li>
+                                <li><a href="#">Separated link</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <% if @req.isAuthenticated() : %>
+                    <p class="navbar-text pull-right">
+                        <a href="/users/<%= @req.user.id %>" class="navbar-link"><img class="img-bordered" src="<%- @h.profileLink(32) %>" alt="<%= @req.user.name %>" /> <%= @req.user.name %></a> (<a href="/logout" class="navbar-link">logout</a>)
+                    </p>
+                    <% else : %>
+                    <p class="navbar-text pull-right">
                     <a href="/auth/google"><img height="40" width="40" src="/img/google.png" alt="google" /></a>
-                </p>
-            <% end %>
-          </div><!--/.nav-collapse -->
+                    </p>
+                    <% end %>
+                </div><!--/.nav-collapse -->
+            </div>
         </div>
-      </div>
     </div>
     <div class="container">
         <% content %>

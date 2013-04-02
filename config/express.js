@@ -6,9 +6,9 @@
 var express = require('express'),
     mongoStore = require('connect-mongo')(express),
     flash = require('connect-flash'),
-    helpers = require('view-helpers'),
+    view_helpers = require('view-helpers'),
     cloudinary = require('cloudinary'),
-    forms = require('../app/forms');
+    helpers = require('../app/helpers');
 
 module.exports = function (app, config, passport) {
 
@@ -32,11 +32,11 @@ module.exports = function (app, config, passport) {
     });
     app.engine('.ect', ectRenderer.render);
     app.set('views', config.root + '/app/views');
-    app.locals.forms = forms;
 
     app.configure(function () {
         // dynamic helpers
-        app.use(helpers(config.app.name))
+        app.use(view_helpers(config.app.name))
+        app.use(helpers(config))
 
         // cookieParser should be above session
         app.use(express.cookieParser())

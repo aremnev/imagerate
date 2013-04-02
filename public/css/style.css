@@ -46,3 +46,7 @@ body {
     cursor: pointer;
     width: 100px;
 }
+
+.img-bordered {
+    border: 1px solid #eee;
+}

@@ -8,16 +8,16 @@
 <% end %>
 <h2>Images</h2>
 <div class="navbar">
-<div class="navbar-inner">
-    <form class="navbar-form pull-left form-upload" action="/images" method="post" enctype="multipart/form-data">
-        <input type="text" id="image_title" name="title" placeholder="Title" />
-        <div class="image-upload">
-            <button class="btn btn-success">Add file...<input type="file" id="image" name="image" maxlength="1" placeholder="Image" /></button>
-            <span></span>
-        </div>
-        <button class="btn btn-primary" type="submit">Upload</button>
-    </form>
-</div>
+    <div class="navbar-inner">
+        <form class="navbar-form pull-left form-upload" action="/images" method="post" enctype="multipart/form-data">
+            <input type="text" id="image_title" name="title" placeholder="Title" />
+            <div class="image-upload">
+                <button class="btn btn-success">Add file...<input type="file" id="image" name="image" maxlength="1" placeholder="Image" /></button>
+                <span></span>
+            </div>
+            <button class="btn btn-primary" type="submit">Upload</button>
+        </form>
+    </div>
 </div>
 <ul class="thumbnails">
     <% for image in @images : %>

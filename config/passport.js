@@ -50,17 +50,17 @@ module.exports = function (passport, config) {
         User.findOne({$or:[
             { 'google.id': profile.id },
             { 'email': profile.email }]}, function (err, user) {
-        if(!user) user = new User({email: profile.email});
-        if(user.google && _.isEqual(user.google, profile)) {
-            return done(err, user);
-        }
-        user.name = profile.name;
-        user.provider = 'google';
-        user.google = profile;
-        user.save(function (err) {
-            if (err) console.log(err)
-            return done(err, user);
-        })
+            if(!user) user = new User({email: profile.email});
+            if(user.google && _.isEqual(user.google, profile)) {
+                return done(err, user);
+            }
+            user.name = profile.name;
+            user.provider = 'google';
+            user.google = profile;
+            user.save(function (err) {
+                if (err) console.log(err)
+                return done(err, user);
+            })
         });
     }
     ));
