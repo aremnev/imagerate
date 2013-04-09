@@ -1,0 +1,8 @@
+<!-- show.ect -->
+<% extend 'layouts/layout.ect' %>
+<h2>Image - <%- @req.image.title %></h2>
+<ul>
+    <li><i>Author:</i>  <%- @req.image.user.name %></li>
+    <li><i>Uploaded:</i>  <%- @formatDate(@req.image.createdAt) %></li>
+</ul>
+<img src="<%- @req.image.image.cdnUri %>" title='<%- @req.image.title %>' />

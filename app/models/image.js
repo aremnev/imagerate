@@ -107,11 +107,12 @@ ImageSchema.statics = {
      */
 
     list: function (options, cb) {
-        var criteria = options.criteria || {}
+        var criteria = options.criteria || {},
+            sort = options.sort || {'createdAt': -1}  // sort by date
 
         this.find(criteria)
             .populate('user', 'name')
-            .sort({'createdAt': -1}) // sort by date
+            .sort(sort)
             .limit(options.perPage)
             .skip(options.perPage * options.page)
             .exec(cb)

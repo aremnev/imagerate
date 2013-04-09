@@ -21,10 +21,13 @@
 </div>
 <ul class="thumbnails">
     <% for image in @images : %>
-        <li class="span3">
+        <li>
             <span data-action="/images/<%- image.id %>/remove" class="remove"><i class="icon-remove"></i></span>
-            <img class="img-polaroid" src="<%- image.image.cdnUri %>" alt="<%= image.title %> [<%= image.user.name %>]" />
+            <a href="/images/<%- image.id %>"><img class="img-polaroid" src="<%- @h.imageUrl(image.image, {width: 150}) %>" alt="<%= image.title %>" /></a>
         </li>
     <% end %>
 </ul>
+<% include 'includes/pagination.ect', {pages: @pages, page: @page, url: @req._parsedUrl.pathname} %>
+
+
 

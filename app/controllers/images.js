@@ -22,6 +22,17 @@ exports.image = function(req, res, next, id){
 }
 
 /**
+ * Image page
+ */
+
+exports.show = function (req, res) {
+    var image = req.image
+    res.render('images/show.ect', {
+        title: req.image.title
+    });
+}
+
+/**
  * Create an image
  */
 
@@ -38,6 +49,10 @@ exports.create = function (req, res) {
         }
     })
 }
+
+/**
+ * Remove image
+ */
 
 exports.remove = function (req, res) {
     var image = req.image

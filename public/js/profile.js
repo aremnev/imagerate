@@ -20,7 +20,7 @@ $(document).ready(function () {
             });
         },
         stop: function (e, data) {
-            window.location.href = window.location.href;
+            window.location.href = window.location.pathname;
         },
         send: function (e, data) {
            if(form.data('file') != data.files[0]){

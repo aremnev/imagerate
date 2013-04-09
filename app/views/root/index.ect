@@ -1,3 +1,12 @@
 <!-- index.ect -->
 <% extend 'layouts/layout.ect' %>
 Hello <%if @req.isAuthenticated(): %><%= @req.user.name %><% else : %>guest<% end %>!
+
+<h3>Recent Images</h3>
+<ul class="thumbnails">
+    <% for image in @images : %>
+        <li>
+            <a href="/images/<%- image.id %>"><img class="img-polaroid" src="<%- @h.imageUrl(image.image, {width: 200}) %>" alt="<%= image.title %>" /></a>
+        </li>
+    <% end %>
+</ul>

@@ -80,11 +80,11 @@ exports.create = function (req, res) {
 
 exports.profile = function (req, res) {
     var user = req.profile
-    var page = req.param('page') > 0 ? req.param('page') : 0
-    var perPage = 5
+    var page = parseInt(req.param('page') > 0 ? req.param('page') : 1)
+    var perPage = 10
     var options = {
         perPage: perPage,
-        page: page,
+        page: page - 1,
         criteria: { user: req.profile.id }
     }
 
@@ -95,7 +95,7 @@ exports.profile = function (req, res) {
                 title: user.name,
                 images: images,
                 page: page,
-                pages: count / perPage
+                pages: Math.ceil(count / perPage)
             })
         })
     })
