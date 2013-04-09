@@ -1,0 +1,27 @@
+{
+	"_id": 11,
+	"title": "First contest title",
+	"description": "First contest description",
+	"user": 1,
+	"created": "2011-12-08 11:06:00",
+	"images": [
+		{
+			"id": 111,
+			"thumb": "http://fileservice.com/thumb/1/2"
+		}
+	]
+}
+
+{
+	"_id": 22,
+	"title": "Second contest title",
+	"description": "Second contest description",
+	"user": 2,
+	"created": "2012-12-08 11:06:00",
+	"images": [
+		{
+			"id": 22,
+			"thumb": "http://fileservice.com/thumb/1/2"
+		}
+	]
+}
