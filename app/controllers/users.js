@@ -79,13 +79,14 @@ exports.create = function (req, res) {
  */
 
 exports.profile = function (req, res) {
-    var user = req.profile
-    var page = parseInt(req.param('page') > 0 ? req.param('page') : 1)
-    var perPage = 10
+    var user = req.profile,
+        page = parseInt(req.param('page') > 0 ? req.param('page') : 1),
+        perPage = 10;
+
     var options = {
         perPage: perPage,
         page: page - 1,
-        criteria: { user: req.profile.id }
+        criteria: { user: user.id }
     }
 
     Image.list(options, function(err, images) {

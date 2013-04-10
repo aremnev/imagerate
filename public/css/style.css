@@ -24,10 +24,29 @@ body {
     right: -6px;
     opacity: .5;
     cursor: pointer;
+    display: none;
 }
 
 .thumbnails .remove:hover {
     opacity: 1;
+}
+
+.thumbnails li:hover .remove {
+    display: inline;
+}
+
+.form-upload .progress {
+    display: none;
+}
+
+.form-upload.process .progress {
+    display: block;
+    width: 300px;
+    margin: 10px 0 0 0;
+}
+
+.form-upload.process .inputs {
+    display: none;
 }
 
 .image-upload {
