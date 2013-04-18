@@ -1,0 +1,7 @@
+<div>
+    <ul class="results unstyled">
+        <% for comment in @comments : %>
+            <li><img title="<%= comment.user.name %>" class="img-bordered" src="<%- @h.profileLink(40, comment.user) %>" alt="<%= comment.user.name %>" /> <%= comment.body %></li>
+        <% end %>
+    </ul>
+</div>

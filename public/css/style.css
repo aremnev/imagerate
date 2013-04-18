@@ -69,3 +69,12 @@ body {
 .img-bordered {
     border: 1px solid #eee;
 }
+
+.pull-center {
+    float: none;
+    margin: 0 auto;
+}
+
+.big {
+    margin: 20px;
+}

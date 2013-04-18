@@ -26,6 +26,7 @@ var ImageSchema = new Schema({
         user: { type : Schema.ObjectId, ref : 'User' },
         createdAt: { type : Date, default : Date.now }
     }],
+    commentsCount: {type: Number, default: 0},
     image: {
         cdnUri: String,
         data: {}
