@@ -8,7 +8,8 @@ var express = require('express'),
     flash = require('connect-flash'),
     view_helpers = require('view-helpers'),
     cloudinary = require('cloudinary'),
-    helpers = require('../app/helpers');
+    helpers = require('../app/helpers'),
+    subscribers = require('../app/subscribers');
 
 module.exports = function (app, config, passport) {
 
@@ -34,9 +35,6 @@ module.exports = function (app, config, passport) {
     app.set('views', config.root + '/app/views');
 
     app.configure(function () {
-        // dynamic helpers
-        app.use(view_helpers(config.app.name))
-        app.use(helpers(config))
 
         // cookieParser should be above session
         app.use(express.cookieParser())
@@ -65,6 +63,11 @@ module.exports = function (app, config, passport) {
 
         //Config cloudinary
         cloudinary.config(config.cloudinary);
+
+        // dynamic helpers
+        app.use(view_helpers(config.app.name))
+        app.use(helpers(config));
+        app.use(subscribers(config));
 
         // routes should be at the last
         app.use(app.router);

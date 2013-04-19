@@ -30,6 +30,13 @@ module.exports = function (app, passport, auth, config) {
 
     app.param('imageId', images.image);
 
+    // contests routes
+    var contests = require('../app/controllers/contests');
+    app.post('/contests', contests.create);
+    app.get('/contests/:contestId', contests.show);
+
+    app.param('contestId', contests.contest);
+
     // home route
     var root = require('../app/controllers/root');
     app.get('/', root.index);

@@ -16,12 +16,14 @@ var mongoose = require('mongoose'),
 var ImageSchema = new Schema({
     title: {type : String, default : '', trim : true},
     user: {type : Schema.ObjectId, ref : 'User'},
-    contest: {type : Schema.ObjectId, ref : 'Contest'},
-    evaluations: [{
-        user: { type : Schema.ObjectId, ref : 'User' },
-        isPositive: { type : Boolean, default: false },
-        createdAt: { type : Date, default : Date.now }
-    }],
+    contest: {
+        contest: {type : Schema.ObjectId, ref : 'Contest'},
+        evaluations: [{
+            user: { type : Schema.ObjectId, ref : 'User' },
+            rating: Number,
+            createdAt: { type : Date, default : Date.now }
+        }]
+    },
     comments: [{
         body: { type : String, default : '' },
         user: { type : Schema.ObjectId, ref : 'User' },

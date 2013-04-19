@@ -1,7 +1,11 @@
 <div class="comments row">
     <ul class="results unstyled row span6 pull-center">
         <% for comment in @comments : %>
-            <li class="clearfix"><% include 'includes/userpic.ect', {user: comment.user, h: @h} %> <p><%= comment.body %></p></li>
+            <li class="clearfix">
+                <% include 'includes/userpic.ect', {user: comment.user, h: @h} %>
+                <span class="time"><%= comment.createdAt %></span>
+                <p><%= comment.body %></p>
+            </li>
         <% end %>
     </ul>
 </div>

@@ -26,7 +26,6 @@ exports.image = function(req, res, next, id){
  */
 
 exports.show = function (req, res) {
-    var image = req.image
     res.render('images/show.ect', {
         title: req.image.title
     });
