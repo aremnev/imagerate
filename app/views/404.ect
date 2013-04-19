@@ -1,13 +1,3 @@
-extends layouts/default
-
-block main
-  h1 Oops something went wrong
-  br
-  span 404
-
-block content
-  #error-message-box
-    #error-stack-trace
-      pre
-        code!= error
+<h1>404 Not found</h1>
+<p><%= @url %> not found.</p>
 

@@ -69,22 +69,13 @@ module.exports = function (app, config, passport) {
         // routes should be at the last
         app.use(app.router);
 
-        // assume "not found" in the error msgs
-        // is a 404.
-        app.use(function(err, req, res, next){
-            // treat as 404
-            if (~err.message.indexOf('not found')) return next();
-
-            console.error(err.stack);
-
-            // error page
-            res.status(500).render('500.ect', { error: err.stack });
-        });
-
         // assume 404 since no middleware responded
         app.use(function(req, res, next){
             res.status(404).render('404.ect', { url: req.originalUrl });
         });
 
+        app.use(function(err, req, res, next){
+            res.status(err.status || 500).render('500.ect', { error: err });
+        });
     });
 }

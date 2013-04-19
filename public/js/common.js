@@ -11,13 +11,14 @@ $(document).ready(function () {
 
     (function(){
         var form = $('.ajax-add').find('form'),
-            list_wrap = $('.ajax-add').find('.results').parent();
+            list_wrap = $('.ajax-add').find('.results').parent(),
+            input = form.find('input[type="text"]');
 
         form.on('submit', function(e) {
             e.preventDefault();
-            form.attr('action');
+            if(!$.trim(input.val())) return;
             $.post(form.attr('action'), form.serialize(), function(d){
-                form.find('input[type="text"]').val('');
+                input.val('');
                 list_wrap.children('.results').replaceWith($(d).find('.results'));
             });
         });

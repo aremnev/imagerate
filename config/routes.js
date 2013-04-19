@@ -21,7 +21,7 @@ module.exports = function (app, passport, auth, config) {
     // image routes
     var images = require('../app/controllers/images');
     app.post('/images', images.create);
-    app.get('/images/:imageId', auth.requiresLogin, images.show);
+    app.get('/images/:imageId', images.show);
     app.post('/images/:imageId/remove', auth.requiresLogin, auth.image.hasAuthorization, images.remove);
 
     // comments routes

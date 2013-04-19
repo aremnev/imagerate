@@ -12,10 +12,10 @@ exports.create = function (req, res) {
     var image = req.image
     var user = req.user
 
-    if (!req.body.comment) res.render('400');
+    if (!req.body.comment.isEmpty()) return res.send(400);
 
     image.comments.push({
-        body: req.body.comment,
+        body: req.body.comment.trim(),
         user: user._id
     });
 

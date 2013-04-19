@@ -1,7 +1,7 @@
-<div>
-    <ul class="results unstyled">
+<div class="comments row">
+    <ul class="results unstyled row span6 pull-center">
         <% for comment in @comments : %>
-            <li><img title="<%= comment.user.name %>" class="img-bordered" src="<%- @h.profileLink(40, comment.user) %>" alt="<%= comment.user.name %>" /> <%= comment.body %></li>
+            <li class="clearfix"><% include 'includes/userpic.ect', {user: comment.user, h: @h} %> <p><%= comment.body %></p></li>
         <% end %>
     </ul>
 </div>

@@ -70,11 +70,39 @@ body {
     border: 1px solid #eee;
 }
 
-.pull-center {
+.pull-center, ul.pull-center {
     float: none;
     margin: 0 auto;
 }
 
 .big {
     margin: 20px;
+}
+
+.userpic {
+    text-decoration: none;
+    display: inline-block;
+    -moz-box-shadow: 0 0 3px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0 0 3px rgba(0,0,0,0.5);
+    box-shadow: 0 0 3px rgba(0,0,0,0.5);
+}
+
+.comments ul li {
+    padding: 10px;
+    padding-left: 80px;
+    margin: 7px 4px;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(40, 201, 255, 0.47);
+}
+
+.comments ul li:nth-child(odd) {
+    box-shadow: 0 1px 4px rgba(94, 197, 79, 0.47);
+}
+.comments ul li:nth-child(3n) {
+    box-shadow: 0 1px 4px rgba(197, 3, 123, 0.46);
+}
+
+.comments .userpic {
+    margin-left: -65px;
+    float: left;
 }

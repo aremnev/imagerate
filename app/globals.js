@@ -23,4 +23,14 @@ module.exports = function() {
 
     }();
 
+    String.prototype.trim = function(full){
+        if(full) return this.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g,'').replace(/\s+/g,' ');
+        return this.replace(/^\s+|\s+$/g, '');
+    };
+
+    String.prototype.ltrim = function(){return this.replace(/^\s+/,'');};
+
+    String.prototype.rtrim = function(){return this.replace(/\s+$/,'');};
+
+    String.prototype.isEmpty = function() { return this && this.trim() }
 }

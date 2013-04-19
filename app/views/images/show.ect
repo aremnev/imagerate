@@ -11,9 +11,11 @@
 
 <div class="row">
     <div class="ajax-add span8 pull-center">
+        <% if @req.isAuthenticated() : %>
         <form class="well well-small form-inline" action="/images/<%- @req.image.id %>/comment">
-            Put a comment: <input name="comment" type="text" maxlength="255" /> <input type="submit" class="btn" value="Send" />
+            Put a comment: <input pattern="^(?=\s*\S).*$" required= "required" name="comment" type="text" maxlength="255" /> <input type="submit" class="btn" value="Send" />
         </form>
+        <% end %>
         <% include 'comments/comments.ect', {comments: @req.image.comments, h: @h} %>
     </div>
 </div>

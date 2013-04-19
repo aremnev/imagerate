@@ -5,6 +5,7 @@
 var mongoose = require('mongoose'),
     fs = require('fs'),
     cloudinary = require('cloudinary'),
+    _ = require('underscore'),
     Schema = mongoose.Schema;
 
 
@@ -46,6 +47,20 @@ ImageSchema.pre('remove', function (next) {
         next();
     });
 
+})
+
+/**
+ * Pre-save hook
+ */
+
+ImageSchema.pre('save', function (next) {
+    var comments = [];
+    _.each(this.comments, function(c){
+        if(c.body && c.body.trim()) comments.push(c);
+    });
+    this.comments = comments;
+    this.commentsCount = comments.length;
+    next();
 })
 
 
