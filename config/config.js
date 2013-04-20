@@ -3,7 +3,7 @@ module.exports = {
 
     development: {
         app: {
-            name: 'Imegerate dev'
+            name: 'Imagerate dev'
         },
         port: 3000,
         root: require('path').normalize(__dirname + '/..'),
@@ -19,7 +19,8 @@ module.exports = {
             cloud_name: 'imagerate-local',
             api_key: '451142758477939',
             api_secret: 'mz_x6GCybvpFlpFRF5phG4VN8fU'
-        }
+        },
+        admin: { regexp: '.*' }
     },
 
     test: {
@@ -28,7 +29,7 @@ module.exports = {
 
     production: {
         app: {
-            name: 'Imegerate'
+            name: 'Imagerate'
         },
         port : process.env.VCAP_APP_PORT,
         root: require('path').normalize(__dirname + '/..'),
@@ -44,6 +45,13 @@ module.exports = {
             cloud_name: 'imagerate-local',
             api_key: '451142758477939',
             api_secret: 'mz_x6GCybvpFlpFRF5phG4VN8fU'
+        },
+        admin: {
+            emails: [
+                'dsedelnikov@thumbtack.net',
+                'dmnorc@gmail.com',
+                'aremnev@thumbtack.net'
+            ]
         }
     },
 

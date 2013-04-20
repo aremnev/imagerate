@@ -31,10 +31,10 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contests<b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <% for contest in @contests: %>
+                                <% for contest in @extra.contests: %>
                                     <li><a href="/contests/<%- contest._id %>"><%= contest.title %></a></li>
                                 <% end %>
-                                <li><a href="#">See all</a></li>
+                                <li><a href="/contests">See all</a></li>
                             </ul>
                         </li>
                     </ul>

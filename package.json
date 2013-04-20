@@ -13,6 +13,7 @@
    "dependencies": {
         "express": "latest",
         "less-middleware": "latest",
+        "q": "latest",
         "ect": "latest",
         "mongoose": "latest",
         "connect-mongo": "latest",

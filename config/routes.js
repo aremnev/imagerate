@@ -32,7 +32,9 @@ module.exports = function (app, passport, auth, config) {
 
     // contests routes
     var contests = require('../app/controllers/contests');
-    app.post('/contests', contests.create);
+    app.post('/contests', auth.requiresLogin, auth.adminAccess, contests.create);
+    app.post('/contests/:contestId', auth.requiresLogin, auth.adminAccess, contests.update);
+    app.get('/contests', contests.show);
     app.get('/contests/:contestId', contests.show);
 
     app.param('contestId', contests.contest);

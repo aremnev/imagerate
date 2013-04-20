@@ -11,7 +11,7 @@ var express = require('express'),
 var env = process.env.NODE_ENV || 'development',
     config = require('./config/config'),
     cfg = config[env],
-    auth = require('./config/middlewares/authorization'),
+    auth = require('./config/middlewares/authorization')(cfg),
     mongoose = require('mongoose');
 
 var port = cfg.port;

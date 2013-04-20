@@ -40,8 +40,8 @@ ContestSchema.statics = {
      */
 
     list: function (options, cb) {
-        var criteria = options.criteria || {},
-            sort = options.sort || {'createdAt': -1} // sort by date
+        var criteria = options.criteria || {startDate: {$lt : Date.now()}},
+            sort = options.sort || {'startDate': -1} // sort by due date
 
         this.find(criteria)
             .sort(sort)

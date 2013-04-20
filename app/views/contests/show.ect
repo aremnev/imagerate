@@ -1,2 +1,28 @@
 <!-- show.ect -->
 <% extend 'layouts/layout.ect' %>
+<div class="row">
+    <div class="span2 well">
+        <ul class="nav nav-list">
+            <% for contest in @contests: %>
+                <% if @req.contest and parseInt(@req.contest._id) == parseInt(contest._id) : %>
+                    <li class="active"><%= contest.title %></li>
+                <% else: %>
+                    <li><a href="/contests/<%- contest._id %>"><%= contest.title %></a></li>
+                <% end %>
+            <% end %>
+        </ul>
+    </div>
+    <div class="span9">
+        <% if @req.contest: %>
+            <h2><%= @req.contest.title %></h2>
+            <ul>
+                <li>Start date: <%- @h.formatDate(@req.contest.startDate) %></li>
+                <li>Due date: <%- @h.formatDate(@req.contest.dueDate) %></li>
+            </ul>
+            <%= @req.contest.description %>
+            <% include 'images/list.ect', {images: @images, h: @h} %>
+        <% else : %>
+            Contest is not selected.
+        <% end %>
+    </div>
+</div>

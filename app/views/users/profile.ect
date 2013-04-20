@@ -19,6 +19,11 @@
         <form class="navbar-form pull-left form-upload" action="/images" method="post" enctype="multipart/form-data">
             <div class="inputs">
                 <input type="text" id="image_title" name="title" placeholder="Title" />
+                <select id="image_contest" name="contest[contest]">
+                    <% for contest in @extra.contests: %>
+                        <option value="<%- contest._id %>"> <%= contest.title %></option>
+                    <% end %>
+                </select>
                 <div class="image-upload">
                     <button class="btn btn-success">Add file...<input type="file" id="image" name="image" maxlength="1" placeholder="Image" /></button>
                     <span></span>
@@ -33,16 +38,7 @@
 </div>
 <% end %>
 <% include 'includes/pagination.ect', {pages: @pages, page: @page, url: @req._parsedUrl.pathname} %>
-<ul class="thumbnails">
-    <% for image in @images : %>
-        <li>
-            <%if @req.isAuthenticated() and @req.user.id == @req.profile.id : %>
-                <span data-action="/images/<%- image.id %>/remove" class="remove"><i class="icon-remove"></i></span>
-            <% end %>
-            <a class="thumbnail" href="/images/<%- image.id %>"><img src="<%- @h.imageUrl(image.image, {width: 150, height: 150, crop: 'pad'}) %>" alt="<%= image.title %>" /></a>
-        </li>
-    <% end %>
-</ul>
+<% include 'images/list.ect', {images: @images, h: @h, remove: @req.isAuthenticated() and @req.user.id == @req.profile.id } %>
 <% include 'includes/pagination.ect', {pages: @pages, page: @page, url: @req._parsedUrl.pathname} %>
 
 
