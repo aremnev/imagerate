@@ -15,6 +15,7 @@ function helpers (cfg) {
         res.locals.h.profileLink = function(size, user){
             return profileLink(cfg, req, size, user);
         }
+        res.locals.h.formatDate = res.locals.formatDate
         res.locals.h.imageUrl = imageUrl(req);
         next()
     }

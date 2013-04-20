@@ -12,6 +12,7 @@
     },
    "dependencies": {
         "express": "latest",
+        "less-middleware": "latest",
         "ect": "latest",
         "mongoose": "latest",
         "connect-mongo": "latest",

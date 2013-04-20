@@ -39,7 +39,7 @@
             <%if @req.isAuthenticated() and @req.user.id == @req.profile.id : %>
                 <span data-action="/images/<%- image.id %>/remove" class="remove"><i class="icon-remove"></i></span>
             <% end %>
-            <a class="thumbnail" href="/images/<%- image.id %>"><img src="<%- @h.imageUrl(image.image, {width: 200, height: 200, crop: 'fit'}) %>" alt="<%= image.title %>" /></a>
+            <a class="thumbnail" href="/images/<%- image.id %>"><img src="<%- @h.imageUrl(image.image, {width: 150, height: 150, crop: 'pad'}) %>" alt="<%= image.title %>" /></a>
         </li>
     <% end %>
 </ul>
