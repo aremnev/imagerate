@@ -1,11 +1,11 @@
 <!-- show.ect -->
 <% extend 'layouts/layout.ect' %>
 <div class="row">
-    <div class="span2 well">
+    <div class="span2 well well-small">
         <ul class="nav nav-list">
             <% for contest in @contests: %>
                 <% if @req.contest and parseInt(@req.contest._id) == parseInt(contest._id) : %>
-                    <li class="active"><%= contest.title %></li>
+                    <li class="active"><a><%= contest.title %></a></li>
                 <% else: %>
                     <li><a href="/contests/<%- contest._id %>"><%= contest.title %></a></li>
                 <% end %>
@@ -19,8 +19,10 @@
                 <li>Start date: <%- @h.formatDate(@req.contest.startDate) %></li>
                 <li>Due date: <%- @h.formatDate(@req.contest.dueDate) %></li>
             </ul>
-            <%= @req.contest.description %>
+            <p><%= @req.contest.description %></p>
+            <% include 'includes/pagination.ect', {pages: @pages, page: @page, url: @req._parsedUrl.pathname} %>
             <% include 'images/list.ect', {images: @images, h: @h} %>
+            <% include 'includes/pagination.ect', {pages: @pages, page: @page, url: @req._parsedUrl.pathname} %>
         <% else : %>
             Contest is not selected.
         <% end %>

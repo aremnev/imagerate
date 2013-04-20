@@ -20,7 +20,7 @@
             <div class="inputs">
                 <input type="text" id="image_title" name="title" placeholder="Title" />
                 <select id="image_contest" name="contest[contest]">
-                    <% for contest in @extra.contests: %>
+                    <% for contest in @contests: %>
                         <option value="<%- contest._id %>"> <%= contest.title %></option>
                     <% end %>
                 </select>

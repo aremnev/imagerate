@@ -48,6 +48,15 @@ ContestSchema.statics = {
             .limit(options.perPage)
             .skip(options.perPage * options.page)
             .exec(cb)
+    },
+    actualList: function (cb) {
+        var options = {
+            criteria: {
+                dueDate: {$gt : Date.now()}
+            }
+        }
+
+        this.list(options, cb);
     }
 
 }

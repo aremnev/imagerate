@@ -56,13 +56,20 @@ exports.show = function (req, res) {
         if (err) return res.render('500');
         var result = {contests: contests}
         if(contest) {
-            var i_options = {perPage: 10,
+            var page = parseInt(req.param('page') > 0 ? req.param('page') : 1);
+            var i_options = {
+                perPage: 10,
+                page: page - 1,
                 criteria: {'contest.contest': contest._id}
             }
             Image.list(i_options, function(err, images){
                 if (err) return res.render('500');
-                result.images = images;
-                return res.render('contests/show.ect', result);
+                    Image.count(i_options.criteria).exec(function (err, count) {
+                    result.images = images;
+                    result.page = page;
+                    result.pages = Math.ceil(count / i_options.perPage);
+                    return res.render('contests/show.ect', result);
+                });
             });
         } else {
             res.render('contests/show.ect', result);

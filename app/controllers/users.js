@@ -5,6 +5,7 @@
 
 var mongoose = require('mongoose'),
     User = mongoose.model('User'),
+    Contest = mongoose.model('Contest'),
     Image = mongoose.model('Image');
 
 exports.signin = function (req, res) {}
@@ -92,12 +93,16 @@ exports.profile = function (req, res) {
     Image.list(options, function(err, images) {
         if (err) return res.render('500')
         Image.count(options.criteria).exec(function (err, count) {
-            res.render('users/profile.ect', {
-                title: user.name,
-                images: images,
-                page: page,
-                pages: Math.ceil(count / perPage)
-            })
+            Contest.actualList(function(err, contests){
+                if (err) return res.render('500');
+                res.render('users/profile.ect', {
+                    title: user.name,
+                    images: images,
+                    page: page,
+                    contests: contests,
+                    pages: Math.ceil(count / perPage)
+                });
+            });
         })
     })
 
