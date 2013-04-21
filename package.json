@@ -8,8 +8,9 @@
         "npm": "1.1.65"
     },
    "scripts": {
-        "start": "node app.js"
-    },
+        "start": "make start",
+        "test": "make test"
+   },
    "dependencies": {
         "express": "latest",
         "less-middleware": "latest",
@@ -27,7 +28,13 @@
         "async": "latest",
         "nodemon": "latest",
         "view-helpers": "latest" ,
-        "forms": "*",
-        "cloudinary": "*"
-    }
+        "forms": "latest",
+        "cloudinary": "latest"
+    },
+        "devDependencies": {
+            "mocha": "latest",
+            "should": "latest",
+            "supertest": "latest",
+            "jscoverage": "latest"
+        }
 }

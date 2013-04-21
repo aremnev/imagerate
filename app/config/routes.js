@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
 module.exports = function (app, passport, auth, config) {
 
     // user routes
-    var users = require('../app/controllers/users');
+    var users = require('../controllers/users');
     app.get('/login', auth.requiresLogout, users.login);
     app.get('/logout', auth.requiresLogin, users.logout);
     //app.post('/users', users.create);
@@ -19,19 +19,19 @@ module.exports = function (app, passport, auth, config) {
     app.param('userId', users.user);
 
     // image routes
-    var images = require('../app/controllers/images');
+    var images = require('../controllers/images');
     app.post('/images', images.create);
     app.get('/images/:imageId', images.show);
     app.post('/images/:imageId/remove', auth.requiresLogin, auth.image.hasAuthorization, images.remove);
 
     // comments routes
-    var comments = require('../app/controllers/comments');
+    var comments = require('../controllers/comments');
     app.post('/images/:imageId/comment', auth.requiresLogin, comments.create);
 
     app.param('imageId', images.image);
 
     // contests routes
-    var contests = require('../app/controllers/contests');
+    var contests = require('../controllers/contests');
     app.post('/contests', auth.requiresLogin, auth.adminAccess, contests.create);
     app.post('/contests/:contestId', auth.requiresLogin, auth.adminAccess, contests.update);
     app.get('/contests', contests.show);
@@ -40,6 +40,6 @@ module.exports = function (app, passport, auth, config) {
     app.param('contestId', contests.contest);
 
     // home route
-    var root = require('../app/controllers/root');
+    var root = require('../controllers/root');
     app.get('/', root.index);
 }

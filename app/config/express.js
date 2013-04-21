@@ -8,8 +8,8 @@ var express = require('express'),
     flash = require('connect-flash'),
     view_helpers = require('view-helpers'),
     cloudinary = require('cloudinary'),
-    helpers = require('../app/helpers'),
-    subscribers = require('../app/subscribers');
+    helpers = require('../helpers'),
+    subscribers = require('../subscribers');
 
 module.exports = function (app, config, passport) {
 
@@ -20,19 +20,19 @@ module.exports = function (app, config, passport) {
     var ectRenderer = require('ect')({ 
         watch: true, 
         cache: false, 
-        root: config.root + '/app/views', 
+        root: config.root + '/../views',
         ext: '.ect' 
     });
     app.engine('.ect', ectRenderer.render);
-    app.set('views', config.root + '/app/views');
+    app.set('views', config.root + '/../views');
 
     app.configure(function () {
         // less should be placed before express.static
         app.use(require('less-middleware')({
-            src: config.root + '/public',
+            src: config.root + '/../public',
             compress: true
         }));
-        app.use(express.static(config.root + '/public'));
+        app.use(express.static(config.root + '/../public'));
 
         // cookieParser should be above session
         app.use(express.cookieParser())
