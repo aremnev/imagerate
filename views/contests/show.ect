@@ -4,7 +4,7 @@
     <div class="span2 well well-small">
         <ul class="nav nav-list">
             <% for contest in @contests: %>
-                <% if @req.contest and parseInt(@req.contest._id) == parseInt(contest._id) : %>
+                <% if @req.contest and (@req.contest._id + '') == (contest._id + '') : %>
                     <li class="active"><a><%= contest.title %></a></li>
                 <% else: %>
                     <li><a href="/contests/<%- contest._id %>"><%= contest.title %></a></li>

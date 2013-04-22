@@ -7,11 +7,11 @@
         "node": "0.8.14",
         "npm": "1.1.65"
     },
-   "scripts": {
-        "start": "make start",
+    "scripts": {
+        "start": "node app.js",
         "test": "make test"
-   },
-   "dependencies": {
+    },
+    "dependencies": {
         "express": "latest",
         "less-middleware": "latest",
         "q": "latest",
@@ -31,10 +31,10 @@
         "forms": "latest",
         "cloudinary": "latest"
     },
-        "devDependencies": {
-            "mocha": "latest",
-            "should": "latest",
-            "supertest": "latest",
-            "jscoverage": "latest"
-        }
+    "devDependencies": {
+        "mocha": "latest",
+        "should": "latest",
+        "supertest": "latest",
+        "jscoverage": "latest"
+    }
 }

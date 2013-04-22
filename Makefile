@@ -2,6 +2,7 @@ REPORTER=dot
 TESTS=$(shell find ./tests -type f -name "*.js")
 
 PROJECT = "Imagerate Node.js project"
+AF_NAMESPACE = "imagerate"
 
 all: install test start
 
@@ -21,10 +22,13 @@ install: ;@echo "Installing ${PROJECT}....."; \
 	git pull && npm install
 
 clean : ;@echo "Clean ${PROJECT}.....";
-	rm -rf node_modules
+	rm -rf node_modules && rm -f npm-shrinkwrap.json
 
 start : ;@echo "Starting ${PROJECT}....."; \
 	node app.js
 
+afupdate : ;@echo "AppFog update ${PROJECT}....."; \
+	npm shrinkwrap && af update $(AF_NAMESPACE)
 
-.PHONY: test start install clean test-cov
+
+.PHONY: test start install clean test-cov afupdate
