@@ -18,6 +18,8 @@ var ImageSchema = new Schema({
     user: {type : Schema.ObjectId, ref : 'User'},
     contest: {
         contest: {type : Schema.ObjectId, ref : 'Contest'},
+        rating: Number,
+        evaluationsCount: { type: Number, default: 0 },
         evaluations: [{
             user: { type : Schema.ObjectId, ref : 'User' },
             rating: Number,
@@ -91,8 +93,40 @@ ImageSchema.methods = {
             }, {transformation: transformation});
 
         imageStream.on('data', cloudStream.write).on('end', cloudStream.end);
-    }
+    },
 
+    /**
+     * Updates average rating
+     *
+     * @param {Number} rateValue
+     * @param {Object} user
+     * @param {Function} callback
+     */
+    saveNewRateValue: function(rateValue, user, callback) {
+        var contest = this.contest;
+        var count = contest.evaluationsCount;
+
+        var newRating = contest.rating
+            ? (contest.rating * count + rateValue) / (count + 1)
+            : rateValue;
+
+        contest.rating = newRating;
+        contest.evaluationsCount = count + 1;
+
+        this.contest.evaluations.push({
+            user: user._id,
+            rating: rateValue
+        });
+
+        this.save(callback);
+    },
+
+    /**
+     *
+     */
+    getRating: function() {
+        return Math.round(this.contest.rating || 0);
+    }
 }
 
 /**
