@@ -1,12 +1,20 @@
 <!-- show.ect -->
 <% extend 'layouts/layout.ect' %>
+<% block 'scripts' : %>
+    <script type="text/javascript" src="/js/rating.js"></script>
+<% end %>
+
 <h2>Image - <%- @req.image.title %></h2>
 <ul>
     <li><i>Author:</i>  <a href="/users/<%- @req.image.user.id %>"><%- @req.image.user.name %></a></li>
     <li><i>Uploaded:</i>  <%- @formatDate(@req.image.createdAt) %></li>
 </ul>
 <div class="row text-center">
-    <img class="img-polaroid big" src="<%- @h.imageUrl(@req.image.image, {width: 800, height: 800, crop: 'limit'}) %>" ref="<%- @req.image.image.cdnUri %>" title='<%- @req.image.title %>' />
+    <div class="image-large image-to-rate<% if false : %> fixed-rating<% end %>">
+        <img class="img-polaroid big" ref="<%- @req.image.image.cdnUri %>" title='<%- @req.image.title %>'
+             src="<%- @h.imageUrl(@req.image.image, {width: 800, height: 800, crop: 'limit'}) %>"/>
+        <% include 'includes/rating.ect', { rating: 3, limit: 5 } %>
+    </div>
 </div>
 
 <div class="row">

@@ -9,7 +9,7 @@ body {
 .thumbnails {
 
   li {
-    position:relative;
+    position: relative;
   }
 
   &:hover .remove {
@@ -72,9 +72,9 @@ body {
 .userpic {
   text-decoration: none;
   display: inline-block;
-  -moz-box-shadow: 0 0 3px rgba(0,0,0,0.5);
-  -webkit-box-shadow: 0 0 3px rgba(0,0,0,0.5);
-  box-shadow: 0 0 3px rgba(0,0,0,0.5);
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 }
 
 .comments ul li {
@@ -100,6 +100,7 @@ body {
 .comments ul li:nth-child(odd) {
   box-shadow: 0 1px 4px rgba(94, 197, 79, 0.47);
 }
+
 .comments ul li:nth-child(3n) {
   box-shadow: 0 1px 4px rgba(197, 3, 123, 0.46);
 }
@@ -107,4 +108,61 @@ body {
 .comments .userpic {
   margin-left: -65px;
   float: left;
+}
+
+.image-to-rate {
+  .rating-shadow (@radius) {
+    box-shadow: 0px 0px 10px @radius rgba(20, 20, 20, 0.8);
+    -webkit-box-shadow: 0px 0px 10px @radius rgba(20, 20, 20, 0.8);
+  }
+
+  display: inline-block;
+  position: relative;
+
+  &:hover {
+    text-decoration: none;
+
+    .rating {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  .rating {
+    @rating-width: 126px;
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    margin-left: -0.5 * @rating-width;
+
+    background: rgba(20, 20, 20, 0.8);
+    .rating-shadow(6px);
+
+    opacity: 0;
+    -o-transition: opacity .5s, .5s ease;
+    -moz-transition: opacity .5s, .5s ease;
+    -webkit-transition: opacity .5s, .5s ease;
+    visibility: hidden;
+
+
+    span {
+      color: orange;
+      cursor: pointer;
+      font-size: 25px;
+    }
+
+  }
+
+  &.image-large .rating {
+    @rating-width: 196px;
+    .rating-shadow(9px);
+
+    bottom: 50px;
+    margin-left: -0.5 * @rating-width;
+
+    span {
+      font-size: 40px;
+      vertical-align: sub;
+    }
+  }
 }
