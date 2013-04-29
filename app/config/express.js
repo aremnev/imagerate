@@ -4,6 +4,7 @@
 */
 
 var express = require('express'),
+    expressParams = require('express-params'),
     mongoStore = require('connect-mongo')(express),
     flash = require('connect-flash'),
     view_helpers = require('view-helpers'),
@@ -12,6 +13,8 @@ var express = require('express'),
     subscribers = require('../subscribers');
 
 module.exports = function (app, config, passport) {
+
+    expressParams.extend(app);
 
     app.set('showStackError', true);
     app.use(express.logger('dev'));

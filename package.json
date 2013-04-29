@@ -29,7 +29,8 @@
         "nodemon": "latest",
         "view-helpers": "latest" ,
         "forms": "latest",
-        "cloudinary": "latest"
+        "cloudinary": "latest",
+        "express-params": "latest"
     },
     "devDependencies": {
         "mocha": "latest",
