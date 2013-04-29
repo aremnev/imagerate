@@ -53,6 +53,8 @@ module.exports = function (app, config, passport) {
             })
         }));
 
+//        app.use(express.csrf());
+
         // connect flash for flash messages
         app.use(flash());
 
