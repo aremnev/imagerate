@@ -6,6 +6,11 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 
+function nowPlusOneMonth() {
+    var now = new Date();
+    return now.setMonth(now.getMonth() + 1)
+}
+
 /**
  * Contest Schema
  */
@@ -14,7 +19,7 @@ var ContestSchema = new Schema({
     title: {type : String, default : '', trim : true},
     description: {type : String, default : '', trim : true},
     startDate : {type : Date, default : Date.now},
-    dueDate: {type : Date, default : Date.now}
+    dueDate: {type : Date, default : nowPlusOneMonth}
 });
 
 /**
