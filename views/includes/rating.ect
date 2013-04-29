@@ -1,5 +1,5 @@
 <div class="rating fixed" data-rating="<%= @rating %>">
     <% for i in [1..@limit] : %>
-        <span data-rating="<%= i %>"><% if i <= @rating : %>★<% else : %>☆<% end %></span>
+        <span data-rate="<%= i %>"><% if i <= @rating : %>★<% else : %>☆<% end %></span>
     <% end %>
 </div>

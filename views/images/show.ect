@@ -10,10 +10,10 @@
     <li><i>Uploaded:</i>  <%- @formatDate(@req.image.createdAt) %></li>
 </ul>
 <div class="row text-center">
-    <div class="image-large image-to-rate<% if false : %> fixed-rating<% end %>">
+    <div class="image-large image-to-rate<% if false : %> fixed-rating<% end %>" data-image-id="<%= @req.image.id %>">
         <img class="img-polaroid big" ref="<%- @req.image.image.cdnUri %>" title='<%- @req.image.title %>'
              src="<%- @h.imageUrl(@req.image.image, {width: 800, height: 800, crop: 'limit'}) %>"/>
-        <% include 'includes/rating.ect', { rating: 3, limit: 5 } %>
+        <% include 'includes/rating.ect', { rating: @req.image.getRating(), limit: 5 } %>
     </div>
 </div>
 

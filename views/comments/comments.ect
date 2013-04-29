@@ -3,7 +3,8 @@
         <% for comment in @comments : %>
             <li class="clearfix">
                 <% include 'includes/userpic.ect', {user: comment.user, h: @h} %>
-                <span class="title"><a href="/users/<%- comment.user._id %>"><%= comment.user.name %></a></span><span class="time"><i><%= @h.formatDate(comment.createdAt) %></i></span>
+                <span class="title"><a href="/users/<%- comment.user._id %>"><%= comment.user.name %></a></span>
+                <span class="time"><i><%= @h.formatDate(comment.createdAt) %></i></span>
                 <p><%= comment.body %></p>
             </li>
         <% end %>
