@@ -18,14 +18,27 @@
 
 
 <% block 'header-right' : %>
-
+    <% if @likes.length : %>
+        <h5><%- @likesCount %> people liked it</h5>
+        <ul class="likes-for-image">
+            <% for like in @likes : %>
+                <li class="like">
+                    <img class="img-bordered" src="<%- @h.profileLink(32, like.user) %>" alt="<%= like.user.name %>">
+                    <div class="like-tooltip">
+                        <h6><%= like.user.name %></h6>
+                        <% include 'includes/rating.ect', { rating: like.rating } %>
+                    </div>
+                </li>
+            <% end %>
+        </ul>
+    <% end %>
 <% end %>
 
 
 <div class="image-large image-to-rate<% if false : %> fixed-rating<% end %>" data-image-id="<%= @req.image.id %>">
     <img class="img-polaroid big" ref="<%- @req.image.image.cdnUri %>" title='<%- @req.image.title %>'
          src="<%- @h.imageUrl(@req.image.image, {width: 952, height: 800, crop: 'limit'}) %>"/>
-    <% include 'includes/rating.ect', { rating: @req.image.getRating(), limit: 5 } %>
+    <% include 'includes/rating.ect', { rating: @req.image.getRating() } %>
 </div>
 
 <div class="row">

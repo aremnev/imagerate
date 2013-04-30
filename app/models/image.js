@@ -146,6 +146,8 @@ ImageSchema.statics = {
     load: function (id, cb) {
         this.findOne({ _id : id })
             .populate('user', 'name')
+            // TODO: move this population to according view
+            .populate('contest.evaluations.user')
             .populate('comments.user')
             .exec(cb)
     },

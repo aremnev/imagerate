@@ -26,8 +26,14 @@ exports.image = function(req, res, next, id){
  */
 
 exports.show = function (req, res) {
+    var likes = req.image.contest.evaluations.filter(function(evaluation) {
+        return evaluation.rating === 5;
+    });
+
     res.render('images/show.ect', {
-        title: req.image.title
+        title: req.image.title,
+        likesCount: likes.length,
+        likes: likes.slice(0, 20)
     });
 }
 

@@ -29,7 +29,8 @@ a, .navbar-link {
 header {
   background: @header-background;
   box-shadow: inset 0px @header-shadow-size @header-shadow-size -1 * @header-shadow-size @header-shadow-color,
-              inset 0px -1 * @header-shadow-size @header-shadow-size -1 * @header-shadow-size @header-shadow-color;
+              inset 0px -1 * @header-shadow-size @header-shadow-size -1 * @header-shadow-size @header-shadow-color,
+              0px 4px 5px rgba(121, 121, 121, 0.8);
   color: @header-text-color;
   height: 150px;
   margin: 20px -100%;
@@ -43,7 +44,7 @@ header {
     float: left;
     height: 120px;
     margin: 15px 0;
-    width: 49%;
+    width: 50%;
   }
 
   .header-left {
@@ -246,6 +247,37 @@ header {
         font-size: 40px;
         vertical-align: sub;
       }
+    }
+  }
+}
+
+.likes-for-image {
+  .like {
+    display: inline-block;
+    margin: 0 5px 5px 0;
+    position: relative;
+
+    .like-tooltip {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 120%;
+      width: 115px;
+      background: #FFF5E7;
+      box-shadow: 0px 0px 5px 3px #FFF5E7,
+                  inset 0 0 1px 1px fade(@header-background, 50%);
+      border-radius: 5px;
+      z-index: 200;
+      color: fade(@header-background, 90%);
+      text-align: center;
+
+      h6 {
+        margin: 0;
+      }
+    }
+
+    &:hover .like-tooltip {
+      display: block;
     }
   }
 }

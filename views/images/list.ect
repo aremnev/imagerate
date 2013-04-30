@@ -6,8 +6,9 @@
                     <span data-action="/images/<%- image.id %>/remove" class="remove">×</span>
                 <% end %>
                 <img src="<%- @h.imageUrl(image.image, {width: 150, height: 150, crop: 'pad'}) %>" alt="<%= image.title %>" />
-                <% include 'includes/rating.ect', { rating: image.getRating(), limit: 5 } %>
+                <% include 'includes/rating.ect', { rating: image.getRating() } %>
             </a>
         </li>
     <% end %>
 </ul>
+
