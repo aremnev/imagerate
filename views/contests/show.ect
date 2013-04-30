@@ -1,7 +1,19 @@
 <!-- show.ect -->
 <% extend 'layouts/layout.ect' %>
+
+
 <% block 'scripts' : %>
     <script type="text/javascript" src="/js/rating.js"></script>
+<% end %>
+
+
+<% block 'header-left' : %>
+    <h3><%= @req.contest.title %></h3>
+    <ul>
+        <li>Start date: <%- @h.formatDate(@req.contest.startDate) %></li>
+        <li>Due date: <%- @h.formatDate(@req.contest.dueDate) %></li>
+    </ul>
+    <p><%= @req.contest.description %></p>
 <% end %>
 
 <div class="row">
@@ -18,12 +30,7 @@
     </div>
     <div class="span9">
         <% if @req.contest: %>
-            <h2><%= @req.contest.title %></h2>
-            <ul>
-                <li>Start date: <%- @h.formatDate(@req.contest.startDate) %></li>
-                <li>Due date: <%- @h.formatDate(@req.contest.dueDate) %></li>
-            </ul>
-            <p><%= @req.contest.description %></p>
+
             <% include 'includes/pagination.ect', {pages: @pages, page: @page, url: @req._parsedUrl.pathname} %>
             <% include 'images/list.ect', {images: @images, h: @h} %>
             <% include 'includes/pagination.ect', {pages: @pages, page: @page, url: @req._parsedUrl.pathname} %>
