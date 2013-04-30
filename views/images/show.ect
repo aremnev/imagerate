@@ -1,20 +1,31 @@
 <!-- show.ect -->
 <% extend 'layouts/layout.ect' %>
+
+
 <% block 'scripts' : %>
     <script type="text/javascript" src="/js/rating.js"></script>
 <% end %>
 
-<h2>Image - <%- @req.image.title %></h2>
-<ul>
-    <li><i>Author:</i>  <a href="/users/<%- @req.image.user.id %>"><%- @req.image.user.name %></a></li>
-    <li><i>Uploaded:</i>  <%- @formatDate(@req.image.createdAt) %></li>
-</ul>
-<div class="row text-center">
-    <div class="image-large image-to-rate<% if false : %> fixed-rating<% end %>" data-image-id="<%= @req.image.id %>">
-        <img class="img-polaroid big" ref="<%- @req.image.image.cdnUri %>" title='<%- @req.image.title %>'
-             src="<%- @h.imageUrl(@req.image.image, {width: 800, height: 800, crop: 'limit'}) %>"/>
-        <% include 'includes/rating.ect', { rating: @req.image.getRating(), limit: 5 } %>
-    </div>
+
+<% block 'header-left' : %>
+    <h3><%- @req.image.title %></h3>
+    <ul>
+        <li><i>Author:</i> <a href="/users/<%- @req.image.user.id %>"><%= @req.image.user.name %></a> </li>
+        <li><i>Rating:</i>  <%- @req.image.contest.rating.toFixed(2) %> of 5</li>
+        <li><i>Uploaded:</i>  <%- @formatDate(@req.image.createdAt) %></li>
+    </ul>
+<% end %>
+
+
+<% block 'header-right' : %>
+
+<% end %>
+
+
+<div class="image-large image-to-rate<% if false : %> fixed-rating<% end %>" data-image-id="<%= @req.image.id %>">
+    <img class="img-polaroid big" ref="<%- @req.image.image.cdnUri %>" title='<%- @req.image.title %>'
+         src="<%- @h.imageUrl(@req.image.image, {width: 952, height: 800, crop: 'limit'}) %>"/>
+    <% include 'includes/rating.ect', { rating: @req.image.getRating(), limit: 5 } %>
 </div>
 
 <div class="row">

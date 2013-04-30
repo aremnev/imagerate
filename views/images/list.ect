@@ -1,10 +1,10 @@
 <ul class="thumbnails">
     <% for image in @images: %>
         <li>
-            <% if @remove: %>
-                <span data-action="/images/<%- image.id %>/remove" class="remove"><i class="icon-remove"></i></span>
-            <% end %>
             <a class="thumbnail image-to-rate fixed-rating" href="/images/<%- image.id %>">
+                <% if @remove: %>
+                    <span data-action="/images/<%- image.id %>/remove" class="remove">×</span>
+                <% end %>
                 <img src="<%- @h.imageUrl(image.image, {width: 150, height: 150, crop: 'pad'}) %>" alt="<%= image.title %>" />
                 <% include 'includes/rating.ect', { rating: image.getRating(), limit: 5 } %>
             </a>
