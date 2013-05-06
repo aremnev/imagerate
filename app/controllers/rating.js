@@ -28,3 +28,7 @@ exports.rateImage = function rateImage(req, res) {
         });
     }
 };
+
+exports.getImageRatingForUser = function getImageRating(image, user) {
+
+};

@@ -11,7 +11,13 @@
     <h3><%- @req.image.title %></h3>
     <ul>
         <li><i>Author:</i> <a href="/users/<%- @req.image.user.id %>"><%= @req.image.user.name %></a> </li>
-        <li><i>Rating:</i>  <%- @req.image.contest.rating.toFixed(2) %> of 5</li>
+        <li><i>Rating:</i>
+            <% if @req.image.contest.rating : %>
+                <%- @req.image.contest.rating.toFixed(2) %> of 5
+            <% else : %>
+                Nobody rated this image
+            <% end %>
+        </li>
         <li><i>Uploaded:</i>  <%- @formatDate(@req.image.createdAt) %></li>
     </ul>
 <% end %>
