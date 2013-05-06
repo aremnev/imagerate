@@ -16,6 +16,16 @@
     <p><%= @req.contest.description %></p>
 <% end %>
 
+
+<% block 'header-right' : %>
+    <h3>Participate contest</h3>
+    <ul class="photos">
+        <li><a href="#">Add image to contest</a></li>
+        <li><a href="#">See your images</a></li>
+    </ul>
+<% end %>
+
+
 <div class="row">
     <div class="span10">
         <% if @req.contest: %>

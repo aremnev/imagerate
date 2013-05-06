@@ -21,6 +21,16 @@
 <% end %>
 
 
+<% block 'header-right' : %>
+    <h3>Your stats</h3>
+    <ul class="photos">
+        <li><i>Contests:</i> N</li>
+        <li><i>Images uploaded:</i> K</li>
+        <li><i>Images rated:</i> M</li>
+    </ul>
+<% end %>
+
+
 <h2>Images</h2>
 <%if @req.isAuthenticated() and @req.user.id == @req.profile.id : %>
 <div class="navbar">

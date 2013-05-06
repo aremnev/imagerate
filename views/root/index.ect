@@ -1,6 +1,27 @@
 <!-- index.ect -->
 <% extend 'layouts/layout.ect' %>
 
+
+<% block 'header-left' : %>
+    <h3>Contests</h3>
+    <ul class="contests">
+        <% for contest in @extra.contests: %>
+            <li><a href="/contests/<%- contest._id %>"><%= contest.title %></a></li>
+        <% end %>
+    </ul>
+<% end %>
+
+
+<% block 'header-right' : %>
+    <h3>Photos</h3>
+    <ul class="photos">
+        <li><a href="#">Most recent</a></li>
+        <li><a href="#">Most popular</a></li>
+        <li><a href="#">Most viewed</a></li>
+    </ul>
+<% end %>
+
+
 <h3>Recent Images</h3>
 <ul class="thumbnails">
     <% for image in @images : %>
