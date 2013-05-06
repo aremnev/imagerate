@@ -26,6 +26,13 @@ a, .navbar-link {
   width: 960px;
 }
 
+footer {
+  border-top: 1px solid fade(@header-background, 50%);
+  box-shadow: inset 0px 2px 4px -2px fade(@header-background, 50%);
+  margin-top: 30px;
+  padding-top: 30px;
+}
+
 header {
   background: @header-background;
   box-shadow: inset 0px @header-shadow-size @header-shadow-size -1 * @header-shadow-size @header-shadow-color,
@@ -33,7 +40,7 @@ header {
               0px 4px 5px rgba(121, 121, 121, 0.8);
   color: @header-text-color;
   height: 150px;
-  margin: 20px -100%;
+  margin: 20px 0;
 
   .container {
     position: relative;
@@ -148,8 +155,7 @@ header {
   padding: 10px;
   padding-left: 80px;
   margin: 7px 4px;
-  border-radius: 10px;
-  box-shadow: 0 1px 4px rgba(40, 201, 255, 0.47);
+  box-shadow: 0 1px 4px rgba(180, 99, 10, 0.5);
   position: relative;
 
   .time {
@@ -163,14 +169,14 @@ header {
     display: inline-block;
   }
 }
-
-.comments ul li:nth-child(odd) {
-  box-shadow: 0 1px 4px rgba(94, 197, 79, 0.47);
-}
-
-.comments ul li:nth-child(3n) {
-  box-shadow: 0 1px 4px rgba(197, 3, 123, 0.46);
-}
+//
+//.comments ul li:nth-child(odd) {
+//  box-shadow: 0 1px 4px rgba(94, 197, 79, 0.47);
+//}
+//
+//.comments ul li:nth-child(3n) {
+//  box-shadow: 0 1px 4px rgba(197, 3, 123, 0.46);
+//}
 
 .comments .userpic {
   margin-left: -65px;
