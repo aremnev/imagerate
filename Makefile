@@ -10,6 +10,7 @@ test: ;@echo "Testing ${PROJECT}....."; \
     NODE_ENV=test ./node_modules/.bin/mocha \
         --require should \
         --reporter $(REPORTER) \
+        --timeout 10000 \
         $(TESTS)
 
 test-cov: app-cov
