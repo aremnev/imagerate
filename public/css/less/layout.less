@@ -28,9 +28,10 @@ a, .navbar-link {
 
 footer {
   border-top: 1px solid fade(@header-background, 50%);
-  box-shadow: inset 0px 2px 4px -2px fade(@header-background, 50%);
+  box-shadow: inset 0px 4px 4px 0px fade(@header-background, 50%);
   margin-top: 30px;
   padding-top: 30px;
+  width: 100%;
 }
 
 header {
@@ -143,6 +144,14 @@ header {
       left: 0;
       cursor: pointer;
       width: 100px;
+    }
+
+    span {
+      display: inline-block;
+      max-width: 305px;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+      vertical-align: sub;
     }
   }
 }
