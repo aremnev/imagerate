@@ -8,12 +8,14 @@
 
 
 <% block 'header-left' : %>
-    <h3><%= @req.contest.title %></h3>
-    <ul>
-        <li>Start date: <%- @h.formatDate(@req.contest.startDate) %></li>
-        <li>Due date: <%- @h.formatDate(@req.contest.dueDate) %></li>
-    </ul>
-    <p><%= @req.contest.description %></p>
+    <% if @req.contest : %>
+        <h3><%= @req.contest.title %></h3>
+        <ul>
+            <li>Start date: <%- @h.formatDate(@req.contest.startDate) %></li>
+            <li>Due date: <%- @h.formatDate(@req.contest.dueDate) %></li>
+        </ul>
+        <p><%= @req.contest.description %></p>
+    <% end %>
 <% end %>
 
 
