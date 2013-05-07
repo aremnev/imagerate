@@ -23,8 +23,9 @@ exports.rateImage = function rateImage(req, res) {
         }
 
         res.send({
-            imageId: image._id,
-            rating: image.contest.rating
+            id: image._id,
+            rating: image.contest.rating,
+            count: image.contest.evaluationsCount
         });
     }
 };

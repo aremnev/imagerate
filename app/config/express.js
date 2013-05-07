@@ -20,11 +20,11 @@ module.exports = function (app, config, passport) {
     app.use(express.logger('dev'));
 
     // set views path, template engine and default layout
-    var ectRenderer = require('ect')({ 
-        watch: true, 
-        cache: false, 
+    var ectRenderer = require('ect')({
+        watch: false,
+        cache: false,
         root: config.root + '/../views',
-        ext: '.ect' 
+        ext: '.ect'
     });
     app.engine('.ect', ectRenderer.render);
     app.set('views', config.root + '/../views');

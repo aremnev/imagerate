@@ -93,8 +93,8 @@ header {
 
   .remove {
     position: absolute;
-    top: -8px;
-    right: -6px;
+    top: -10px;
+    right: -10px;
 
     background: @header-background;
     border-radius: 50%;
@@ -206,15 +206,6 @@ header {
   display: inline-block;
   position: relative;
 
-  &:hover {
-    text-decoration: none;
-
-    .rating {
-      opacity: 1;
-      visibility: visible;
-    }
-  }
-
   &.thumbnail {
     border-width: 2px;
     border-color: fade(#8E6542, 50%);
@@ -222,26 +213,38 @@ header {
     &:hover {
       border-color: fade(#8E6542, 50%);
       box-shadow: inset 0px 0px 2px 2px fade(#8E6542, 50%);
+
+      .rating {
+        opacity: 1;
+        visibility: visible;
+      }
     }
   }
 
-  .rating {
-    @rating-width: 126px;
+  .rating-container {
     position: absolute;
-    left: 50%;
     bottom: 10px;
-    margin-left: -0.5 * @rating-width;
+    width: 100%;
+    text-align: center;
 
-    background: @header-shadow-color;
-    .rating-shadow(6px);
+    .rating {
+      background: @header-shadow-color;
+      .rating-shadow(6px);
 
-    opacity: 0;
-    -o-transition: opacity .5s, .5s ease;
-    -moz-transition: opacity .5s, .5s ease;
-    -webkit-transition: opacity .5s, .5s ease;
-    visibility: hidden;
+      display: inline-block;
 
-    span {
+      opacity: 0;
+      -o-transition: opacity .5s, .5s ease;
+      -moz-transition: opacity .5s, .5s ease;
+      -webkit-transition: opacity .5s, .5s ease;
+      visibility: hidden;
+    }
+
+    .rating-message {
+      color: @header-text-color;
+    }
+
+    .star {
       color: orange;
       cursor: pointer;
       font-size: 25px;
@@ -250,23 +253,32 @@ header {
   }
 
   &.image-large {
-    margin: 0 0 40px;
+    display: block;
+    margin: 0 auto 40px;
+    text-align: center;
 
     img {
       border-color: fade(@header-background, 50%);
       box-shadow: inset 0px 0px 2px 2px fade(@header-background, 50%);
     }
 
+    .rating-container {
+      bottom: 50px;
+    }
+
     .rating {
-      @rating-width: 196px;
       .rating-shadow(12px);
 
-      bottom: 50px;
-      margin-left: -0.5 * @rating-width;
-
-      span {
+      .star {
         font-size: 40px;
         vertical-align: sub;
+      }
+    }
+
+    &:hover {
+      .rating {
+        opacity: 1;
+        visibility: visible;
       }
     }
   }

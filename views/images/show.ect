@@ -3,7 +3,7 @@
 
 
 <% block 'scripts' : %>
-    <script type="text/javascript" src="/js/rating.js"></script>
+    <!--script type="text/javascript" src="/js/rating.js"></script-->
 <% end %>
 
 
@@ -12,11 +12,10 @@
     <ul>
         <li><i>Author:</i> <a href="/users/<%- @req.image.user.id %>"><%= @req.image.user.name %></a> </li>
         <li><i>Rating:</i>
-            <% if @req.image.contest.rating : %>
-                <%- @req.image.contest.rating.toFixed(2) %> of 5
-            <% else : %>
-                Nobody rated this image
-            <% end %>
+            <span ng-switch on="rating.value">
+                <span ng-switch-when="0">Nobody rated this image</span>
+                <span ng-switch-default>{{rating.value | number:2}} of 5</span>
+            </span>
         </li>
         <li><i>Uploaded:</i>  <%- @formatDate(@req.image.createdAt) %></li>
     </ul>
@@ -41,10 +40,12 @@
 <% end %>
 
 
-<div class="image-large image-to-rate<% if false : %> fixed-rating<% end %>" data-image-id="<%= @req.image.id %>">
-    <img class="img-polaroid big" ref="<%- @req.image.image.cdnUri %>" title='<%- @req.image.title %>'
+<div class="image-large image-to-rate"
+     ng-init="rating.id = '<%= @req.image.id %>'; initRating(<%- @req.image.contest.evaluationsCount %>, <%- @req.image.contest.rating || 0 %>);"
+     ng-mouseleave="rating.state = rating.defaultState">
+    <img class="img-polaroid big" ref="<%- @req.image.image.cdnUri %>" title="<%= @req.image.title %>"
          src="<%- @h.imageUrl(@req.image.image, {width: 952, height: 800, crop: 'limit'}) %>"/>
-    <% include 'includes/rating.ect', { rating: @req.image.getRating() } %>
+    <% include 'includes/rating.ect', { rating: @req.image.getRating(), thumbnail: false } %>
 </div>
 
 <div class="comments-block">

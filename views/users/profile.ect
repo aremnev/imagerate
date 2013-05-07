@@ -32,7 +32,7 @@
 
 
 <h2>Images</h2>
-<%if @req.isAuthenticated() and @req.user.id == @req.profile.id : %>
+<% if @req.isAuthenticated() and @req.user.id == @req.profile.id : %>
 <div class="navbar">
     <div class="navbar-inner">
         <form class="navbar-form pull-left form-upload" action="/images" method="post" enctype="multipart/form-data">
