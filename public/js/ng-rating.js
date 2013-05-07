@@ -8,13 +8,13 @@ function RatingController($scope, $http) {
     $scope.starHover = 0;
     $scope.stars = {};
 
-    $scope.initRating = function(count, rating) {
-        if (rating) {
-            this.rating.value = rating;
-            this.rating.count = count;
-
-            // TODO: Render here only user stars
-            this.rating.stars = $scope.renderStars(rating);
+    $scope.initRating = function(rating) {
+        if (rating.value) {
+            this.rating.value = rating.value;
+            this.rating.count = rating.count;
+        }
+        if (rating.byUser) {
+            this.rating.stars = $scope.renderStars(rating.byUser);
             this.rating.state = this.rating.defaultState = 'rated';
         }
     };

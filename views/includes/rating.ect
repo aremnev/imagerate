@@ -1,5 +1,5 @@
 <div class="rating-container">
-    <% if @thumbnail : %>
+    <% if @rated : %>
         <% if @rating : %>
             <div class="rating" ng-init="stars['<%- @id %>'] = renderStars(<%- @rating %>)">
                 <span class="star">{{stars['<%- @id %>']}}</span>

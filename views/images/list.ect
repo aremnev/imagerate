@@ -7,7 +7,7 @@
                 <% end %>
                 <img src="<%- @h.imageUrl(image.image, {width: 156, height: 156, crop: 'pad'}) %>" alt="<%= image.title %>" />
 
-                <% include 'includes/rating.ect', { rating: image.getRating(), thumbnail: true, id: image.id } %>
+                <% include 'includes/rating.ect', { rating: image.getRating(), rated: true, id: image.id } %>
             </a>
         </li>
     <% end %>

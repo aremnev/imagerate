@@ -31,7 +31,7 @@
                     <img class="img-bordered" src="<%- @h.profileLink(32, like.user) %>" alt="<%= like.user.name %>">
                     <div class="like-tooltip">
                         <h6><%= like.user.name %></h6>
-                        <% include 'includes/rating.ect', { rating: like.rating } %>
+                        <% include 'includes/rating.ect', { rating: like.rating, rated: true, id: like.user.id } %>
                     </div>
                 </li>
             <% end %>
@@ -41,7 +41,11 @@
 
 
 <div class="image-large image-to-rate"
-     ng-init="rating.id = '<%= @req.image.id %>'; initRating(<%- @req.image.contest.evaluationsCount %>, <%- @req.image.contest.rating || 0 %>);"
+     ng-init="rating.id = '<%= @req.image.id %>'; initRating({
+         value: <%- @req.image.getRating() %>,
+         count: <%- @req.image.contest.evaluationsCount %>,
+         byUser: <%- @req.image.getRating(@req.user) %>
+     });"
      ng-mouseleave="rating.state = rating.defaultState">
     <img class="img-polaroid big" ref="<%- @req.image.image.cdnUri %>" title="<%= @req.image.title %>"
          src="<%- @h.imageUrl(@req.image.image, {width: 952, height: 800, crop: 'limit'}) %>"/>
