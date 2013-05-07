@@ -7,7 +7,6 @@ var express = require('express'),
     expressParams = require('express-params'),
     mongoStore = require('connect-mongo')(express),
     flash = require('connect-flash'),
-    view_helpers = require('view-helpers'),
     cloudinary = require('cloudinary'),
     helpers = require('../helpers'),
     subscribers = require('../subscribers');
@@ -68,7 +67,6 @@ module.exports = function (app, config, passport) {
         cloudinary.config(config.cloudinary);
 
         // dynamic helpers
-        app.use(view_helpers(config.app.name))
         app.use(helpers(config));
         app.use(subscribers(config));
 

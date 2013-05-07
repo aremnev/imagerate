@@ -26,7 +26,8 @@
         "async": "latest",
         "forms": "latest",
         "cloudinary": "latest",
-        "express-params": "latest"
+        "express-params": "latest",
+        "moment": "latest"
     },
     "devDependencies": {
         "mocha": "latest",
