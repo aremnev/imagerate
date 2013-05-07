@@ -6,7 +6,7 @@ module.exports = {
         },
         port: 3000,
         root: require('path').normalize(__dirname + '/..'),
-        mongo: { hostname: 'localhost', port: 27017, username: '', password: '', name: '', db: 'test' },
+        mongo: { hostname: 'localhost', port: 27017, username: '', password: '', name: '', db: 'dev-imagerate' },
         google: {
             clientID: '163368963370.apps.googleusercontent.com',
             clientSecret: 'rSsPMMP6MyWsIcnW6ksTg2dR',
@@ -28,7 +28,7 @@ module.exports = {
         },
         port: 3000,
         root: require('path').normalize(__dirname + '/..'),
-        mongo: { hostname: 'localhost', port: 27017, username: '', password: '', name: '', db: 'test' },
+        mongo: { hostname: 'localhost', port: 27017, username: '', password: '', name: '', db: 'test-imagerate' },
         google: {
             clientID: '163368963370.apps.googleusercontent.com',
             clientSecret: 'rSsPMMP6MyWsIcnW6ksTg2dR',
@@ -41,7 +41,8 @@ module.exports = {
             api_key: '451142758477939',
             api_secret: 'mz_x6GCybvpFlpFRF5phG4VN8fU'
         },
-        admin: { regexp: '.*' }
+        admin: { regexp: '.*' },
+        test: true
     },
 
     production: {
@@ -50,7 +51,7 @@ module.exports = {
         },
         port : process.env.VCAP_APP_PORT,
         root: require('path').normalize(__dirname + '/..'),
-        mongo: { hostname: 'localhost', port: 27017, username: '', password: '', name: '', db: 'test' },
+        mongo: { hostname: 'localhost', port: 27017, username: '', password: '', name: '', db: 'imagerate' },
         google: {
             clientID: '163368963370-5qcnvj9oorl0cjmn5noi8jpj0tgriid9.apps.googleusercontent.com',
             clientSecret: '3WsFl4iXUpI4KyrqZi7fp6ZU',

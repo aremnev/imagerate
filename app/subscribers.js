@@ -9,8 +9,6 @@ var mongoose = require('mongoose'),
 
 function subscribers (cfg) {
 
-
-
     return function(req, res, next) {
         async.series([
 
@@ -19,17 +17,22 @@ function subscribers (cfg) {
                 Contest.list(options, function(err, contests){
                     res.locals.extra = res.locals.extra || {}
                     res.locals.extra.contests = contests;
-                    callback(null, true);
+                    callback();
                 });
             },
             function(callback){
-                console.log(res);
-                callback(null, true);
+                if(req.param('json')) {
+                    res.render = function(view, options, fn) {
+                        options = options || {};
+                        options.extra = res.locals.extra
+                        return res.json(options);
+                    }
+                }
+                callback();
             }
 
         ],
         function(err, results){
-            console.log(results);
             next();
         })
     }

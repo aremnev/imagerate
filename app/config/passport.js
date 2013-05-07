@@ -19,20 +19,15 @@ module.exports = function (passport, config) {
         })
     })
 
-    // use local strategy
+    // use local strategy, only for testing
     passport.use(new LocalStrategy({
-        usernameField: 'email',
-        passwordField: 'password'
+        usernameField: 'email'
     },
-    function(email, password, done) {
-
+    function(email, done) {
         User.findOne({ email: email }, function (err, user) {
             if (err) { return done(err) }
             if (!user) {
                 return done(null, false, { message: 'Unknown user' })
-            }
-            if (!user.authenticate(password)) {
-                return done(null, false, { message: 'Invalid password' })
             }
             return done(null, user)
         })
