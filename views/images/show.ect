@@ -2,11 +2,6 @@
 <% extend 'layouts/layout.ect' %>
 
 
-<% block 'scripts' : %>
-    <!--script type="text/javascript" src="/js/rating.js"></script-->
-<% end %>
-
-
 <% block 'header-left' : %>
     <h3><%- @req.image.title %></h3>
     <ul>
@@ -23,20 +18,16 @@
 
 
 <% block 'header-right' : %>
-    <% if @likes.length : %>
-        <h5><%- @likesCount %> people liked it</h5>
-        <ul class="likes-for-image">
-            <% for like in @likes : %>
-                <li class="like">
-                    <img class="img-bordered" src="<%- @h.profileLink(32, like.user) %>" alt="<%= like.user.name %>">
-                    <div class="like-tooltip">
-                        <h6><%= like.user.name %></h6>
-                        <% include 'includes/rating.ect', { rating: like.rating, rated: true, id: like.user.id } %>
-                    </div>
-                </li>
-            <% end %>
-        </ul>
-    <% end %>
+    <h5 ng-init='likes = <%= @likes %>' ng-show="likes.length">{{ likes.length }} people liked it</h5>
+    <ul class="likes-for-image">
+        <li class="like" ng-repeat="like in likes">
+            <img class="img-bordered" ng-src="{{like.user.image}}" alt="{{like.user.name}}">
+            <div class="like-tooltip">
+                <h6>{{like.user.name}}</h6>
+                <span class="rating">★★★★★</span>
+            </div>
+        </li>
+    </ul>
 <% end %>
 
 

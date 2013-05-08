@@ -7,6 +7,7 @@ function RatingController($scope, $http) {
     };
     $scope.starHover = 0;
     $scope.stars = {};
+    $scope.likes = [];
 
     $scope.initRating = function(rating) {
         this.rating.id = rating.id;
@@ -29,12 +30,16 @@ function RatingController($scope, $http) {
     $scope.rateIt = function(rateValue) {
         var url = ['/images', this.rating.id, 'rate', rateValue].join('/');
         $http.post(url).success(function(data) {
-            console.log(data);
             $scope.rating.value = data.rating;
             $scope.rating.count = data.count;
+
             $scope.rating.stars = $scope.renderStars(rateValue);
             $scope.rating.state = 'thanks-for-vote';
             $scope.rating.defaultState = 'rated';
+
+            if (data.newLike) {
+                $scope.likes.unshift(data.newLike);
+            }
         });
     };
 }

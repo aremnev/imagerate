@@ -26,20 +26,25 @@ exports.image = function(req, res, next, id){
  */
 
 exports.show = function (req, res) {
-    var opts = { path: 'contest.evaluations.user' };
+    var opts = { path: 'contest.evaluations.user',
+                 select: '_id name provider google.picture' };
 
     Image.populate(req.image, opts, onLikesPopulated);
 
     function onLikesPopulated(err, image) {
-        var likes = image.contest.evaluations.filter(function(evaluation) {
-            return evaluation.rating === 5;
+        var likes = image.contest.evaluations.filter(function filterFiveStar(ev) {
+            return ev.rating === 5;
+        }).slice(0, 20).map(function addProfileImage(ev) {
+            var evAsObject = ev.toObject();
+            evAsObject.user.image = res.locals.h.profileLink(32, ev.user);
+            return evAsObject;
         });
 
         image.getRatingByUser(req.user, function onRatingReceived(err, ratingByUser) {
             res.render('images/show.ect', {
                 title: image.title,
                 likesCount: likes.length,
-                likes: likes.slice(0, 20),
+                likes: JSON.stringify(likes),
                 ratingByUser: ratingByUser
             });
         });

@@ -13,10 +13,11 @@ var mongoose = require('mongoose'),
 
 exports.rateImage = function rateImage(req, res) {
     var image = req.image;
+    var user = req.user;
     var rateValue = Number(req.params.rateValue.input);
 
 
-    image.getRatingByUser(req.user, checkIfAlreadyRated);
+    image.getRatingByUser(user, checkIfAlreadyRated);
 
     function checkIfAlreadyRated(err, rating) {
         if (rating) {
@@ -26,7 +27,7 @@ exports.rateImage = function rateImage(req, res) {
             });
         }
 
-        image.saveNewRateValue(rateValue, req.user, onRatingReceived);
+        image.saveNewRateValue(rateValue, user, onRatingReceived);
     }
 
     function onRatingReceived(err) {
@@ -34,10 +35,22 @@ exports.rateImage = function rateImage(req, res) {
             return res.render('500');
         }
 
+        var newLike = null;
+        if (rateValue == 5) {
+            var _user = user.toObject();
+            _user.image = res.locals.h.profileLink(32, user);
+            newLike = {
+                rating: 5,
+                user: _user
+            };
+        }
+
         res.send({
             id: image._id,
             rating: image.contest.rating,
-            count: image.contest.evaluationsCount
+            count: image.contest.evaluationsCount,
+            newLike: newLike
         });
     }
 };
+
