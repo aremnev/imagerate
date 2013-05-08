@@ -9,6 +9,7 @@ function RatingController($scope, $http) {
     $scope.stars = {};
 
     $scope.initRating = function(rating) {
+        this.rating.id = rating.id;
         if (rating.value) {
             this.rating.value = rating.value;
             this.rating.count = rating.count;

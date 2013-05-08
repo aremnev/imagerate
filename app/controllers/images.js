@@ -26,15 +26,24 @@ exports.image = function(req, res, next, id){
  */
 
 exports.show = function (req, res) {
-    var likes = req.image.contest.evaluations.filter(function(evaluation) {
-        return evaluation.rating === 5;
-    });
+    var opts = { path: 'contest.evaluations.user' };
 
-    res.render('images/show.ect', {
-        title: req.image.title,
-        likesCount: likes.length,
-        likes: likes.slice(0, 20)
-    });
+    Image.populate(req.image, opts, onLikesPopulated);
+
+    function onLikesPopulated(err, image) {
+        var likes = image.contest.evaluations.filter(function(evaluation) {
+            return evaluation.rating === 5;
+        });
+
+        image.getRatingByUser(req.user, function onRatingReceived(err, ratingByUser) {
+            res.render('images/show.ect', {
+                title: image.title,
+                likesCount: likes.length,
+                likes: likes.slice(0, 20),
+                ratingByUser: ratingByUser
+            });
+        });
+    }
 }
 
 /**

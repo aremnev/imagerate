@@ -15,7 +15,19 @@ exports.rateImage = function rateImage(req, res) {
     var image = req.image;
     var rateValue = Number(req.params.rateValue.input);
 
-    image.saveNewRateValue(rateValue, req.user, onRatingReceived);
+
+    image.getRatingByUser(req.user, checkIfAlreadyRated);
+
+    function checkIfAlreadyRated(err, rating) {
+        if (rating) {
+            return req.send({
+                id: image._id,
+                error: 'already rated'
+            });
+        }
+
+        image.saveNewRateValue(rateValue, req.user, onRatingReceived);
+    }
 
     function onRatingReceived(err) {
         if (err) {
@@ -28,8 +40,4 @@ exports.rateImage = function rateImage(req, res) {
             count: image.contest.evaluationsCount
         });
     }
-};
-
-exports.getImageRatingForUser = function getImageRating(image, user) {
-
 };

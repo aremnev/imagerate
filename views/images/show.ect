@@ -41,11 +41,10 @@
 
 
 <div class="image-large image-to-rate"
-     ng-init="rating.id = '<%= @req.image.id %>'; initRating({
-         value: <%- @req.image.getRating() %>,
-         count: <%- @req.image.contest.evaluationsCount %>,
-         byUser: <%- @req.image.getRating(@req.user) %>
-     });"
+     ng-init="initRating({ id: '<%= @req.image.id %>',
+                           value: <%- @req.image.getRating() %>,
+                           count: <%- @req.image.contest.evaluationsCount %>,
+                           byUser: <%- @ratingByUser %> });"
      ng-mouseleave="rating.state = rating.defaultState">
     <img class="img-polaroid big" ref="<%- @req.image.image.cdnUri %>" title="<%= @req.image.title %>"
          src="<%- @h.imageUrl(@req.image.image, {width: 952, height: 800, crop: 'limit'}) %>"/>

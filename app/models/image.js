@@ -122,10 +122,31 @@ ImageSchema.methods = {
     },
 
     /**
-     *
+     * Returns average rating for image
      */
     getRating: function() {
         return Math.round(this.contest.rating || 0);
+    },
+
+    /**
+     * Returns rate by concrete user if that user rated the image.
+     * Else returns null
+     */
+    getRatingByUser: function(user, callback) {
+        this.model('Image')
+            .findOne({_id: this._id,
+                      'contest.evaluations.user': user._id},
+                     {'contest.evaluations.$': 1},
+                     onRatingByUserReceived);
+
+        function onRatingByUserReceived(err, image) {
+            if (err) {
+                return callback(err);
+            }
+
+            var value = image ? image.contest.evaluations[0].rating : 0;
+            callback(err, value);
+        }
     }
 }
 
@@ -146,8 +167,6 @@ ImageSchema.statics = {
     load: function (id, cb) {
         this.findOne({ _id : id })
             .populate('user', 'name')
-            // TODO: move this population to according view
-            .populate('contest.evaluations.user')
             .populate('comments.user')
             .exec(cb)
     },
