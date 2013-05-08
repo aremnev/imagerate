@@ -1,4 +1,5 @@
 @import "vars.less";
+@import "mixins.less";
 
 body {
   padding-top: 20px;
@@ -48,7 +49,8 @@ header {
   }
 
   .header-left, .header-right {
-    box-sizing: border-box;
+    .border-box();
+
     float: left;
     height: 120px;
     margin: 15px 0;
