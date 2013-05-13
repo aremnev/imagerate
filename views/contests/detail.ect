@@ -1,0 +1,35 @@
+<!-- detail.ect -->
+<% extend 'layouts/layout.ect' %>
+
+
+<% block 'header-left' : %>
+    <h3><%= @req.contest.title %></h3>
+    <ul>
+        <li class="starred">Start date: <%- @h.formatDate(@req.contest.startDate) %></li>
+        <li class="starred">Due date: <%- @h.formatDate(@req.contest.dueDate) %></li>
+    </ul>
+    <p><%= @req.contest.description %></p>
+<% end %>
+
+
+<% block 'header-right' : %>
+    <h3>Participate contest</h3>
+    <ul class="photos">
+        <li class="starred"><a href="#">Add image to contest</a></li>
+        <li class="starred"><a href="#">See your images</a></li>
+    </ul>
+<% end %>
+
+
+<div class="row">
+    <div class="span10">
+        <ul class="info">
+            <li><%- @imagesTotalCount %> images by <%- @usersCount %> users</li>
+            <li>You rated <%- @ratedImagesCount %> images of <%- @imagesTotalCount %></li>
+        </ul>
+
+        <% include 'includes/pagination.ect', {pages: @pages, page: @page, url: @req._parsedUrl.pathname} %>
+        <% include 'images/list.ect', {images: @images, h: @h} %>
+        <% include 'includes/pagination.ect', {pages: @pages, page: @page, url: @req._parsedUrl.pathname} %>
+    </div>
+</div>

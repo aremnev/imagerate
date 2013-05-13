@@ -12,7 +12,20 @@ body {
 ul, li {
   list-style-type: none;
   margin: 0;
+  padding: 0;
 }
+
+li.starred {
+  padding-left: 10px;
+
+  &::before {
+    content: '★';
+    display: inline-block;
+    left: -10px;
+    position: relative;
+  }
+}
+
 
 a, .navbar-link {
   color: @link-color;

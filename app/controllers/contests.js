@@ -4,7 +4,9 @@
 
 var mongoose = require('mongoose'),
     Contest = mongoose.model('Contest'),
-    Image = mongoose.model('Image');
+    Image = mongoose.model('Image'),
+    async = require('async'),
+    safe = require('../async_helpers').safe;
 
 
 /**
@@ -13,11 +15,15 @@ var mongoose = require('mongoose'),
 
 exports.contest = function(req, res, next, id){
     Contest.findOne({_id: id}, function (err, contest) {
-        if (err) return next(err)
-        if (!contest) return next(new Error('Failed to load contest ' + id))
-        req.contest = contest
-        next()
-    })
+        if (err) {
+            return next(err);
+        }
+        if (!contest) {
+            return next(new Error('Failed to load contest ' + id));
+        }
+        req.contest = contest;
+        next();
+    });
 }
 
 /**
@@ -27,7 +33,9 @@ exports.contest = function(req, res, next, id){
 exports.create = function (req, res) {
     var contest = new Contest(req.body);
     contest.save(function (err) {
-        if (err) return res.render('500');
+        if (err) {
+            return res.render('500');
+        }
         return res.json({contest: contest});
     })
 }
@@ -40,7 +48,9 @@ exports.create = function (req, res) {
 exports.update = function (req, res) {
     var contest = req.contest;
     contest.update(req.body, function (err) {
-        if (err) return res.render('500');
+        if (err) {
+            return res.render('500');
+        }
         return res.json({contest: contest});
     })
 }
@@ -49,30 +59,98 @@ exports.update = function (req, res) {
  * Contest page
  */
 
-exports.show = function (req, res) {
-    var options = {perPage: 30,  criteria: {}},
-        contest = req.contest;
-    Contest.list(options, function(err, contests){
-        if (err) return res.render('500');
-        var result = {contests: contests}
-        if(contest) {
-            var page = parseInt(req.param('page') > 0 ? req.param('page') : 1);
-            var i_options = {
-                perPage: 10,
-                page: page - 1,
-                criteria: {'contest.contest': contest._id}
-            }
-            Image.list(i_options, function(err, images){
-                if (err) return res.render('500');
-                    Image.count(i_options.criteria).exec(function (err, count) {
-                    result.images = images;
-                    result.page = page;
-                    result.pages = Math.ceil(count / i_options.perPage);
-                    return res.render('contests/show.ect', result);
-                });
+exports.list = function (req, res) {
+    var locals = {};
+
+    async.series([
+        function loadContests(callback) {
+            var options = {
+                    perPage: 30,
+                    criteria: {}
+                };
+            Contest.list(options, function(err, contests) {
+                if (err) { return callback(err); }
+
+                locals.contests = contests;
+                callback();
             });
-        } else {
-            res.render('contests/show.ect', result);
+        },
+        function loadImagesForContest(callback) {
+            callback();
+        },
+        function loadUserStats(callback) {
+            callback();
+        }], function(err) {
+            if (err) {
+                return req.render('500');
+            }
+            res.render('contests/list.ect', locals);
         }
-    });
+    );
+
+
 }
+
+exports.detail = function(req, res) {
+    var contest = req.contest;
+    var locals = {contest: contest};
+    var page = parseInt(req.param('page'));
+
+    page = locals.page = page > 0 ? page : 1;
+
+    var imageOptions = {
+        perPage: 10,
+        page: page - 1,
+        criteria: {'contest.contest': contest._id}
+    };
+
+    async.parallel([
+            loadContestImages,
+            countImagesInContest,
+            loadStatsForCurrentUser,
+            loadUsersStatsRegardingContest
+        ], function render(err) {
+            if (err) {
+                console.log(err);
+                return res.render('500');
+            }
+            res.render('contests/detail.ect', locals);
+        }
+    );
+
+    function loadContestImages(callback) {
+        Image.list(imageOptions, safe(callback, function(images){
+            locals.images = images;
+        }));
+    }
+
+    function countImagesInContest(callback) {
+        Image.count(imageOptions.criteria).exec(safe(callback, function (count) {
+            locals.pages = Math.ceil(count / imageOptions.perPage);
+            locals.imagesTotalCount = count;
+        }));
+    }
+
+    function loadUsersStatsRegardingContest(callback) {
+        var opts = {
+            query: imageOptions.criteria,
+            map: function() { emit(this.user, 1); },
+            reduce: function(key, values) { return values.length; }
+        };
+
+        Image.mapReduce(opts, safe(callback, function(result) {
+            locals.usersCount = result.length;
+        }));
+    }
+
+    function loadStatsForCurrentUser(callback) {
+        var criteria = {
+            'contest.contest': contest._id,
+            'contest.evaluations.user': req.user._id
+        };
+        Image.count(criteria).exec(safe(callback, function (count) {
+            locals.ratedImagesCount = count;
+        }));
+    }
+};
+
