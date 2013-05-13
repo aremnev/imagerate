@@ -27,7 +27,7 @@ module.exports = {
         app: {
             name: 'Imagerate test'
         },
-        port: 3000,
+        port: 88654,
         root: require('path').normalize(__dirname + '/..'),
         mongo: { hostname: 'localhost', port: 27017, username: '', password: '', name: '', db: 'test-imagerate' },
         google: {
