@@ -13,7 +13,7 @@ module.exports = function (app, passport, auth, config) {
         app.get('/signup', users.signup);
         app.post('/session', passport.authenticate('local', {failureRedirect: '/login', failureFlash: 'Invalid email or password.'}), users.session);
     }
-    app.get('/users/:userId', users.profile);
+    app.get('/users/:userId', auth.requiresLogin, users.profile);
     app.get('/auth/google', passport.authenticate('google', { failureRedirect: '/login', scope: config.google.scope }), users.signin)
     app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login', scope: 'https://www.google.com/m8/feeds' }), users.authCallback)
     app.param('userId', users.user);

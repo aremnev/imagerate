@@ -23,7 +23,7 @@ module.exports = function (passport, config) {
     passport.use(new LocalStrategy({
         usernameField: 'email'
     },
-    function(email, done) {
+    function(email, password, done) {
         User.findOne({ email: email }, function (err, user) {
             if (err) { return done(err) }
             if (!user) {

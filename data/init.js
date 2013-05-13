@@ -1,2 +1,0 @@
-// reset database
-db.dropDatabase()

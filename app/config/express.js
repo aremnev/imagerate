@@ -16,7 +16,9 @@ module.exports = function (app, config, passport) {
     expressParams.extend(app);
 
     app.set('showStackError', true);
-    app.use(express.logger('dev'));
+    if(config.log) {
+        app.use(express.logger(config.log));
+    }
 
     // set views path, template engine and default layout
     var ectRenderer = require('ect')({

@@ -1,5 +1,5 @@
 REPORTER=spec
-TESTS=$(shell find ./tests -type f -name "*.js")
+TESTS=$(shell find ./tests -type f -name "test*.js")
 
 PROJECT = "Imagerate Node.js project"
 AF_NAMESPACE = "imagerate"
@@ -7,7 +7,6 @@ AF_NAMESPACE = "imagerate"
 all: install test start
 
 test: ;@echo "Testing ${PROJECT}....."; \
-    sh ./data/import.sh; \
     NODE_ENV=test ./node_modules/.bin/mocha \
         --require should \
         --reporter $(REPORTER) \
@@ -29,7 +28,7 @@ start : ;@echo "Starting ${PROJECT}....."; \
 	node app.js
 
 afupdate : ;@echo "AppFog update ${PROJECT}....."; \
-	npm shrinkwrap && af update $(AF_NAMESPACE)
+	rm -f npm-shrinkwrap.json && npm shrinkwrap && af update $(AF_NAMESPACE)
 
 
 .PHONY: test start install clean test-cov afupdate

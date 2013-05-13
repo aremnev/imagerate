@@ -1,5 +1,4 @@
-{
-    "_id" : 1,
+[{
     "email": "test@thumbtack.net",
     "google":{
     "hd" :"thumbtack.net",
@@ -15,10 +14,8 @@
     },
     "name" : "Test Teston",
     "provider" : "google"
-}
-
+},
 {
-    "_id" : 2,
     "email": "testa@thumbtack.net",
     "google":{
     "hd" :"thumbtack.net",
@@ -34,4 +31,4 @@
     },
     "name" : "Testa Teston",
     "provider" : "google"
-}
+}]

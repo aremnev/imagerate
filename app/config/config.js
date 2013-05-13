@@ -4,6 +4,7 @@ module.exports = {
         app: {
             name: 'Imagerate dev'
         },
+        log: 'dev',
         port: 3000,
         root: require('path').normalize(__dirname + '/..'),
         mongo: { hostname: 'localhost', port: 27017, username: '', password: '', name: '', db: 'dev-imagerate' },
@@ -19,7 +20,7 @@ module.exports = {
             api_key: '451142758477939',
             api_secret: 'mz_x6GCybvpFlpFRF5phG4VN8fU'
         },
-        admin: { regexp: '.*' }
+        admin: { regexp: '.*' },
     },
 
     test: {

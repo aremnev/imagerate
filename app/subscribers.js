@@ -21,10 +21,12 @@ function subscribers (cfg) {
                 });
             },
             function(callback){
-                if(req.param('json')) {
+                if(cfg.test && req.param('json')) {
                     res.render = function(view, options, fn) {
                         options = options || {};
                         options.extra = res.locals.extra
+                        options.extra.user = req.user;
+                        options.extra.profile = req.profile;
                         return res.json(options);
                     }
                 }
