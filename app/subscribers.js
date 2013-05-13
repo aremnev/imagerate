@@ -4,39 +4,37 @@
 var mongoose = require('mongoose'),
     Contest = mongoose.model('Contest'),
      _ = require('underscore'),
-     Q = require('q');
+    async = require('async');
 
 
 function subscribers (cfg) {
 
-    var queue = [
-        function (req, res, next) {
-            var deferred = Q.defer();
-            var options = {perPage: 5};
-            Contest.list(options, function(err, contests){
-                res.locals.extra = res.locals.extra || {}
-                res.locals.extra.contests = contests;
-                deferred.resolve(true);
-            });
-            // return promise to resolve deferred call
-            return deferred.promise;
-        }
-    ]
-
     return function(req, res, next) {
+        async.series([
 
-        var promises = [];
+            function(callback){
+                var options = {perPage: 5};
+                Contest.list(options, function(err, contests){
+                    res.locals.extra = res.locals.extra || {}
+                    res.locals.extra.contests = contests;
+                    callback();
+                });
+            },
+            function(callback){
+                if(req.param('json')) {
+                    res.render = function(view, options, fn) {
+                        options = options || {};
+                        options.extra = res.locals.extra
+                        return res.json(options);
+                    }
+                }
+                callback();
+            }
 
-        // Add functions to promises
-        _.each(queue, function(f){
-            promises.push(Q.fcall(f, req, res, next));
-        });
-
-        // Q.all: execute an array of 'promises'
-        Q.all(promises).then(function(results) {
-            // all deferred are resolved
+        ],
+        function(err, results){
             next();
-        });
+        })
     }
 }
 

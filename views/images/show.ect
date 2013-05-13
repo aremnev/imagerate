@@ -12,7 +12,7 @@
                 <span ng-switch-default>{{rating.value | number:2}} of 5</span>
             </span>
         </li>
-        <li><i>Uploaded:</i>  <%- @formatDate(@req.image.createdAt) %></li>
+        <li><i>Uploaded:</i>  <%- @h.formatDate(@req.image.createdAt) %></li>
     </ul>
 <% end %>
 

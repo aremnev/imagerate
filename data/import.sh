@@ -1,9 +1,7 @@
 #!/bin/bash
 
 # init database
-mongo imagerate init.js
+mongo imagerate ./data/init.js
 
 # insert test data
-mongoimport -d imagerate -c users --file users.json --jsonArray
-mongoimport -d imagerate -c contests --file contests.json --jsonArray
-mongoimport -d imagerate -c images --file images.json --jsonArray
+mongoimport -d test-imagerate -c users --file ./data/users.json --jsonArray

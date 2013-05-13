@@ -1,4 +1,4 @@
-REPORTER=dot
+REPORTER=spec
 TESTS=$(shell find ./tests -type f -name "*.js")
 
 PROJECT = "Imagerate Node.js project"
@@ -7,6 +7,7 @@ AF_NAMESPACE = "imagerate"
 all: install test start
 
 test: ;@echo "Testing ${PROJECT}....."; \
+    sh ./data/import.sh; \
     NODE_ENV=test ./node_modules/.bin/mocha \
         --require should \
         --reporter $(REPORTER) \

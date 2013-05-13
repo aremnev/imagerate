@@ -11,14 +11,12 @@ var express = require('express'),
 var env = process.env.NODE_ENV || 'development',
     config = require('./config/config'),
     cfg = config[env],
-    auth = require('./middlewares/authorization')(cfg),
-    mongoose = require('mongoose');
+    auth = require('./middlewares/authorization')(cfg);
 
 var port = cfg.port;
 
 // Bootstrap db connection
-cfg.db = config.buildMongoUrl(cfg.mongo);
-mongoose.connect(cfg.db);
+require('./config/mongo')(app, cfg);
 
 // Bootstrap models
 var models_path = __dirname + '/models';
