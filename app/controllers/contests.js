@@ -27,8 +27,12 @@ exports.contest = function(req, res, next, id){
 exports.create = function (req, res) {
     var contest = new Contest(req.body);
     contest.save(function (err) {
-        if (err) return res.render('500');
-        return res.json({contest: contest});
+        if (err) return res.json(401, {
+            message: err.message
+        });
+        return res.json({
+            contest: contest
+        });
     })
 }
 
@@ -38,8 +42,7 @@ exports.create = function (req, res) {
  */
 
 exports.update = function (req, res) {
-    var contest = req.contest;
-    contest.update(req.body, function (err) {
+    Contest.findByIdAndUpdate(req.contest._id, req.body, function (err, contest) {
         if (err) return res.render('500');
         return res.json({contest: contest});
     })
