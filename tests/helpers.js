@@ -5,30 +5,34 @@
 var mongoose = require('mongoose'),
     async = require('async'),
     fs = require('fs'),
-    User = mongoose.model('User');
+    User = mongoose.model('User'),
+    Contest = mongoose.model('Contest'),
+    Image = mongoose.model('Image');
 
 /**
  * Clear database
  *
  * @param {Function} done
- * @api public
  */
 
 exports.resetDb = function (done) {
     var data_path = './data';
-    var data = {}
+    var data = []
     fs.readdirSync(data_path).forEach(function (file) {
-        data[file.replace('.json', '')] = JSON.parse(fs.readFileSync(data_path + '/' + file, 'utf8'));
+        var obj = {
+            model: file.replace('.json', ''),
+            data: JSON.parse(fs.readFileSync(data_path + '/' + file, 'utf8'))
+        }
+        data.push(obj);
     });
-
     async.series([
         function (cb) {
-            User.remove({}, function(err, res) {
+            async.map([User, Contest, Image], dropCollection, function(err, res){
                 cb();
             });
         },
         function (cb) {
-            async.map(data.User, addObject(User), function(err, res){
+            async.map(data, fillCollection, function(err, res){
                 cb();
             });
         }
@@ -37,11 +41,62 @@ exports.resetDb = function (done) {
     });
 }
 
+function dropCollection(model, cb) {
+    model.remove({}, function() {
+        cb();
+    });
+}
+
+function fillCollection(data, cb) {
+    async.map(data.data, addObject(data.model), function(err, res){
+        cb();
+    });
+}
+
 function addObject(model) {
-    return function(obj, cb) {
-        obj = new model(obj);
+    model = mongoose.model(model);
+    return function(data, cb) {
+        var obj = new model(data);
         obj.save(function(err, obj) {
             cb();
         });
     }
 }
+
+/**
+ * Loginer
+ * @param request
+ * @constructor
+ */
+function Loginer(request) {
+    this.request = request;
+}
+
+/*
+ * @param done
+ * @param user
+ */
+Loginer.prototype.login = function(done, user) {
+    var obj = this;
+    var request_call = function(obj, user){
+        obj.request
+            .post('/session')
+            .field('email', user.email)
+            .field('password', 'foobar')
+            .end(function (err, res) {
+                // store the cookie
+                obj.cookies = res.headers['set-cookie'].pop().split(';')[0];
+                obj.current = user;
+                done()
+            });
+    }
+    if(!user) {
+        User.findOne({}, function(err, user){
+            request_call(obj, user);
+        })
+    } else {
+        request_call(obj, user);
+    }
+}
+
+exports.Loginer = Loginer;

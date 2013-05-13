@@ -20,7 +20,7 @@ module.exports = {
             api_key: '451142758477939',
             api_secret: 'mz_x6GCybvpFlpFRF5phG4VN8fU'
         },
-        admin: { regexp: '.*' },
+        admin: { regexp: '.*' }
     },
 
     test: {
