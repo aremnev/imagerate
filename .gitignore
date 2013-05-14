@@ -20,6 +20,9 @@ npm-shrinkwrap.json
 # Node modules
 node_modules
 
+# Virtual env
+env
+
 # Compiled resources
 public/css/style.css
 

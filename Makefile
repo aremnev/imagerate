@@ -19,11 +19,23 @@ test-coverage: app-cov
 app-cov:
 	./node_modules/.bin/jscoverage app app-cov
 
+node-virtual: ;@echo "Prepare nodeenv....."; \
+	sudo apt-get install -y python-setuptools python-virtualenv && \
+	virtualenv env && \
+	source env/bin/activate && \
+	easy_install nodeenv && \
+	nodeenv env/node --node=0.10.5 --npm=1.2.18;
+	@echo "*** Nodeenv with node-0.10.5 is created. Activate it: 'source env/node/bin/activate'."
+	@echo "*** After that you can execute 'install', 'test' and 'start' commands."
+	@echo "*** Also you can execute 'make all' command which is equal to 'make install test start'."
+
+
 install: ;@echo "Installing ${PROJECT}....."; \
 	npm install;
 
 clean: ;@echo "Clean ${PROJECT}....."; \
 	rm -rf node_modules \
+	rm -rf env \
 	rm -f npm-shrinkwrap.json \
 	rm -f coverage.html \
 	rm -rf app-cov;
@@ -40,4 +52,4 @@ af-update: ;@echo "AppFog update ${PROJECT}....."; \
 	af update $(NAMESPACE)
 
 
-.PHONY: test start install clean test-coverage af-update af-install all
+.PHONY: test start install clean test-coverage af-update af-install all node-virtual
