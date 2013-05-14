@@ -5,20 +5,19 @@ require('./globals')();
 
 var express = require('express'),
     fs = require('fs'),
-    passport = require('passport');
+    passport = require('passport'),
+    logger = require('./logger')();
 
 // Load configurations
 var env = process.env.NODE_ENV || 'development',
     config = require('./config/config'),
     cfg = config[env],
-    auth = require('./middlewares/authorization')(cfg),
-    mongoose = require('mongoose');
+    auth = require('./middlewares/authorization')(cfg);
 
 var port = cfg.port;
 
 // Bootstrap db connection
-cfg.db = config.buildMongoUrl(cfg.mongo);
-mongoose.connect(cfg.db);
+require('./config/mongo')(app, cfg);
 
 // Bootstrap models
 var models_path = __dirname + '/models';
@@ -39,8 +38,8 @@ require('./config/routes')(app, passport, auth, cfg);
 // Start the app by listening on <port>
 app.listen(port);
 
-console.log('Express app started on port ' + port);
-console.log('Env: ' + env);
+logger.info('Express app started on port ' + port);
+logger.info('Env: ' + env);
 
 module.exports = app;
 

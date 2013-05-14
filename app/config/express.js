@@ -7,7 +7,6 @@ var express = require('express'),
     expressParams = require('express-params'),
     mongoStore = require('connect-mongo')(express),
     flash = require('connect-flash'),
-    view_helpers = require('view-helpers'),
     cloudinary = require('cloudinary'),
     helpers = require('../helpers'),
     subscribers = require('../subscribers');
@@ -17,7 +16,9 @@ module.exports = function (app, config, passport) {
     expressParams.extend(app);
 
     app.set('showStackError', true);
-    app.use(express.logger('dev'));
+    if(config.log) {
+        app.use(express.logger(config.log));
+    }
 
     // set views path, template engine and default layout
     var ectRenderer = require('ect')({
@@ -68,7 +69,6 @@ module.exports = function (app, config, passport) {
         cloudinary.config(config.cloudinary);
 
         // dynamic helpers
-        app.use(view_helpers(config.app.name))
         app.use(helpers(config));
         app.use(subscribers(config));
 

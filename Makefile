@@ -1,34 +1,40 @@
-REPORTER=dot
-TESTS=$(shell find ./tests -type f -name "*.js")
+REPORTER=spec
+TESTS=$(shell find ./tests -type f -name "test*.js")
+SHELL=/bin/bash
 
-PROJECT = "Imagerate Node.js project"
-AF_NAMESPACE = "imagerate"
+PROJECT = "project"
+NAMESPACE = "imagerate"
 
 all: install test start
 
-test: ;@echo "Testing ${PROJECT}....."; \
-    NODE_ENV=test ./node_modules/.bin/mocha \
-        --require should \
-        --reporter $(REPORTER) \
-        $(TESTS)
+test: ;@echo ""; \
+	NODE_ENV=test ./node_modules/.bin/mocha \
+		--require should \
+		--reporter $(REPORTER) \
+		$(TESTS)
 
-test-cov: app-cov
-	@COVERAGE=1 $(MAKE) --quiet test REPORTER=html-cov > coverage.html
+test-coverage: app-cov
+	@COVERAGE=1 $(MAKE) --silent --quiet test REPORTER=html-cov > coverage.html
 
 app-cov:
-	./node_modules/.bin/jscoverage  app app-cov
+	./node_modules/.bin/jscoverage app app-cov
 
 install: ;@echo "Installing ${PROJECT}....."; \
-	git pull && npm install
+	npm install;
 
-clean : ;@echo "Clean ${PROJECT}.....";
-	rm -rf node_modules && rm -f npm-shrinkwrap.json
+clean : ;@echo "Clean ${PROJECT}....."; \
+	rm -rf node_modules \
+	rm -f npm-shrinkwrap.json \
+	rm -f coverage.html \
+	rm -rf app-cov;
 
 start : ;@echo "Starting ${PROJECT}....."; \
-	node app.js
+	node app.js;
 
-afupdate : ;@echo "AppFog update ${PROJECT}....."; \
-	npm shrinkwrap && af update $(AF_NAMESPACE)
+af-update : ;@echo "AppFog update ${PROJECT}....."; \
+	npm shrinkwrap && \
+	if [[ `af user | grep -F "[N/A]"` > /dev/null ]]; then af login; fi && \
+	af update $(NAMESPACE)
 
 
-.PHONY: test start install clean test-cov afupdate
+.PHONY: test start install clean test-coverage af-update all

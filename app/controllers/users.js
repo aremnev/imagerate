@@ -54,7 +54,7 @@ exports.logout = function (req, res) {
  */
 
 exports.session = function (req, res) {
-    res.redirect('/users/' + res.profile.id);
+    res.redirect('/users/' + req.user.id);
 }
 
 /**

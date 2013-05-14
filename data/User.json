@@ -1,0 +1,34 @@
+[{
+    "email": "test@thumbtack.net",
+    "google":{
+    "hd" :"thumbtack.net",
+    "locale": "ru",
+    "gender": "male",
+    "link": "https://plus.google.com/115996099931854226333",
+    "family_name" : "Teston",
+    "given_name" : "Test",
+    "name" : "Test Teston",
+    "verified_email" : true,
+    "email" : "test@thumbtack.net",
+    "id" : "115996099931854226333"
+    },
+    "name" : "Test Teston",
+    "provider" : "google"
+},
+{
+    "email": "testa@thumbtack.net",
+    "google":{
+    "hd" :"thumbtack.net",
+    "locale": "ru",
+    "gender": "female",
+    "link": "https://plus.google.com/115996099931854226334",
+    "family_name" : "Teston",
+    "given_name" : "Testa",
+    "name" : "Testa Teston",
+    "verified_email" : true,
+    "email" : "testa@thumbtack.net",
+    "id" : "115996099931854226334"
+    },
+    "name" : "Testa Teston",
+    "provider" : "google"
+}]
