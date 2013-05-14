@@ -23,6 +23,19 @@
 
 <div class="row">
     <div class="span10">
+        <% if @req.isAuthenticated() : %>
+        <form class="well well-small form-inline" action="/contests/" method="post">
+            Create new contest:
+            <input type="text" pattern="^(?=\s*\S).*$" name="title" placeholder="Title" maxlength="255" required/>
+            <input type="text" pattern="^(?=\s*\S).*$" name="description" placeholder="Description" maxlength="255"/>
+            <input type="submit" class="btn" value="Send" />
+        </form>
+        <% end %>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span10">
 
     </div>
 </div>
