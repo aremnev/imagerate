@@ -1,5 +1,5 @@
-REPORTER=dot
-TESTS=$(shell find ./tests -type f -name "*.js")
+REPORTER=spec
+TESTS=$(shell find ./tests -type f -name "test*.js")
 
 PROJECT = "Imagerate Node.js project"
 AF_NAMESPACE = "imagerate"
@@ -28,7 +28,7 @@ start : ;@echo "Starting ${PROJECT}....."; \
 	node app.js
 
 afupdate : ;@echo "AppFog update ${PROJECT}....."; \
-	npm shrinkwrap && af update $(AF_NAMESPACE)
+	rm -f npm-shrinkwrap.json && npm shrinkwrap && af update $(AF_NAMESPACE)
 
 
 .PHONY: test start install clean test-cov afupdate

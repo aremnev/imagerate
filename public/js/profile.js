@@ -20,7 +20,7 @@ $(document).ready(function () {
                 }
             });
         },
-        stop: function (e, data) {
+        done: function (e, data) {
             window.location.href = window.location.pathname;
         },
         progress: function (e, data) {
