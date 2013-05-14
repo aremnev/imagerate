@@ -20,7 +20,7 @@ app-cov:
 	./node_modules/.bin/jscoverage app app-cov
 
 node-virtual: ;@echo "Prepare nodeenv....."; \
-	sudo apt-get install -y python-setuptools python-virtualenv && \
+	sudo apt-get install -y python-setuptools python-virtualenv curl && \
 	virtualenv env && \
 	source env/bin/activate && \
 	easy_install nodeenv && \
@@ -31,7 +31,7 @@ node-virtual: ;@echo "Prepare nodeenv....."; \
 
 
 install: ;@echo "Installing ${PROJECT}....."; \
-	npm install;
+	sudo apt-get install mongodb && npm install;
 
 clean: ;@echo "Clean ${PROJECT}....."; \
 	rm -rf node_modules \
