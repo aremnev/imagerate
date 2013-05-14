@@ -41,7 +41,7 @@ clean: ;@echo "Clean ${PROJECT}....."; \
 	rm -rf app-cov;
 
 start: ;@echo "Starting ${PROJECT}....."; \
-	node app.js;
+	npm start;
 
 af-install: ;@echo "AppFog gem install....."; \
 	sudo apt-get -y install ruby && sudo gem update && sudo gem install af
