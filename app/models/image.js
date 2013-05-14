@@ -90,7 +90,10 @@ ImageSchema.methods = {
                     self.save(cb);
                 }
 
-            }, {transformation: transformation});
+            }, {transformation: transformation,
+                eager: [
+                {width: 156, height: 156, crop: 'pad'}
+            ]});
 
         imageStream.on('data', cloudStream.write).on('end', cloudStream.end);
     },

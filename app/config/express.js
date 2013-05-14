@@ -84,15 +84,15 @@ module.exports = function (app, config, passport) {
             if (~err.message.indexOf('not found')) return next()
 
             // log it
-            console.error(err.stack)
+            console.error(err.message)
 
             // error page
-            res.status(500).render('500', { err: err.stack })
+            res.status(500).render('500.ect', { err: err.stack })
         })
 
         // assume 404 since no middleware responded
         app.use(function(req, res, next){
-            res.status(404).render('404', { url: req.originalUrl, error: 'Not found' })
+            res.status(404).render('404.ect', { url: req.originalUrl, error: 'Not found' })
         })
     });
 }

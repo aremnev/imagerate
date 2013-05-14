@@ -56,9 +56,12 @@ exports.show = function (req, res) {
  */
 
 exports.create = function (req, res) {
-    var image = new Image(req.body)
-    image.user = req.user
-
+    var body = req.body;
+    var image = new Image({
+        contest: {contest: body.contest.contest},
+        title: body.title
+    })
+    image.user = req.user;
     image.uploadAndSave(req.files.image, function (err) {
         if(err) res.json(400, { error: err });
         res.json({ ok: true });
