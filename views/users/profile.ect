@@ -33,28 +33,24 @@
 
 <h2>Images</h2>
 <% if @req.isAuthenticated() and @req.user.id == @req.profile.id : %>
-<div class="navbar">
-    <div class="navbar-inner">
-        <form class="navbar-form pull-left form-upload" action="/images" method="post" enctype="multipart/form-data">
-            <div class="inputs">
-                <input type="text" id="image_title" name="title" placeholder="Title" />
-                <select id="image_contest" name="contest[contest]">
-                    <% for contest in @contests: %>
-                        <option value="<%- contest._id %>"> <%= contest.title %></option>
-                    <% end %>
-                </select>
-                <div class="image-upload">
-                    <button class="btn">Add file...<input type="file" id="image" name="image" maxlength="1" placeholder="Image" /></button>
-                    <span></span>
-                </div>
-                <button class="btn btn-primary" type="submit">Upload</button>
+    <form class="well well-small form-inline form-upload" action="/images" method="post" enctype="multipart/form-data">
+        <span class="inputs">
+            <input type="text" id="image_title" name="title" placeholder="Title" />
+            <select id="image_contest" name="contest[contest]">
+                <% for contest in @contests: %>
+                    <option value="<%- contest._id %>"> <%= contest.title %></option>
+                <% end %>
+            </select>
+            <div class="image-upload">
+                <button class="btn">Add file...<input type="file" id="image" name="image" maxlength="1" placeholder="Image" /></button>
+                <span></span>
             </div>
-            <div class="progress progress-striped active">
-                <div class="bar bar-warning" style="width: 0%;"></div>
-            </div>
-        </form>
-    </div>
-</div>
+            <button class="btn btn-primary" type="submit">Upload</button>
+        </span>
+        <div class="progress progress-striped active">
+            <div class="bar bar-warning" style="width: 0%;"></div>
+        </div>
+    </form>
 <% end %>
 <% include 'includes/pagination.ect', {pages: @pages, page: @page, url: @req._parsedUrl.pathname} %>
 <% include 'images/list.ect', {images: @images, h: @h, remove: @req.isAuthenticated() and @req.user.id == @req.profile.id } %>

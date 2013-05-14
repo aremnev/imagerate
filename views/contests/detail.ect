@@ -23,13 +23,19 @@
 
 <div class="row">
     <div class="span10">
-        <ul class="info">
-            <li><%- @imagesTotalCount %> images by <%- @usersCount %> users</li>
-            <li>You rated <%- @ratedImagesCount %> images of <%- @imagesTotalCount %></li>
-        </ul>
+        <% if @imagesTotalCount : %>
+            <ul class="info">
+                <li><%- @imagesTotalCount %> images by <%- @usersCount %> users</li>
+                <li>You rated <%- @ratedImagesCount %> images of <%- @imagesTotalCount %></li>
+            </ul>
 
-        <% include 'includes/pagination.ect', {pages: @pages, page: @page, url: @req._parsedUrl.pathname} %>
-        <% include 'images/list.ect', {images: @images, h: @h} %>
-        <% include 'includes/pagination.ect', {pages: @pages, page: @page, url: @req._parsedUrl.pathname} %>
+            <% include 'includes/pagination.ect', {pages: @pages, page: @page, url: @req._parsedUrl.pathname} %>
+            <% include 'images/list.ect', {images: @images, h: @h} %>
+            <% include 'includes/pagination.ect', {pages: @pages, page: @page, url: @req._parsedUrl.pathname} %>
+        <% else : %>
+            <ul class="info">
+                <li>There are no images in this contest yet</li>
+            </ul>
+        <% end %>
     </div>
 </div>

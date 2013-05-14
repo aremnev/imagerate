@@ -102,9 +102,13 @@ exports.detail = function(req, res) {
 
     async.parallel([
             loadContestImages,
-            countImagesInContest,
             loadStatsForCurrentUser,
-            loadUsersStatsRegardingContest
+            function(callback) {
+                async.series([
+                    countImagesInContest,
+                    loadUsersStatsRegardingContest
+                ], callback);
+            }
         ], function render(err) {
             if (err) {
                 console.log(err);
@@ -128,6 +132,10 @@ exports.detail = function(req, res) {
     }
 
     function loadUsersStatsRegardingContest(callback) {
+        if (locals.imagesTotalCount === 0) {
+            return callback();
+        }
+
         var opts = {
             query: imageOptions.criteria,
             map: function() { emit(this.user, 1); },
