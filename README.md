@@ -1,15 +1,8 @@
 imagerate
 =========
 
-Project for the photo contests. For staging server is used AppFog.
+Project for the photo contests. For staging server is used AppFog. http://contest-app.aws.af.cm/
 
-
-Requirements
-------
-
-Node version: 0.10.5 <br />
-npm  version: 1.2.18 <br />
-Mongodb: 2.0.4
 
 How to build (Debian like OS):
 ------
@@ -51,8 +44,8 @@ List of Makefile commands:
 ------
 
 * `clean` - remove node_modules and virtual environment folders.
-* `node-virtual` - prepare node virtual environment ([nodeenv](https://github.com/ekalinin/nodeenv))
-* `install` - execute `npm install`
+* `node-virtual` - prepare node virtual environment ([nodeenv](https://github.com/ekalinin/nodeenv)) with node-0.10.5
+* `install` - install mongodb and execute `npm install`
 * `test` - execute test
 * `test-coverage` - execute tests and generate coverage report file: `imagerate/covarage.html` ([JScovarage](http://siliconforks.com/jscoverage/))
 * `af-install` - install af (AppFog) gem.

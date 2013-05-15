@@ -31,7 +31,7 @@ node-virtual: ;@echo "Prepare nodeenv....."; \
 
 
 install: ;@echo "Installing ${PROJECT}....."; \
-	sudo apt-get install mongodb && npm install;
+	sudo apt-get install -y mongodb && npm install;
 
 clean: ;@echo "Clean ${PROJECT}....."; \
 	rm -rf node_modules \
