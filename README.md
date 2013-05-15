@@ -21,20 +21,26 @@ How to build (Debian like OS):
     cd imagerate
     </pre>
     
-2. Prepare node virtual environment and activate it:
+2. Prepare node virtual environment with node-0.10.5 and installed modules with activation (recommended):
 
     <pre>
-    make node-virtaul
+    make
     source env/node/bin/activate
     </pre>
-    
-3. Now you can install, test and run application:
+
+3. Also if you don't want to use virtual node, you can skip previous step and install modules with your global node ():
 
     <pre>
-    make all
+    make clean install
     </pre>
     
-4. Install AppFog gem and upload files to [AppFog](http://appfog.com):
+4. Now you can test and run application:
+
+    <pre>
+    make test start
+    </pre>
+    
+5. Install AppFog gem and upload files to [AppFog](http://appfog.com):
 
     <pre>
     make af-install af-update
@@ -43,12 +49,13 @@ How to build (Debian like OS):
 List of Makefile commands:
 ------
 
-* `clean` - remove node_modules and virtual environment folders.
+* `clean` - remove node_modules and virtual environment folder.
 * `node-virtual` - prepare node virtual environment ([nodeenv](https://github.com/ekalinin/nodeenv)) with node-0.10.5
 * `install` - install mongodb and execute `npm install`
 * `test` - execute test
 * `test-coverage` - execute tests and generate coverage report file: `imagerate/covarage.html` ([JScovarage](http://siliconforks.com/jscoverage/))
 * `af-install` - install af (AppFog) gem.
 * `af-update` - prepare shrinkwrap and upload files to AppFog
+* `all` - `make all` is the same as `make` without a command, execute `make clean node-virtual install`
 
 

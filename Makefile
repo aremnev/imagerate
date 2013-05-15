@@ -5,7 +5,9 @@ SHELL=/bin/bash
 PROJECT = "project"
 NAMESPACE = "contest-app"
 
-all: install test start
+all: clean node-virtual install;
+	@echo "*** Nodeenv with node-0.10.5 and installed modules is created. Activate it: 'source env/node/bin/activate'.";
+	@echo "*** After that you can execute 'test' and 'start' commands."
 
 test: ;@echo ""; \
 	NODE_ENV=test ./node_modules/.bin/mocha \
@@ -27,11 +29,12 @@ node-virtual: ;@echo "Prepare nodeenv....."; \
 	nodeenv env/node --node=0.10.5 --npm=1.2.18;
 	@echo "*** Nodeenv with node-0.10.5 is created. Activate it: 'source env/node/bin/activate'."
 	@echo "*** After that you can execute 'install', 'test' and 'start' commands."
-	@echo "*** Also you can execute 'make all' command which is equal to 'make install test start'."
 
 
 install: ;@echo "Installing ${PROJECT}....."; \
-	sudo apt-get install -y mongodb && npm install;
+	if [ -f env/node/bin/activate ]; then source env/node/bin/activate; fi && \
+	sudo apt-get install -y mongodb && \
+	npm install;
 
 clean: ;@echo "Clean ${PROJECT}....."; \
 	rm -rf node_modules \
@@ -44,7 +47,9 @@ start: ;@echo "Starting ${PROJECT}....."; \
 	npm start;
 
 af-install: ;@echo "AppFog gem install....."; \
-	sudo apt-get -y install ruby && sudo gem update && sudo gem install af
+	sudo apt-get -y install ruby && \
+	sudo gem update && \
+	sudo gem install af
 
 af-update: ;@echo "AppFog update ${PROJECT}....."; \
 	npm shrinkwrap && \
