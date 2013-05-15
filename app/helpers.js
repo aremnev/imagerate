@@ -18,9 +18,10 @@ function helpers (cfg) {
             return profileLink(cfg, req, size, user);
         }
         res.locals.h.formatDate = function(req){
-            return function(date){
-                return moment(date).format();
-            }
+            return formatDate;
+        }(req);
+        res.locals.h.formatTime = function(req){
+            return formatTime;
         }(req);
         res.locals.h.imageUrl = imageUrl(req);
         next()
@@ -43,4 +44,13 @@ function imageUrl (req) {
     return function imageUrl (image, options) {
         return cloudinary.url(image.data.public_id, options) + '.png'
     }
+}
+
+function formatTime(date, format) {
+    format = format || 'HH:mm MMM DD, YYYY';
+    return moment(date).format(format);
+}
+
+function formatDate(date) {
+    return formatTime(date, 'MMM DD, YYYY');
 }
