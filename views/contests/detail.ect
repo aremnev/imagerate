@@ -26,7 +26,9 @@
         <% if @imagesTotalCount : %>
             <ul class="info">
                 <li><%- @imagesTotalCount %> images by <%- @usersCount %> users</li>
-                <li>You rated <%- @ratedImagesCount %> images of <%- @imagesTotalCount %></li>
+                <% if @req.isAuthenticated() : %>
+                    <li>You rated <%- @ratedImagesCount %> images of <%- @imagesTotalCount %></li>
+                <% end %>
             </ul>
 
             <% include 'includes/pagination.ect', {pages: @pages, page: @page, url: @req._parsedUrl.pathname} %>

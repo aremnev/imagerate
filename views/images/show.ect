@@ -32,11 +32,11 @@
 
 
 <div class="image-large image-to-rate"
-    <% if @req.isAuthenticated() : %>
          ng-init="initRating({ id: '<%= @req.image.id %>',
                                value: <%- @req.image.getRating() %>,
                                count: <%- @req.image.contest.evaluationsCount %>,
                                byUser: <%- @ratingByUser %> });"
+    <% if @req.isAuthenticated() : %>
          ng-mouseleave="rating.state = rating.defaultState"
     <% end %>
 >
