@@ -140,23 +140,27 @@ ImageSchema.methods = {
 
     /**
      * Returns rate by concrete user if that user rated the image.
-     * Else returns null
+     * Else returns 0
      */
     getRatingByUser: function(user, callback) {
-        Image
-            .findOne({_id: this._id,
-                      'contest.evaluations.user': user._id},
-                     {'contest.evaluations.$': 1},
-                     onRatingByUserReceived);
-
-        function onRatingByUserReceived(err, image) {
-            if (err) {
-                return callback(err);
-            }
-
-            var value = image ? image.contest.evaluations[0].rating : 0;
-            callback(err, value);
-        }
+        var evaluation = _.find(this.contest.evaluations, function(evaluation) {
+            return evaluation.user._id + '' == user._id + '';
+        })
+        callback(null, evaluation ? evaluation.rating : 0);
+//        Image
+//            .findOne({_id: this._id,
+//                      'contest.evaluations.user': user._id},
+//                     {'contest.evaluations.$': 1},
+//                     onRatingByUserReceived);
+//
+//        function onRatingByUserReceived(err, image) {
+//            if (err) {
+//                return callback(err);
+//            }
+//            console.log(image.contest, image.contest.evaluationsCount);
+//            var value = image ? image.contest.evaluations[0].rating : 0;
+//            callback(err, value);
+//        }
     },
 
     addViewedByUser: function(user, callback) {
