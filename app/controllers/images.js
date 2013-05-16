@@ -42,7 +42,7 @@ exports.show = function (req, res) {
             if (err) {
                 return res.render('500');
             }
-            res.render('images/detail.ect', locals);
+            res.render('images/show.ect', locals);
         }
     );
 
