@@ -148,13 +148,17 @@ exports.detail = function(req, res) {
     }
 
     function loadStatsForCurrentUser(callback) {
-        var criteria = {
-            'contest.contest': contest._id,
-            'contest.evaluations.user': req.user._id
-        };
-        Image.count(criteria).exec(safe(callback, function (count) {
-            locals.ratedImagesCount = count;
-        }));
+        if(req.user) {
+            var criteria = {
+                'contest.contest': contest._id,
+                'contest.evaluations.user': req.user._id
+            };
+            Image.count(criteria).exec(safe(callback, function (count) {
+                locals.ratedImagesCount = count;
+            }));
+        } else {
+            callback();
+        }
     }
 };
 

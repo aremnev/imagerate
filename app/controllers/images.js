@@ -39,15 +39,23 @@ exports.show = function (req, res) {
             evAsObject.user.image = res.locals.h.profileLink(32, ev.user);
             return evAsObject;
         });
-
-        image.getRatingByUser(req.user, function onRatingReceived(err, ratingByUser) {
+        if(req.user) {
+            image.getRatingByUser(req.user, function onRatingReceived(err, ratingByUser) {
+                res.render('images/show.ect', {
+                    title: image.title,
+                    likesCount: likes.length,
+                    likes: JSON.stringify(likes),
+                    ratingByUser: ratingByUser
+                });
+            });
+        } else {
             res.render('images/show.ect', {
                 title: image.title,
                 likesCount: likes.length,
                 likes: JSON.stringify(likes),
-                ratingByUser: ratingByUser
+                ratingByUser: 0
             });
-        });
+        }
     }
 }
 
