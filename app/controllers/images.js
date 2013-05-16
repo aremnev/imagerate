@@ -4,7 +4,9 @@
 
 var mongoose = require('mongoose'),
     User = mongoose.model('User'),
-    Image = mongoose.model('Image');
+    Image = mongoose.model('Image'),
+    async = require('async'),
+    safe = require('../async_helpers').safe;
 
 
 /**
@@ -26,28 +28,46 @@ exports.image = function(req, res, next, id){
  */
 
 exports.show = function (req, res) {
+    var locals = {
+        image: req.image,
+        title: req.image.title
+    };
     var opts = { path: 'contest.evaluations.user',
                  select: '_id name provider google.picture' };
 
-    Image.populate(req.image, opts, onLikesPopulated);
+    async.series([
+            populateLikes,
+            getRatingByUser
+        ], function render(err) {
+            if (err) {
+                return res.render('500');
+            }
+            res.render('images/detail.ect', locals);
+        }
+    );
 
-    function onLikesPopulated(err, image) {
-        var likes = image.contest.evaluations.filter(function filterFiveStar(ev) {
-            return ev.rating === 5;
-        }).slice(0, 20).map(function addProfileImage(ev) {
-            var evAsObject = ev.toObject();
-            evAsObject.user.image = res.locals.h.profileLink(32, ev.user);
-            return evAsObject;
-        });
-
-        image.getRatingByUser(req.user, function onRatingReceived(err, ratingByUser) {
-            res.render('images/show.ect', {
-                title: image.title,
-                likesCount: likes.length,
-                likes: JSON.stringify(likes),
-                ratingByUser: ratingByUser
+    function populateLikes(callback) {
+        Image.populate(req.image, opts, safe(callback, function(image) {
+            var likes = image.contest.evaluations.filter(function filterFiveStar(ev) {
+                return ev.rating === 5;
+            }).slice(0, 20).map(function addProfileImage(ev) {
+                var evAsObject = ev.toObject();
+                evAsObject.user.image = res.locals.h.profileLink(32, ev.user);
+                return evAsObject;
             });
-        });
+            locals.likes = likes;
+        }));
+
+    }
+
+    function getRatingByUser(callback) {
+        if (!req.isAuthenticated()) {
+            return callback();
+        }
+
+        locals.image.getRatingByUser(req.user, safe(callback, function(ratingByUser) {
+            locals.ratingByUser = ratingByUser;
+        }));
     }
 }
 

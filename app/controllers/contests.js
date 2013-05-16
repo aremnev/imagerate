@@ -111,7 +111,6 @@ exports.detail = function(req, res) {
             }
         ], function render(err) {
             if (err) {
-                console.log(err);
                 return res.render('500');
             }
             res.render('contests/detail.ect', locals);
@@ -148,6 +147,10 @@ exports.detail = function(req, res) {
     }
 
     function loadStatsForCurrentUser(callback) {
+        if (!req.isAuthenticated()) {
+            return callback();
+        }
+
         var criteria = {
             'contest.contest': contest._id,
             'contest.evaluations.user': req.user._id
