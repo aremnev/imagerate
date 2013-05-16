@@ -52,7 +52,7 @@
         </div>
     </form>
 <% end %>
-<% include 'images/list.ect', {images: @images, pages: @pages, page: @page, url: @url, h: @h, remove: @req.isAuthenticated() and @req.user.id == @req.profile.id } %>
+<% include 'images/list.ect', {images: @images, pages: @pages, page: @page, url: @req._parsedUrl.pathname, h: @h, remove: @req.isAuthenticated() and @req.user.id == @req.profile.id } %>
 
 
 
