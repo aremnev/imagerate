@@ -6,7 +6,7 @@ PROJECT = "project"
 NAMESPACE = "contest-app"
 
 all: clean node-virtual install;
-	@echo "*** Nodeenv with node-0.10.5 and installed modules is created. Activate it: 'source env/node/bin/activate'.";
+	@echo "*** Nodeenv with node-0.8.14 and installed modules is created. Activate it: 'source env/node/bin/activate'.";
 	@echo "*** After that you can execute 'test' and 'start' commands."
 
 test: ;@echo ""; \
@@ -26,8 +26,8 @@ node-virtual: ;@echo "Prepare nodeenv....."; \
 	virtualenv env && \
 	source env/bin/activate && \
 	easy_install nodeenv && \
-	nodeenv env/node --node=0.10.5 --npm=1.2.18;
-	@echo "*** Nodeenv with node-0.10.5 is created. Activate it: 'source env/node/bin/activate'."
+	nodeenv env/node --node=0.8.14 --npm=1.2.18;
+	@echo "*** Nodeenv with node-0.8.14 is created. Activate it: 'source env/node/bin/activate'."
 	@echo "*** After that you can execute 'install', 'test' and 'start' commands."
 
 

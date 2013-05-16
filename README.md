@@ -21,7 +21,7 @@ How to build (Debian like OS):
     cd imagerate
     </pre>
     
-2. Prepare node virtual environment with node-0.10.5 and installed modules with activation (recommended):
+2. Prepare node virtual environment with node-0.8.14 and installed modules with activation (recommended):
 
     <pre>
     make
@@ -50,7 +50,7 @@ List of Makefile commands:
 ------
 
 * `clean` - remove node_modules and virtual environment folder.
-* `node-virtual` - prepare node virtual environment ([nodeenv](https://github.com/ekalinin/nodeenv)) with node-0.10.5
+* `node-virtual` - prepare node virtual environment ([nodeenv](https://github.com/ekalinin/nodeenv)) with node-0.8.14
 * `install` - install mongodb and execute `npm install`
 * `test` - execute test
 * `test-coverage` - execute tests and generate coverage report file: `imagerate/covarage.html` ([JScovarage](http://siliconforks.com/jscoverage/))
