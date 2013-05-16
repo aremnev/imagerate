@@ -30,10 +30,7 @@
                     <li>You rated <%- @ratedImagesCount %> images of <%- @imagesTotalCount %></li>
                 <% end %>
             </ul>
-
-            <% include 'includes/pagination.ect', {pages: @pages, page: @page, url: @req._parsedUrl.pathname} %>
-            <% include 'images/list.ect', {images: @images, h: @h} %>
-            <% include 'includes/pagination.ect', {pages: @pages, page: @page, url: @req._parsedUrl.pathname} %>
+            <% include 'images/list.ect', {images: @images, pages: @pages, page: @page, url: @url, h: @h} %>
         <% else : %>
             <ul class="info">
                 <li>There are no images in this contest yet</li>

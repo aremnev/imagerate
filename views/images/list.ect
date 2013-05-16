@@ -17,7 +17,7 @@
     <% end %>
 <% end %>
 <% if @pages : %>
-    <% include 'includes/pagination.ect', {pages: @pages, page: @page || 1, url: @req._parsedUrl.pathname} %>
+    <% include 'includes/pagination.ect', {pages: @pages, page: @page || 1, url: @url || @req._parsedUrl.pathname} %>
 <% end %>
 <ul class="thumbnails">
     <% for image in @images: %>
@@ -34,6 +34,6 @@
     <% end %>
 </ul>
 <% if @pages : %>
-    <% include 'includes/pagination.ect', {pages: @pages, page: @page || 1, url: @req._parsedUrl.pathname} %>
+    <% include 'includes/pagination.ect', {pages: @pages, page: @page || 1, url: @url || @req._parsedUrl.pathname} %>
 <% end %>
 
