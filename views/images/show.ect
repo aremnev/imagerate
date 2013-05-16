@@ -32,14 +32,19 @@
 
 
 <div class="image-large image-to-rate"
-     ng-init="initRating({ id: '<%= @req.image.id %>',
-                           value: <%- @req.image.getRating() %>,
-                           count: <%- @req.image.contest.evaluationsCount %>,
-                           byUser: <%- @ratingByUser %> });"
-     ng-mouseleave="rating.state = rating.defaultState">
+    <% if @req.isAuthenticated() : %>
+         ng-init="initRating({ id: '<%= @req.image.id %>',
+                               value: <%- @req.image.getRating() %>,
+                               count: <%- @req.image.contest.evaluationsCount %>,
+                               byUser: <%- @ratingByUser %> });"
+         ng-mouseleave="rating.state = rating.defaultState"
+    <% end %>
+>
     <img class="img-polaroid big" ref="<%- @req.image.image.cdnUri %>" title="<%= @req.image.title %>"
          src="<%- @h.imageUrl(@req.image.image, {width: 952, height: 800, crop: 'limit'}) %>"/>
-    <% include 'includes/rating.ect', { rating: @req.image.getRating(), thumbnail: false } %>
+    <% if @req.isAuthenticated() : %>
+        <% include 'includes/rating.ect', { rating: @req.image.getRating(), thumbnail: false } %>
+    <% end %>
 </div>
 
 <div class="comments-block">

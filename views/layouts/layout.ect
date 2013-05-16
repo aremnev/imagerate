@@ -12,7 +12,7 @@
 
     <% content 'scripts' %>
 </head>
-<body>
+<body <% if @req.isAuthenticated() : %>class="logged-in"<% end %>>
     <div class="navbar">
         <div class="">
             <div class="container">
