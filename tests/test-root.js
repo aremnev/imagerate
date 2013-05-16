@@ -34,7 +34,9 @@ describe('Main page', function () {
                     var data = res.body;
                     assert.ok(data.extra.contests.length);
                     assert.ok(_.isString(data.title));
-                    assert.ok(data.images);
+                    assert.ok(data.recent_images);
+                    assert.ok(data.popular_images);
+                    assert.ok(data.viewed_images);
                     _.each(data.extra.contests, function(contest){
                         assert.ok(new Date(contest.dueDate).getTime() > new Date().getTime());
                     });
