@@ -8,6 +8,8 @@ var mongoose = require('mongoose'),
     _ = require('underscore'),
     Schema = mongoose.Schema;
 
+var Image;
+
 
 /**
  * Image Schema
@@ -32,6 +34,11 @@ var ImageSchema = new Schema({
         createdAt: { type : Date, default : Date.now }
     }],
     commentsCount: {type: Number, default: 0},
+    views: [{
+        user: { type : Schema.ObjectId, ref : 'User' },
+        createdAt: { type : Date, default : Date.now }
+    }],
+    viewsCount: {type: Number, default: 0},
     image: {
         cdnUri: String,
         data: {}
@@ -136,7 +143,7 @@ ImageSchema.methods = {
      * Else returns null
      */
     getRatingByUser: function(user, callback) {
-        this.model('Image')
+        Image
             .findOne({_id: this._id,
                       'contest.evaluations.user': user._id},
                      {'contest.evaluations.$': 1},
@@ -150,6 +157,21 @@ ImageSchema.methods = {
             var value = image ? image.contest.evaluations[0].rating : 0;
             callback(err, value);
         }
+    },
+
+    addViewedByUser: function(user, callback) {
+        this.populate('views.user', '_id', function(err, image){
+            var view = _.find(image.views, function(view) {
+                return view.user._id + '' == user._id + '';
+            });
+            if (!view) {
+                image.views.push({user: user._id});
+                image.viewsCount++;
+            } else {
+                view.createdAt = Date.now();
+            }
+            image.save(callback);
+        });
     }
 }
 
@@ -193,7 +215,6 @@ ImageSchema.statics = {
             .skip(options.perPage * options.page)
             .exec(cb)
     }
-
 }
 
-mongoose.model('Image', ImageSchema)
+Image = mongoose.model('Image', ImageSchema)

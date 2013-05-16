@@ -32,6 +32,7 @@ exports.show = function (req, res) {
     Image.populate(req.image, opts, onLikesPopulated);
 
     function onLikesPopulated(err, image) {
+
         var likes = image.contest.evaluations.filter(function filterFiveStar(ev) {
             return ev.rating === 5;
         }).slice(0, 20).map(function addProfileImage(ev) {
@@ -40,6 +41,7 @@ exports.show = function (req, res) {
             return evAsObject;
         });
         if(req.user) {
+            image.addViewedByUser(req.user);
             image.getRatingByUser(req.user, function onRatingReceived(err, ratingByUser) {
                 res.render('images/show.ect', {
                     title: image.title,
