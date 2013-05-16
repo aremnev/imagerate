@@ -101,3 +101,74 @@ exports.remove = function (req, res) {
         res.send({});
     })
 }
+
+function imageList(req, res, type) {
+    var page = parseInt(req.param('page') > 0 ? req.param('page') : 1),
+        perPage = 15;
+    var soptions = {
+        perPage: perPage,
+        page: page - 1
+    }
+    var locals = {page: page}
+    async.waterfall([
+        function(cb) {
+            Image.count({}, safe(cb, function(count) {
+                locals.pages = Math.ceil(count / perPage);
+            }))
+        },
+        function(count, cb) {
+            if(count) {
+                var options;
+                switch (type) {
+                    case 'viewed':
+                        options = _.extend(soptions, {sort: {viewsCount: -1}});
+                        locals.title = 'Most viewed photos';
+                        break;
+                    case 'rated':
+                        options = _.extend(soptions, {sort: {'contest.rating': -1}});
+                        locals.title = 'Most rated photos';
+                        break;
+                    default:
+                        options = soptions;
+                        locals.title = 'Most recent photos';
+                }
+                Image.list(options, safe(cb, function(images) {
+                    locals.images = images;
+                }))
+            } else {
+                locals.images = [];
+                cb();
+            }
+        }
+    ],
+    function(err) {
+        if (err) {
+            return req.render('500');
+        }
+        res.render('images/list.ect', locals);
+    });
+}
+
+/**
+ * Most rated image list
+ */
+
+exports.ratedList = function (req, res) {
+    imageList(req, res, 'rated');
+}
+
+/**
+ * Most recent image list
+ */
+
+exports.recentList = function (req, res) {
+    imageList(req, res, 'recent');
+}
+
+/**
+ * Most viewed image list
+ */
+
+exports.viewedList = function (req, res) {
+    imageList(req, res, 'viewed');
+}

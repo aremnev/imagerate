@@ -15,9 +15,9 @@
 <% block 'header-right' : %>
     <h3>Photos</h3>
     <ul class="photos">
-        <li class="starred"><a href="#">Most recent</a></li>
-        <li class="starred"><a href="#">Most popular</a></li>
-        <li class="starred"><a href="#">Most viewed</a></li>
+        <li class="starred"><a href="/images/recent">Most recent</a></li>
+        <li class="starred"><a href="/images/rated">Most rated</a></li>
+        <li class="starred"><a href="/images/viewed">Most viewed</a></li>
     </ul>
 <% end %>
 
@@ -27,7 +27,7 @@
     <% include 'images/list.ect', {images: @recent_images, h: @h } %>
 </ul>
 
-<h3>Most Popular Images</h3>
+<h3>Most Rated Images</h3>
 <ul class="thumbnails">
     <% include 'images/list.ect', {images: @popular_images, h: @h } %>
 </ul>

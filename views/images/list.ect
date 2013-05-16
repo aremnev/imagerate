@@ -1,3 +1,24 @@
+<!-- list.ect -->
+<% if @req and not @req.xhr : %>
+    <% extend 'layouts/layout.ect' %>
+
+
+    <% block 'header-left' : %>
+    <% end %>
+
+
+    <% block 'header-right' : %>
+    <h3><%= @title || 'Photos' %></h3>
+    <ul class="photos">
+        <li class="starred"><a class="<% if @h.isActive('recent'): %>active<%end%>" href="/images/recent">Most recent</a></li>
+        <li class="starred"><a class="<% if @h.isActive('rated'): %>active<%end%>" href="/images/rated">Most rated</a></li>
+        <li class="starred"><a class="<% if @h.isActive('viewed'): %>active<%end%>" href="/images/viewed">Most viewed</a></li>
+    </ul>
+    <% end %>
+<% end %>
+<% if @pages : %>
+    <% include 'includes/pagination.ect', {pages: @pages, page: @page || 1, url: @req._parsedUrl.pathname} %>
+<% end %>
 <ul class="thumbnails">
     <% for image in @images: %>
         <li>
@@ -12,4 +33,7 @@
         </li>
     <% end %>
 </ul>
+<% if @pages : %>
+    <% include 'includes/pagination.ect', {pages: @pages, page: @page || 1, url: @req._parsedUrl.pathname} %>
+<% end %>
 

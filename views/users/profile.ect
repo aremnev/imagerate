@@ -52,8 +52,7 @@
         </div>
     </form>
 <% end %>
-<% include 'includes/pagination.ect', {pages: @pages, page: @page, url: @req._parsedUrl.pathname} %>
-<% include 'images/list.ect', {images: @images, h: @h, remove: @req.isAuthenticated() and @req.user.id == @req.profile.id } %>
+<% include 'images/list.ect', {images: @images, pages: @pages, page: @page, h: @h, remove: @req.isAuthenticated() and @req.user.id == @req.profile.id } %>
 <% include 'includes/pagination.ect', {pages: @pages, page: @page, url: @req._parsedUrl.pathname} %>
 
 

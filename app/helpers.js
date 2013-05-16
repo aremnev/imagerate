@@ -24,6 +24,12 @@ function helpers (cfg) {
             return formatTime;
         }(req);
         res.locals.h.imageUrl = imageUrl(req);
+        res.locals.h.isActive = function(req) {
+            return function(url) {
+                var result = req._parsedUrl.pathname.indexOf(url) + 1;
+                return result > 0;
+            }
+        }(req);
         next()
     }
 }
