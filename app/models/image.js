@@ -84,12 +84,13 @@ ImageSchema.methods = {
 
         var imageStream = fs.createReadStream(image.path, { encoding: 'binary' }),
             cloudStream = cloudinary.uploader.upload_stream(function(data) {
-                if(data) {
-                    self.image.cdnUri = data.secure_url;
-                    self.image.data = data;
-                    self.save(cb);
+                if (data.error) {
+                    return cb({ image: 'Invalid file'});
                 }
 
+                self.image.cdnUri = data.secure_url;
+                self.image.data = data;
+                self.save(cb);
             }, {transformation: transformation,
                 eager: [
                 {width: 156, height: 156, crop: 'pad'}

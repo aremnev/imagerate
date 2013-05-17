@@ -14,7 +14,6 @@ var mongoose = require('mongoose'),
  */
 
 exports.image = function(req, res, next, id){
-
     Image.load(id, function (err, image) {
         if (err) return next(err)
         if (!image) return next(new Error('Failed to load image ' + id))
@@ -74,17 +73,18 @@ exports.show = function (req, res) {
 /**
  * Create an image
  */
-
 exports.create = function (req, res) {
-    var body = req.body;
     var image = new Image({
-        contest: {contest: body.contest.contest},
-        title: body.title
+        contest: {contest: req.body.contest.contest},
+        title: req.body.title
     })
     image.user = req.user;
+
     image.uploadAndSave(req.files.image, function (err) {
-        if(err) res.json(400, { error: err });
-        res.json({ ok: true });
+        if (err) {
+            return res.send(400, { error: err });
+        }
+        res.send({ ok: true });
     })
 }
 
