@@ -1,12 +1,15 @@
 $(document).ready(function () {
 
     $('.remove').on('click', function(e) {
-        var $self = $(this),
-           action = $self.data('action');
-
-        $.post(action, function(d) {
-            $self.parent().remove();
+        var $self = $(this);
+        $.ajax({
+            url: $self.data('action'),
+            type: 'delete',
+            success: function(d) {
+                $self.parent().remove();
+            }
         });
+        return false;
     });
 
     (function(){
