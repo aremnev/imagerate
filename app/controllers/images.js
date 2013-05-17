@@ -52,12 +52,14 @@ exports.show = function (req, res) {
     function populateLikes(callback) {
         Image.populate(req.image, opts, safe(callback, function(image) {
             var likes = image.contest.evaluations.filter(function filterFiveStar(ev) {
-                return ev.rating === 5;
+                if(!req.isAuthenticated()) return true;
+                return ev.user._id + '' != req.user._id + '';
             }).slice(0, 20).map(function addProfileImage(ev) {
                 var evAsObject = ev.toObject();
                 evAsObject.user.image = res.locals.h.profileLink(32, ev.user);
                 return evAsObject;
             });
+            console.log(image.contest.evaluations);
             locals.likes = likes;
         }));
 

@@ -135,7 +135,7 @@ ImageSchema.methods = {
      * Returns average rating for image
      */
     getRating: function() {
-        return Math.round(this.contest.rating || 0);
+        return Math.round(this.contest.rating * 100 || 0) / 100;
     },
 
     /**
@@ -196,6 +196,7 @@ ImageSchema.statics = {
     load: function (id, cb) {
         this.findOne({ _id : id })
             .populate('user', 'name')
+            .populate('evaluations', '', null, { sort: [['createdAt', -1 ]] })
             .populate('comments.user')
             .exec(cb)
     },
