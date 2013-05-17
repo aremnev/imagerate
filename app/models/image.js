@@ -8,6 +8,8 @@ var mongoose = require('mongoose'),
     _ = require('underscore'),
     Schema = mongoose.Schema;
 
+var Image;
+
 
 /**
  * Image Schema
@@ -32,6 +34,11 @@ var ImageSchema = new Schema({
         createdAt: { type : Date, default : Date.now }
     }],
     commentsCount: {type: Number, default: 0},
+    views: [{
+        user: { type : Schema.ObjectId, ref : 'User' },
+        createdAt: { type : Date, default : Date.now }
+    }],
+    viewsCount: {type: Number, default: 0},
     image: {
         cdnUri: String,
         data: {}
@@ -130,28 +137,47 @@ ImageSchema.methods = {
      * Returns average rating for image
      */
     getRating: function() {
-        return Math.round(this.contest.rating || 0);
+        return Math.round(this.contest.rating * 100 || 0) / 100;
     },
 
     /**
      * Returns rate by concrete user if that user rated the image.
-     * Else returns null
+     * Else returns 0
      */
     getRatingByUser: function(user, callback) {
-        this.model('Image')
-            .findOne({_id: this._id,
-                      'contest.evaluations.user': user._id},
-                     {'contest.evaluations.$': 1},
-                     onRatingByUserReceived);
+        var evaluation = _.find(this.contest.evaluations, function(evaluation) {
+            return evaluation.user._id + '' == user._id + '';
+        })
+        callback(null, evaluation ? evaluation.rating : 0);
+//        Image
+//            .findOne({_id: this._id,
+//                      'contest.evaluations.user': user._id},
+//                     {'contest.evaluations.$': 1},
+//                     onRatingByUserReceived);
+//
+//        function onRatingByUserReceived(err, image) {
+//            if (err) {
+//                return callback(err);
+//            }
+//            console.log(image.contest, image.contest.evaluationsCount);
+//            var value = image ? image.contest.evaluations[0].rating : 0;
+//            callback(err, value);
+//        }
+    },
 
-        function onRatingByUserReceived(err, image) {
-            if (err) {
-                return callback(err);
+    addViewedByUser: function(user, callback) {
+        this.populate('views.user', '_id', function(err, image){
+            var view = _.find(image.views, function(view) {
+                return view.user._id + '' == user._id + '';
+            });
+            if (!view) {
+                image.views.push({user: user._id});
+                image.viewsCount++;
+            } else {
+                view.createdAt = Date.now();
             }
-
-            var value = image ? image.contest.evaluations[0].rating : 0;
-            callback(err, value);
-        }
+            image.save(callback);
+        });
     }
 }
 
@@ -172,6 +198,7 @@ ImageSchema.statics = {
     load: function (id, cb) {
         this.findOne({ _id : id })
             .populate('user', 'name')
+            .populate('evaluations', '', null, { sort: [['createdAt', -1 ]] })
             .populate('comments.user')
             .exec(cb)
     },
@@ -195,7 +222,6 @@ ImageSchema.statics = {
             .skip(options.perPage * options.page)
             .exec(cb)
     }
-
 }
 
-mongoose.model('Image', ImageSchema)
+Image = mongoose.model('Image', ImageSchema)

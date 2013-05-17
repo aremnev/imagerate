@@ -11,10 +11,6 @@ var request = require('supertest'),
 
 var loginer = new helpers.Loginer(request(app));
 
-before(function (done) {
-    helpers.resetDb(done);
-})
-
 describe('Profile page', function () {
     context('When logged in', function () {
         before(function (done) {
@@ -40,7 +36,7 @@ describe('Profile page', function () {
                     assert.equal(data.extra.user._id, loginer.current._id);
                     assert.ok(data.contests.length);
                     assert.ok(data.extra.contests.length);
-                    assert.ok(data.images);
+                    assert.ok(data.images.length);
                     done();
                 });
         })

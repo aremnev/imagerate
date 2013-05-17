@@ -18,13 +18,13 @@
 
 
 <% block 'header-right' : %>
-    <h5 ng-init='likes = <%= @likes %>' ng-show="likes.length">{{ likes.length }} people liked it</h5>
+    <h5 ng-init='likes = <%- JSON.stringify(@likes) %>;' ng-show="likes.length">{{ likes.length }} others rated it</h5>
     <ul class="likes-for-image">
         <li class="like" ng-repeat="like in likes">
             <img class="img-bordered" ng-src="{{like.user.image}}" alt="{{like.user.name}}">
-            <div class="like-tooltip">
+            <div ng-init='starts = "★".repeat(like.rating);' class="like-tooltip">
                 <h6>{{like.user.name}}</h6>
-                <span class="rating">★★★★★</span>
+                <span class="rating">{{starts}}</span>
             </div>
         </li>
     </ul>

@@ -22,6 +22,9 @@ module.exports = function (app, passport, auth, config) {
     // image routes
     var images = require('../controllers/images');
     app.post('/images', auth.requiresLogin, validate.createImage, images.create);
+    app.get('/images/recent', images.recentList);
+    app.get('/images/rated', images.ratedList);
+    app.get('/images/viewed', images.viewedList);
     app.get('/images/:imageId', images.show);
     app.del('/images/:imageId', auth.requiresLogin, auth.image.hasAuthorization, images.remove);
     app.param('imageId', images.image);

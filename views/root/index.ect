@@ -15,18 +15,24 @@
 <% block 'header-right' : %>
     <h3>Photos</h3>
     <ul class="photos">
-        <li class="starred"><a href="#">Most recent</a></li>
-        <li class="starred"><a href="#">Most popular</a></li>
-        <li class="starred"><a href="#">Most viewed</a></li>
+        <li class="starred"><a href="/images/recent">Most recent</a></li>
+        <li class="starred"><a href="/images/rated">Most rated</a></li>
+        <li class="starred"><a href="/images/viewed">Most viewed</a></li>
     </ul>
 <% end %>
 
 
-<h3>Recent Images</h3>
+<h3>Most Recent Images</h3>
 <ul class="thumbnails">
-    <% for image in @images : %>
-        <li>
-            <a class="thumbnail" href="/images/<%- image.id %>"><img src="<%- @h.imageUrl(image.image, {width: 200, height: 200, crop: 'fit'}) %>" alt="<%= image.title %>" /></a>
-        </li>
-    <% end %>
+    <% include 'images/list.ect', {images: @recent_images, h: @h } %>
+</ul>
+
+<h3>Most Rated Images</h3>
+<ul class="thumbnails">
+    <% include 'images/list.ect', {images: @popular_images, h: @h } %>
+</ul>
+
+<h3>Most Viewed Images</h3>
+<ul class="thumbnails">
+    <% include 'images/list.ect', {images: @viewed_images, h: @h } %>
 </ul>

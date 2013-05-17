@@ -42,6 +42,9 @@ exports.show = function (req, res) {
             if (err) {
                 return res.status(500).render('500.ect', { err: err });
             }
+            if (req.isAuthenticated()) {
+                locals.image.addViewedByUser(req.user);
+            }
             res.render('images/show.ect', locals);
         }
     );
@@ -49,7 +52,8 @@ exports.show = function (req, res) {
     function populateLikes(callback) {
         Image.populate(req.image, opts, safe(callback, function(image) {
             var likes = image.contest.evaluations.filter(function filterFiveStar(ev) {
-                return ev.rating === 5;
+                if(!req.isAuthenticated()) return true;
+                return ev.user._id + '' != req.user._id + '';
             }).slice(0, 20).map(function addProfileImage(ev) {
                 var evAsObject = ev.toObject();
                 evAsObject.user.image = res.locals.h.profileLink(32, ev.user);
@@ -98,4 +102,75 @@ exports.remove = function (req, res) {
     image.remove(function(err){
         res.send({});
     })
+}
+
+function imageList(req, res, type) {
+    var page = parseInt(req.param('page') > 0 ? req.param('page') : 1),
+        perPage = 5;
+    var soptions = {
+        perPage: perPage,
+        page: page - 1
+    }
+    var locals = {page: page}
+    async.waterfall([
+        function(cb) {
+            Image.count({}, safe(cb, function(count) {
+                locals.pages = Math.ceil(count / perPage);
+            }))
+        },
+        function(count, cb) {
+            if(count) {
+                var options;
+                switch (type) {
+                    case 'viewed':
+                        options = _.extend(soptions, {sort: {viewsCount: -1}});
+                        locals.title = 'Most viewed photos';
+                        break;
+                    case 'rated':
+                        options = _.extend(soptions, {sort: {'contest.rating': -1}});
+                        locals.title = 'Most rated photos';
+                        break;
+                    default:
+                        options = soptions;
+                        locals.title = 'Most recent photos';
+                }
+                Image.list(options, safe(cb, function(images) {
+                    locals.images = images;
+                }))
+            } else {
+                locals.images = [];
+                cb();
+            }
+        }
+    ],
+    function(err) {
+        if (err) {
+            return req.render('500');
+        }
+        res.render('images/list.ect', locals);
+    });
+}
+
+/**
+ * Most rated image list
+ */
+
+exports.ratedList = function (req, res) {
+    imageList(req, res, 'rated');
+}
+
+/**
+ * Most recent image list
+ */
+
+exports.recentList = function (req, res) {
+    imageList(req, res, 'recent');
+}
+
+/**
+ * Most viewed image list
+ */
+
+exports.viewedList = function (req, res) {
+    imageList(req, res, 'viewed');
 }
