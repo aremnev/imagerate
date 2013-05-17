@@ -1,7 +1,7 @@
 
 var mongoose = require('mongoose'),
     User = mongoose.model('User'),
-    async = require('async');
+    validate = require('../middlewares/validate');
 
 module.exports = function (app, passport, auth, config) {
     // user routes
@@ -21,9 +21,9 @@ module.exports = function (app, passport, auth, config) {
 
     // image routes
     var images = require('../controllers/images');
-    app.post('/images', images.create);
+    app.post('/images', auth.requiresLogin, validate.createImage, images.create);
     app.get('/images/:imageId', images.show);
-    app.post('/images/:imageId/remove', auth.requiresLogin, auth.image.hasAuthorization, images.remove);
+    app.del('/images/:imageId', auth.requiresLogin, auth.image.hasAuthorization, images.remove);
     app.param('imageId', images.image);
 
 
@@ -35,12 +35,12 @@ module.exports = function (app, passport, auth, config) {
 
     // comments routes
     var comments = require('../controllers/comments');
-    app.post('/images/:imageId/comment', auth.requiresLogin, comments.create);
+    app.post('/images/:imageId/comment', auth.requiresLogin, validate.createComment, comments.create);
 
 
     // contests routes
     var contests = require('../controllers/contests');
-    app.post('/contests', auth.requiresLogin, auth.adminAccess, contests.create);
+    app.post('/contests', auth.requiresLogin, auth.adminAccess, validate.createContest, contests.create);
     app.post('/contests/:contestId', auth.requiresLogin, auth.adminAccess, contests.update);
     app.get('/contests', contests.list);
     app.get('/contests/:contestId', contests.detail);

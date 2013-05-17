@@ -5,6 +5,7 @@
 
 var express = require('express'),
     expressParams = require('express-params'),
+    expressValidator = require('express-validator'),
     mongoStore = require('connect-mongo')(express),
     flash = require('connect-flash'),
     cloudinary = require('cloudinary'),
@@ -44,6 +45,8 @@ module.exports = function (app, config, passport) {
         // bodyParser should be above methodOverride
         app.use(express.bodyParser())
         app.use(express.methodOverride())
+
+        app.use(expressValidator);
 
         // express/mongo session storage
         app.use(express.session({
