@@ -84,6 +84,7 @@ ImageSchema.methods = {
 
         var imageStream = fs.createReadStream(image.path, { encoding: 'binary' }),
             cloudStream = cloudinary.uploader.upload_stream(function(data) {
+
                 if (data.error) {
                     return cb({ image: 'Invalid file'});
                 }

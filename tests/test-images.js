@@ -27,6 +27,7 @@ describe('Images', function() {
         before(function(done) {
             Contest.findOne(function(err, contest) {
                 locals.contest = contest;
+                locals.contestId = contest._id.toString();
                 done();
             });
         });
@@ -47,7 +48,7 @@ describe('Images', function() {
             req.cookies = loginer.cookies;
             req
                 .field('title', 'Fabulous Script')
-                .field('contest[contest]', locals.contest._id.toString())
+                .field('contest[contest]', locals.contestId)
                 .attach('image', './public/js/common.js')
                 .expect(400)
                 .end(function(err, res) {
@@ -55,35 +56,57 @@ describe('Images', function() {
                     done();
                 });
         });
-//
-//        it('POST /images with proper parameters should respond with new image data', function(done) {
-//            var req = request(app).post('/images');
-//            req.cookies = loginer.cookies;
-//            req
-//                .field('title', 'Fabulous Image')
-//                .field('contest[contest]', locals.contest._id)
-//                .attach('file', 'public/img/google.png')
-//                .expect(200)
-//                .end(function(err, res) {
-//                    var data = res.body;
-//                    assert.ok(data.image);
-//                    assert.equal(data.image.title, 'Fabulous Image');
-//                    assert.equal(data.image.contest.contest, locals.contest._id);
-//                    locals.image = data.image;
-//                    done();
-//                });
-//        });
-//    });
-//
-//    context('When not logged in', function () {
-//        it('POST: /images should respond with error message', function (done) {
-//            var req = request(app).post('/images');
-//            req
-//                .expect(401)
-//                .end(function (err, res) {
-//                    assert.ok(res.header['location'].indexOf('/login') + 1)
-//                    done();
-//                });
-//        })
+
+        it('POST /images with proper parameters should respond with new image data', function(done) {
+            var req = request(app).post('/images');
+            req.cookies = loginer.cookies;
+            req
+                .field('title', 'Fabulous Image')
+                .field('contest[contest]', locals.contestId)
+                .attach('image', './public/img/google.png')
+                .expect(200)
+                .end(function(err, res) {
+                    var data = res.body;
+                    assert.ok(data.image);
+                    assert.equal(data.image.title, 'Fabulous Image');
+                    assert.equal(data.image.contest.contest, locals.contestId);
+                    locals.image = data.image;
+                    done();
+                });
+        });
+
+        it('GET /images/:imageId for existing image should respond with Content-Type text/html', function (done) {
+            var req = request(app).get('/images/' + locals.image._id);
+            req.cookies = loginer.cookies;
+            req
+                .expect(200)
+                .end(function (err, res) {
+                    done();
+                });
+        });
+
+        it('GET /images/:imageId for non-existent image should respond with NotFound error', function (done) {
+            var req = request(app).get('/images/000011112222333344445555');
+            req.cookies = loginer.cookies;
+            req
+                .expect(404)
+                .end(function (err, res) {
+                    done();
+                });
+        });
+
+//        it('DELETE ')
+    });
+
+    context('When not logged in', function () {
+        it('POST: /images should respond with error message', function (done) {
+            var req = request(app).post('/images');
+            req
+                .expect(401)
+                .end(function (err, res) {
+                    assert.ok(res.header['location'].indexOf('/login') + 1)
+                    done();
+                });
+        })
     });
 });

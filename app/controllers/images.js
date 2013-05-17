@@ -15,10 +15,11 @@ var mongoose = require('mongoose'),
 
 exports.image = function(req, res, next, id){
     Image.load(id, function (err, image) {
-        if (err) return next(err)
-        if (!image) return next(new Error('Failed to load image ' + id))
-        req.image = image
-        next()
+        if (err || !image) {
+            return res.status(404).render('404.ect');
+        }
+        req.image = image;
+        next();
     })
 }
 
@@ -39,7 +40,7 @@ exports.show = function (req, res) {
             getRatingByUser
         ], function render(err) {
             if (err) {
-                return res.render('500');
+                return res.status(500).render('500.ect', { err: err });
             }
             res.render('images/show.ect', locals);
         }
@@ -80,11 +81,11 @@ exports.create = function (req, res) {
     })
     image.user = req.user;
 
-    image.uploadAndSave(req.files.image, function (err) {
+    image.uploadAndSave(req.files.image, function (err, savedImage) {
         if (err) {
             return res.send(400, { error: err });
         }
-        res.send({ ok: true });
+        res.send({ image: savedImage });
     })
 }
 
