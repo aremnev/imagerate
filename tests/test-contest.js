@@ -11,10 +11,6 @@ var request = require('supertest'),
 
 var loginer = new helpers.Loginer(request(app));
 
-before(function (done) {
-    helpers.resetDb(done);
-})
-
 describe('Contests pages', function () {
     context('When logged in', function () {
         before(function (done) {

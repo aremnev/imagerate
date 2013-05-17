@@ -59,7 +59,6 @@ exports.show = function (req, res) {
                 evAsObject.user.image = res.locals.h.profileLink(32, ev.user);
                 return evAsObject;
             });
-            console.log(image.contest.evaluations);
             locals.likes = likes;
         }));
 

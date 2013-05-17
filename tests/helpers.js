@@ -16,7 +16,7 @@ var mongoose = require('mongoose'),
  */
 
 exports.resetDb = function (done) {
-    var data_path = './data';
+    var data_path = './data/collections';
     var data = []
     fs.readdirSync(data_path).forEach(function (file) {
         var obj = {
@@ -25,7 +25,7 @@ exports.resetDb = function (done) {
         }
         data.push(obj);
     });
-    async.series([
+    async.waterfall([
         function (cb) {
             async.map([User, Contest, Image], dropCollection, function(err, res){
                 cb();
@@ -33,7 +33,17 @@ exports.resetDb = function (done) {
         },
         function (cb) {
             async.map(data, fillCollection, function(err, res){
-                cb();
+                cb(null, res);
+            });
+        },
+        function (data, cb) {
+            var objects = {};
+            _.each(data, function(result) {
+                objects[result.model] = result.results;
+            });
+            async.map(objects.User, addPhotos(objects.Contest), function(err, res){
+                objects.Image = res;
+                cb(null, objects);
             });
         }
     ], function(err, res) {
@@ -41,15 +51,24 @@ exports.resetDb = function (done) {
     });
 }
 
-function dropCollection(model, cb) {
-    model.remove({}, function() {
-        cb();
+function dropCollection(model, done) {
+    // Should use this instead model.remove({}, cb)
+    // This is calls hooks for remove action
+    model.find({}, function(err, list) {
+        function removeObj(obj, cb) {
+            obj.remove(function(err) {
+                cb();
+            });
+        }
+        async.map(list, removeObj, function(err, res){
+            done();
+        });
     });
 }
 
 function fillCollection(data, cb) {
     async.map(data.data, addObject(data.model), function(err, res){
-        cb();
+        cb(null, {'model': data.model, 'results': res});
     });
 }
 
@@ -58,7 +77,25 @@ function addObject(model) {
     return function(data, cb) {
         var obj = new model(data);
         obj.save(function(err, obj) {
-            cb();
+            cb(null, obj);
+        });
+    }
+}
+
+function addPhotos(contests) {
+    var files = []
+    var images_path =  './data/images';
+    fs.readdirSync(images_path).forEach(function (file) {
+        files.push({path: images_path + '/' + file});
+    })
+    return function(user, cb) {
+        var image = new Image({
+            contest: {contest: contests[0]._id},
+            title: 'File ' + user.name
+        })
+        image.user = user;
+        image.uploadAndSave(files[0], function(err, image) {
+            cb(null, image);
         });
     }
 }

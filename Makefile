@@ -13,6 +13,7 @@ test: ;@echo ""; \
 	NODE_ENV=test ./node_modules/.bin/mocha \
 		--require should \
 		--reporter $(REPORTER) \
+		--timeout 20000 \
 		$(TESTS)
 
 test-coverage: app-cov
