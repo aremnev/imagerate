@@ -14,6 +14,7 @@
     "dependencies": {
         "express": "latest",
         "less-middleware": "latest",
+        "express-validator": "latest",
         "ect": "latest",
         "mongoose": "latest",
         "connect-mongo": "latest",

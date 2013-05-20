@@ -35,6 +35,7 @@ node-virtual: ;@echo "Prepare nodeenv....."; \
 install: ;@echo "Installing ${PROJECT}....."; \
 	if [ -f env/node/bin/activate ]; then source env/node/bin/activate; fi && \
 	sudo apt-get install -y mongodb && \
+	rm -f npm-shrinkwrap.json && \
 	npm install;
 
 clean: ;@echo "Clean ${PROJECT}....."; \
