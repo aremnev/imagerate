@@ -100,9 +100,14 @@ exports.detail = function(req, res) {
         criteria: {'contest.contest': contest._id}
     };
 
+    if(res.locals.h.isPastDate(contest.dueDate)) {
+        imageOptions.sort = {'contest.ratingSum': -1}
+    }
+
     async.parallel([
             loadContestImages,
-            loadStatsForCurrentUser,
+            loadRatedCountForCurrentUser,
+            loadImageCountForCurrentUser,
             function(callback) {
                 async.series([
                     countImagesInContest,
@@ -146,7 +151,7 @@ exports.detail = function(req, res) {
         }));
     }
 
-    function loadStatsForCurrentUser(callback) {
+    function loadRatedCountForCurrentUser(callback) {
         if (!req.isAuthenticated()) {
             return callback();
         }
@@ -157,6 +162,20 @@ exports.detail = function(req, res) {
         };
         Image.count(criteria).exec(safe(callback, function (count) {
             locals.ratedImagesCount = count;
+        }));
+    }
+
+    function loadImageCountForCurrentUser(callback) {
+        if (!req.isAuthenticated()) {
+            return callback();
+        }
+
+        var criteria = {
+            'contest.contest': contest._id,
+            'user': req.user._id
+        };
+        Image.count(criteria).exec(safe(callback, function (count) {
+            locals.imageAddedCount = count;
         }));
     }
 };

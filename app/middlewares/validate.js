@@ -15,7 +15,6 @@ exports.createComment = createComment;
  */
 function createImage(req, res, next) {
     req.assert('title', 'Enter image title').notEmpty();
-    req.assert('contest.contest', 'Contest is invalid').len(24, 24).isAlphanumeric();
     var errors = req.validationErrors(true);
 
     if (!req.files.image) {

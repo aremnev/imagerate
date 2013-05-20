@@ -4,20 +4,25 @@
 
 <% block 'header-left' : %>
     <h3><%= @req.contest.title %></h3>
+    <p><em><%= @req.contest.description %></em></p>
     <ul>
         <li class="starred">Start date: <%- @h.formatDate(@req.contest.startDate) %></li>
-        <li class="starred">Due date: <%- @h.formatDate(@req.contest.dueDate) %></li>
+        <li class="starred">Due date: <%- @h.formatDate(@req.contest.dueDate) %><% if @h.isPastDate(@req.contest.dueDate): %> <strong>(finished)</strong><% end %></li>
     </ul>
-    <p><%= @req.contest.description %></p>
 <% end %>
 
 
 <% block 'header-right' : %>
     <h3>Participate contest</h3>
     <ul class="photos">
-        <li class="starred"><a href="#">Add image to contest</a></li>
-        <li class="starred"><a href="#">See your images</a></li>
+        <% if @req.isAuthenticated() and @imageAddedCount < 3: %>
+            <li class="starred"><a href="#uploadModal" role="button" data-toggle="modal">Add image to contest</a></li>
+        <% end %>
+        <li class="starred"><a href="/users/<%- @req.user._id %>">See your images</a></li>
     </ul>
+    <% if @req.isAuthenticated() and @imageAddedCount < 3: %>
+        <% include 'includes/modals/upload.ect', {contest: @req.contest, user: @req.user} %>
+    <% end %>
 <% end %>
 
 
@@ -30,7 +35,7 @@
                     <li>You rated <%- @ratedImagesCount %> images of <%- @imagesTotalCount %></li>
                 <% end %>
             </ul>
-            <% include 'images/list.ect', {images: @images, pages: @pages, page: @page, url: @url, h: @h} %>
+            <% include 'images/list.ect', {images: @images, pages: @pages, page: @page, url: @url, h: @h, winners: @h.isPastDate(@req.contest.dueDate)} %>
         <% else : %>
             <ul class="info">
                 <li>There are no images in this contest yet</li>

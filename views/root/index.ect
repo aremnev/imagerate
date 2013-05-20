@@ -16,7 +16,6 @@
     <h3>Photos</h3>
     <ul class="photos">
         <li class="starred"><a href="/images/recent">Most recent</a></li>
-        <li class="starred"><a href="/images/rated">Most rated</a></li>
         <li class="starred"><a href="/images/viewed">Most viewed</a></li>
     </ul>
 <% end %>
@@ -25,11 +24,6 @@
 <h3>Most Recent Images</h3>
 <ul class="thumbnails">
     <% include 'images/list.ect', {images: @recent_images, h: @h } %>
-</ul>
-
-<h3>Most Rated Images</h3>
-<ul class="thumbnails">
-    <% include 'images/list.ect', {images: @popular_images, h: @h } %>
 </ul>
 
 <h3>Most Viewed Images</h3>

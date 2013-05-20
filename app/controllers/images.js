@@ -51,10 +51,7 @@ exports.show = function (req, res) {
 
     function populateLikes(callback) {
         Image.populate(req.image, opts, safe(callback, function(image) {
-            var likes = image.contest.evaluations.filter(function filterFiveStar(ev) {
-                if(!req.isAuthenticated()) return true;
-                return ev.user._id + '' != req.user._id + '';
-            }).slice(0, 20).map(function addProfileImage(ev) {
+            var likes = image.contest.evaluations.slice(0, 20).map(function addProfileImage(ev) {
                 var evAsObject = ev.toObject();
                 evAsObject.user.image = res.locals.h.profileLink(32, ev.user);
                 return evAsObject;
@@ -80,7 +77,7 @@ exports.show = function (req, res) {
  */
 exports.create = function (req, res) {
     var image = new Image({
-        contest: {contest: req.body.contest.contest},
+        contest: {contest: req.contest},
         title: req.body.title
     })
     image.user = req.user;
@@ -125,10 +122,6 @@ function imageList(req, res, type) {
                     case 'viewed':
                         options = _.extend(soptions, {sort: {viewsCount: -1}});
                         locals.title = 'Most viewed photos';
-                        break;
-                    case 'rated':
-                        options = _.extend(soptions, {sort: {'contest.rating': -1}});
-                        locals.title = 'Most rated photos';
                         break;
                     default:
                         options = soptions;

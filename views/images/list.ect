@@ -11,7 +11,6 @@
     <h3><%= @title || 'Photos' %></h3>
     <ul class="photos">
         <li class="starred"><a class="<% if @h.isActive('recent'): %>active<%end%>" href="/images/recent">Most recent</a></li>
-        <li class="starred"><a class="<% if @h.isActive('rated'): %>active<%end%>" href="/images/rated">Most rated</a></li>
         <li class="starred"><a class="<% if @h.isActive('viewed'): %>active<%end%>" href="/images/viewed">Most viewed</a></li>
     </ul>
     <% end %>
@@ -20,15 +19,16 @@
     <% include 'includes/pagination.ect', {pages: @pages, page: @page || 1, url: @url || ''} %>
 <% end %>
 <ul class="thumbnails">
-    <% for image in @images: %>
-        <li>
+    <% for image, i in @images: %>
+        <li <% if image.getRating() and @winners: %>class="winner-<%- i + 1 %>"<%end %>>
             <a class="thumbnail image-to-rate fixed-rating" href="/images/<%- image.id %>">
                 <% if @remove: %>
                     <span data-action="/images/<%- image.id %>" class="remove">×</span>
                 <% end %>
                 <img src="<%- @h.imageUrl(image.image, {width: 156, height: 156, crop: 'pad'}) %>" alt="<%= image.title %>" title="<%= image.title %>"/>
-
-                <% include 'includes/rating.ect', { rating: image.getRating(), rated: true, id: image.id } %>
+                <% if @h.isPastDate(image.contest.contest.dueDate): %>
+                    <% include 'includes/rating.ect', { rating: image.getRating(), rated: true, id: image.id } %>
+                <% end %>
             </a>
         </li>
     <% end %>

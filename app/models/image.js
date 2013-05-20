@@ -20,7 +20,7 @@ var ImageSchema = new Schema({
     user: {type : Schema.ObjectId, ref : 'User'},
     contest: {
         contest: {type : Schema.ObjectId, ref : 'Contest'},
-        rating: Number,
+        ratingSum: Number,
         evaluationsCount: { type: Number, default: 0 },
         evaluations: [{
             user: { type : Schema.ObjectId, ref : 'User' },
@@ -118,11 +118,9 @@ ImageSchema.methods = {
         var contest = this.contest;
         var count = contest.evaluationsCount;
 
-        var newRating = contest.rating
-            ? (contest.rating * count + rateValue) / (count + 1)
-            : rateValue;
+        var newRating = contest.ratingSum || 0 + rateValue;
 
-        contest.rating = newRating;
+        contest.ratingSum = newRating;
         contest.evaluationsCount = count + 1;
 
         this.contest.evaluations.push({
@@ -134,10 +132,10 @@ ImageSchema.methods = {
     },
 
     /**
-     * Returns average rating for image
+     * Returns sum rating for image
      */
     getRating: function() {
-        return Math.round(this.contest.rating * 100 || 0) / 100;
+        return this.contest.ratingSum || 0;
     },
 
     /**
@@ -198,6 +196,7 @@ ImageSchema.statics = {
     load: function (id, cb) {
         this.findOne({ _id : id })
             .populate('user', 'name')
+            .populate('contest.contest')
             .populate('evaluations', '', null, { sort: [['createdAt', -1 ]] })
             .populate('comments.user')
             .exec(cb)
@@ -217,6 +216,7 @@ ImageSchema.statics = {
 
         this.find(criteria)
             .populate('user', 'name')
+            .populate('contest.contest')
             .sort(sort)
             .limit(options.perPage)
             .skip(options.perPage * options.page)

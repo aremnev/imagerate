@@ -6,25 +6,30 @@
     <h3><%- @req.image.title %></h3>
     <ul>
         <li><i>Author:</i> <a href="/users/<%- @req.image.user.id %>"><%= @req.image.user.name %></a> </li>
+        <li><i>Contest:</i> <a href="/contests/<%- @req.image.contest.contest._id %>"><%= @req.image.contest.contest.title %> (<%- @h.formatDate(@req.image.contest.contest.dueDate) %>)</a> </li>
+        <% if @h.isPastDate(@req.image.contest.contest.dueDate): %>
         <li><i>Rating:</i>
             <span ng-switch on="rating.value">
                 <span ng-switch-when="0">Nobody rated this image</span>
-                <span ng-switch-default>{{rating.value | number:2}} of 5</span>
+                <span ng-switch-default>{{rating.value}}</span>
             </span>
         </li>
+        <% end %>
         <li><i>Uploaded:</i>  <%- @h.formatDate(@req.image.createdAt) %></li>
     </ul>
 <% end %>
 
 
 <% block 'header-right' : %>
-    <h5 ng-init='likes = <%- JSON.stringify(@likes) %>;' ng-show="likes.length">{{ likes.length }} others rated it</h5>
+    <h5 ng-init='likes = <%- JSON.stringify(@likes) %>;' ng-show="likes.length">Who rated it:</h5>
     <ul class="likes-for-image">
         <li class="like" ng-repeat="like in likes">
             <img class="img-bordered" ng-src="{{like.user.image}}" alt="{{like.user.name}}">
             <div ng-init='starts = "★".repeat(like.rating);' class="like-tooltip">
                 <h6>{{like.user.name}}</h6>
-                <span class="rating">{{starts}}</span>
+                <% if @h.isPastDate(@req.image.contest.contest.dueDate): %>
+                    <span class="rating">{{starts}}</span>
+                <% end %>
             </div>
         </li>
     </ul>
@@ -42,8 +47,8 @@
 >
     <img class="img-polaroid big" ref="<%- @req.image.image.cdnUri %>" title="<%= @req.image.title %>"
          src="<%- @h.imageUrl(@req.image.image, {width: 952, height: 800, crop: 'limit'}) %>"/>
-    <% if @req.isAuthenticated() : %>
-        <% include 'includes/rating.ect', { rating: @req.image.getRating(), thumbnail: false } %>
+    <% if @req.isAuthenticated() and @req.image.user._id + '' != @req.user._id + '' : %>
+        <% include 'includes/rating.ect', { rating: @req.image.getRating(), thumbnail: false, isPast: @h.isPastDate(@req.image.contest.contest.dueDate) } %>
     <% end %>
 </div>
 
@@ -54,6 +59,6 @@
             Put a comment: <input pattern="^(?=\s*\S).*$" name="comment" type="text" maxlength="255" /> <input type="submit" class="btn" value="Send" />
         </form>
         <% end %>
-        <% include 'comments/comments.ect', {comments: @req.image.comments, h: @h} %>
+        <% include 'comments/comments.ect', {comments: @req.image.comments, h: @h, user_id: if @req.isAuthenticated() then @req.user._id else "" } %>
     </div>
 </div>

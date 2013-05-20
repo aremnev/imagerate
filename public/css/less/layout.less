@@ -36,6 +36,10 @@ a, .navbar-link {
   }
 }
 
+.modal {
+  color: #4b3300;
+}
+
 .container, .navbar .container {
   width: 960px;
 }
@@ -54,7 +58,6 @@ header {
               inset 0px -1 * @header-shadow-size @header-shadow-size -1 * @header-shadow-size @header-shadow-color,
               0px 4px 5px rgba(121, 121, 121, 0.8);
   color: @header-text-color;
-  height: 150px;
   margin: 20px 0;
 
   .container {
@@ -65,7 +68,6 @@ header {
     .border-box();
 
     float: left;
-    height: 120px;
     margin: 15px 0;
     width: 50%;
 
@@ -104,6 +106,31 @@ header {
     &:hover .remove {
       display: block;
     }
+
+    &.winner-1, &.winner-2, &.winner-3 {
+      &:after {
+        content: "I";
+        dipslay: block;
+        position: absolute;
+        bottom: -7px;
+        right: -15px;
+        width: 30px;
+        height: 30px;
+        background: @header-background;
+        color: @link-color;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 30px;
+        size: 16px;
+        font-weight: bold;
+      }
+    }
+    &.winner-2:after {
+      content: "II";
+    }
+    &.winner-3:after {
+      content: "III";
+    }
   }
 
   .remove {
@@ -137,7 +164,6 @@ header {
   &.process {
     .progress {
       display: block;
-      width: 300px;
       margin: 10px 0 0 0;
     }
 
@@ -166,7 +192,7 @@ header {
 
     span {
       display: inline-block;
-      max-width: 305px;
+      max-width: 115px;
       overflow-x: hidden;
       text-overflow: ellipsis;
       vertical-align: sub;
@@ -189,6 +215,14 @@ header {
   margin: 7px 4px;
   box-shadow: 0 1px 4px rgba(180, 99, 10, 0.5);
   position: relative;
+
+  &.me {
+    box-shadow: 0 1px 4px rgba(37, 89, 180, 0.48);
+
+    .title a {
+      color: rgba(37, 89, 180, 0.48);
+    }
+  }
 
   .time {
     position: absolute;

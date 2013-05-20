@@ -20,11 +20,8 @@ var auth = function(cfg) {
         },
 
         adminAccess: function (req, res, next) {
-            var emails = cfg.admin.emails || [],
-                regexp = cfg.admin.regexp;
-            if (!req.isAuthenticated() ||
-                (emails.indexOf(req.user.email) == -1 && (!regexp || !req.user.email.match(regexp, 'ig')))) {
-                return res.send(400);
+            if (!req.isAdmin()) {
+                return res.send('403 error');
             }
             next();
         },

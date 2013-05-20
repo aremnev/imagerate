@@ -1,9 +1,15 @@
 <div class="comments">
     <ul class="results unstyled">
         <% for comment in @comments : %>
-            <li class="clearfix">
+            <li class="clearfix <% if comment.user._id + '' == @user_id + '': %>me<% end %>">
                 <% include 'includes/userpic.ect', {user: comment.user, h: @h} %>
-                <span class="title"><a href="/users/<%- comment.user._id %>"><%= comment.user.name %></a></span>
+                <span class="title">
+                    <% if comment.user._id + '' != @user_id + '': %>
+                        <a href="/users/<%- comment.user._id %>"><%= comment.user.name %></a>
+                    <% else: %>
+                        <a href="/users/<%- comment.user._id %>">Me</a>
+                    <% end %>
+                </span>
                 <span class="time"><i><%= @h.formatTime(comment.createdAt) %></i></span>
                 <p><%= comment.body %></p>
             </li>

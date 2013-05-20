@@ -25,11 +25,6 @@ exports.index = function (req, res) {
                 }));
             },
             function(cb){
-                Image.list(_.extend(options, {sort: {'contest.rating': -1}}),  safe(cb, function(images) {
-                    locals.popular_images = images;
-                }));
-            },
-            function(cb){
                 Image.list(_.extend(options, {sort: {'viewsCount': -1}}),  safe(cb, function(images) {
                     locals.viewed_images = images;
                 }));

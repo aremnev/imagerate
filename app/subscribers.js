@@ -11,7 +11,18 @@ function subscribers (cfg) {
 
     return function(req, res, next) {
         async.series([
-
+            function(callback) {
+                req.isAdmin = function() {
+                    var emails = cfg.admin.emails || [],
+                        regexp = cfg.admin.regexp;
+                    if (!req.isAuthenticated() ||
+                        (emails.indexOf(req.user.email) == -1 && (!regexp || !req.user.email.match(regexp, 'ig')))) {
+                        return false;
+                    }
+                    return true;
+                }
+                callback();
+            },
             function(callback){
                 var options = {perPage: 5};
                 Contest.list(options, function(err, contests){

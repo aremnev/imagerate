@@ -21,9 +21,8 @@ module.exports = function (app, passport, auth, config) {
 
     // image routes
     var images = require('../controllers/images');
-    app.post('/images', auth.requiresLogin, validate.createImage, images.create);
     app.get('/images/recent', images.recentList);
-    app.get('/images/rated', images.ratedList);
+    //app.get('/images/rated', images.ratedList);
     app.get('/images/viewed', images.viewedList);
     app.get('/images/:imageId', images.show);
     app.del('/images/:imageId', auth.requiresLogin, auth.image.hasAuthorization, images.remove);
@@ -47,6 +46,7 @@ module.exports = function (app, passport, auth, config) {
     app.post('/contests/:contestId', auth.requiresLogin, auth.adminAccess, contests.update);
     app.get('/contests', contests.list);
     app.get('/contests/:contestId', contests.detail);
+    app.post('/contests/:contestId/images', auth.requiresLogin, validate.createImage, images.create);
     app.param('contestId', contests.contest);
 
 

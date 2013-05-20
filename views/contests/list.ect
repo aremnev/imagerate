@@ -23,7 +23,7 @@
 
 <div class="row">
     <div class="span10">
-        <% if @req.isAuthenticated() : %>
+        <% if @req.isAdmin() : %>
         <form class="well well-small form-inline" action="/contests/" method="post">
             Create new contest:
             <input type="text" pattern="^(?=\s*\S).*$" name="title" placeholder="Title" maxlength="255" required/>

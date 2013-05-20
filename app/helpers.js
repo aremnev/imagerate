@@ -30,6 +30,8 @@ function helpers (cfg) {
                 return result > 0;
             }
         }(req);
+        res.locals.h.isPastDate = isPastDate;
+        res.locals.h.isNewDate = isNewDate;
         next()
     }
 }
@@ -59,4 +61,16 @@ function formatTime(date, format) {
 
 function formatDate(date) {
     return formatTime(date, 'MMM DD, YYYY');
+}
+
+function isPastDate(date) {
+    var date = new Date(date);
+    var now = new Date();
+    return date < now;
+}
+
+function isNewDate(date) {
+    var date = new Date(date);
+    var now = new Date();
+    return date > now;
 }

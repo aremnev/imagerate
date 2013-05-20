@@ -33,7 +33,7 @@ describe('Images', function() {
         });
 
         it('POST /images with lack of parameters should respond with error message', function(done) {
-            var req = request(app).post('/images');
+            var req = request(app).post('/contests/' + locals.contestId +'/images');
             req.cookies = loginer.cookies;
             req
                 .expect(400)
@@ -44,11 +44,10 @@ describe('Images', function() {
         });
 
         it('POST /images with invalid file should respond with error message', function(done) {
-            var req = request(app).post('/images');
+            var req = request(app).post('/contests/' + locals.contestId +'/images');
             req.cookies = loginer.cookies;
             req
                 .field('title', 'Fabulous Script')
-                .field('contest[contest]', locals.contestId)
                 .attach('image', './public/js/common.js')
                 .expect(400)
                 .end(function(err, res) {
@@ -57,12 +56,11 @@ describe('Images', function() {
                 });
         });
 
-        it('POST /images with proper parameters should respond with new image data', function(done) {
-            var req = request(app).post('/images');
+        it('POST /contests/:contestId/images with proper parameters should respond with new image data', function(done) {
+            var req = request(app).post('/contests/' + locals.contestId +'/images');
             req.cookies = loginer.cookies;
             req
                 .field('title', 'Fabulous Image')
-                .field('contest[contest]', locals.contestId)
                 .attach('image', './public/img/google.png')
                 .expect(200)
                 .end(function(err, res) {
@@ -99,8 +97,18 @@ describe('Images', function() {
     });
 
     context('When not logged in', function () {
+        var locals = {};
+
+        before(function(done) {
+            Contest.findOne(function(err, contest) {
+                locals.contest = contest;
+                locals.contestId = contest._id.toString();
+                done();
+            });
+        });
+
         it('POST: /images should respond with error message', function (done) {
-            var req = request(app).post('/images');
+            var req = request(app).post('/contests/' + locals.contestId +'/images');
             req
                 .expect(401)
                 .end(function (err, res) {
@@ -127,28 +135,6 @@ describe('Images', function() {
             req
                 .expect(200)
                 .end(done);
-        })
-
-        it('GET: /images/rated (json) should respond with images', function (done) {
-            var req = request(app).get('/images/rated?json=1')
-            req
-                .expect(200)
-                .end(function (err, res) {
-                    var data = res.body;
-                    assert.ok(data.images.length);
-                    assert.ok(data.pages);
-                    assert.ok(data.page);
-                    done();
-                });
-        })
-
-        it('GET: /images/rated with Content-Type text/html', function (done) {
-            var req = request(app).get('/images/rated')
-            req
-                .expect(200)
-                .end(function (err, res) {
-                    done();
-                });
         })
 
         it('GET: /images/viewed (json) should respond with images', function (done) {
