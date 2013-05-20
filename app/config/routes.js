@@ -44,6 +44,7 @@ module.exports = function (app, passport, auth, config) {
     var contests = require('../controllers/contests');
     app.post('/contests', auth.requiresLogin, auth.adminAccess, validate.createContest, contests.create);
     app.post('/contests/:contestId', auth.requiresLogin, auth.adminAccess, contests.update);
+    app.delete('/contests/:contestId', auth.requiresLogin, auth.adminAccess, contests.delete);
     app.get('/contests', contests.list);
     app.get('/contests/:contestId', contests.detail);
     app.post('/contests/:contestId/images', auth.requiresLogin, validate.createImage, images.create);

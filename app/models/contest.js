@@ -3,6 +3,7 @@
  */
 
 var mongoose = require('mongoose'),
+    async = require('async'),
     Schema = mongoose.Schema;
 
 
@@ -21,6 +22,23 @@ var ContestSchema = new Schema({
     startDate : {type : Date, default : Date.now},
     dueDate: {type : Date, default : nowPlusOneMonth}
 });
+
+
+/**
+ * Pre-remove hook
+ */
+
+ContestSchema.pre('remove', function (next) {
+    var contest = this;
+    mongoose.model('Image').find({'contest.contest': contest._id}, function(err, images) {
+        async.map(images, function(image, cb) {
+            image.remove(function() { cb(); });
+        }, function(err, res){
+            next();
+        });
+    })
+
+})
 
 /**
  * Validations

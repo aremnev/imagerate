@@ -15,11 +15,8 @@ var mongoose = require('mongoose'),
 
 exports.contest = function(req, res, next, id){
     Contest.findOne({_id: id}, function (err, contest) {
-        if (err) {
-            return next(err);
-        }
         if (!contest) {
-            return next(new Error('Failed to load contest ' + id));
+            return res.status(404).render('404.ect');
         }
         req.contest = contest;
         next();
@@ -44,7 +41,21 @@ exports.create = function (req, res) {
 
 
 /**
- * Contest create
+ * Contest delete
+ */
+
+exports.delete = function (req, res) {
+    req.contest.remove(function (err) {
+        if (err) return res.json(401, {
+            message: err.message
+        });
+        return res.json({ ok: true });
+    })
+}
+
+
+/**
+ * Contest update
  */
 
 exports.update = function (req, res) {

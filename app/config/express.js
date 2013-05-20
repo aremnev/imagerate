@@ -84,10 +84,10 @@ module.exports = function (app, config, passport) {
         // properties, use instanceof etc.
         app.use(function(err, req, res, next){
             // treat as 404
-            if (~err.message.indexOf('not found')) return next()
+            if (res.statusCode == 404 || ~err.message.indexOf('not found')) return next()
 
             // log it
-            console.error(err.message)
+            console.error(err.message);
 
             // error page
             res.status(500).render('500.ect', { err: err.stack })

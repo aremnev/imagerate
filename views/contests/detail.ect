@@ -18,7 +18,9 @@
         <% if @req.isAuthenticated() and @imageAddedCount < 3: %>
             <li class="starred"><a href="#uploadModal" role="button" data-toggle="modal">Add image to contest</a></li>
         <% end %>
-        <li class="starred"><a href="/users/<%- @req.user._id %>">See your images</a></li>
+        <% if @req.isAuthenticated() : %>
+            <li class="starred"><a href="/users/<%- @req.user._id %>">See your images</a></li>
+        <% end %>
     </ul>
     <% if @req.isAuthenticated() and @imageAddedCount < 3: %>
         <% include 'includes/modals/upload.ect', {contest: @req.contest, user: @req.user} %>

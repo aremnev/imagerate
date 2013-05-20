@@ -6,7 +6,9 @@
 var mongoose = require('mongoose'),
     User = mongoose.model('User'),
     Contest = mongoose.model('Contest'),
-    Image = mongoose.model('Image');
+    Image = mongoose.model('Image'),
+    async = require('async'),
+    safe = require('../async_helpers').safe;
 
 exports.signin = function (req, res) {}
 
@@ -82,7 +84,8 @@ exports.create = function (req, res) {
 exports.profile = function (req, res) {
     var user = req.profile,
         page = parseInt(req.param('page') > 0 ? req.param('page') : 1),
-        perPage = 10;
+        perPage = 10,
+        locals = {title: user.name, page: page};
 
     var options = {
         perPage: perPage,
@@ -90,22 +93,56 @@ exports.profile = function (req, res) {
         criteria: { user: user.id }
     }
 
-    Image.list(options, function(err, images) {
-        if (err) return res.render('500')
-        Image.count(options.criteria).exec(function (err, count) {
-            Contest.actualList(function(err, contests){
-                if (err) return res.render('500');
-                res.render('users/profile.ect', {
-                    title: user.name,
-                    images: images,
-                    page: page,
-                    contests: contests,
-                    pages: Math.ceil(count / perPage)
-                });
-            });
-        })
-    })
-
+    async.parallel([
+        function(cb) {
+            async.waterfall([
+                function (callback) {
+                    Image.count(options.criteria).exec(safe(callback, function (count) {
+                        locals.pages = Math.ceil(count / perPage);
+                        locals.imagesCount = count;
+                    }));
+                },
+                function (count, callback) {
+                    if(count) {
+                        Image.list(options, safe(callback, function (images) {
+                            locals.images = images;
+                        }));
+                    } else {
+                        locals.images = [];
+                        callback(null, locals.images)
+                    }
+                }], function(err) {
+                    cb();
+                }
+            );
+        },
+        function(cb) {
+            Contest.actualList(safe(cb, function(contests){
+                locals.contests = contests;
+            }));
+        },
+        function(cb) {
+            var criteria = {
+                'contest.evaluations.user': req.user._id
+            };
+            Image.count(criteria).exec(safe(cb, function (count) {
+                locals.ratedImagesCount = count;
+            }));
+        },
+        function(cb) {
+            var opts = {
+                query: options.criteria,
+                map: function() { emit(this.contest.contest, 1); },
+                reduce: function(key, values) { return values.length; }
+            };
+            Image.mapReduce(opts, safe(cb, function(result) {
+                locals.contestsCount = result.length;
+            }));
+        }
+    ], function(err) {
+        if (err) { return req.render('500'); }
+        res.render('users/profile.ect', locals);
+    });
 }
 
 /**

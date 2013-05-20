@@ -118,7 +118,7 @@ ImageSchema.methods = {
         var contest = this.contest;
         var count = contest.evaluationsCount;
 
-        var newRating = contest.ratingSum || 0 + rateValue;
+        var newRating = (contest.ratingSum || 0) + rateValue;
 
         contest.ratingSum = newRating;
         contest.evaluationsCount = count + 1;
