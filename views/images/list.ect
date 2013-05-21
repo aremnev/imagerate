@@ -20,16 +20,20 @@
 <% end %>
 <ul class="thumbnails">
     <% for image, i in @images: %>
-        <li <% if image.getRating() and @winners: %>class="winner-<%- i + 1 %>"<%end %>>
+        <li>
             <a class="thumbnail image-to-rate fixed-rating" href="/images/<%- image.id %>">
                 <% if @remove and @user and (image.user._id + '' == @user._id + ''): %>
                     <span data-confirm="Are you sure?" data-ok="<%- @url || '' %>" href="/images/<%- image.id %>" class="remove ajax-delete">×</span>
                 <% end %>
                 <img src="<%- @h.imageUrl(image.image, {width: 156, height: 156, crop: 'pad'}) %>" alt="<%= image.title %>" title="<%= image.title %>"/>
-                <% if @h.isPastDate(image.contest.contest.dueDate): %>
-                    <span class="rating-sum"><%- image.getRating() %></span>
-                <% end %>
             </a>
+            <div class="caption center small ">
+                <span class="title"><%= image.title %></span>
+                <% if @h.isPastDate(image.contest.contest.dueDate) and @winners: %>
+                    <br />
+                    <span class="label">Rating: <%- image.getRating() %></span> <span class="label <% if image.getRating() and @winners: %>winner-<%- (i + 1) * @page %> <%end %>">Rank: <%- (i + 1) * @page %></span>
+                <% end %>
+            </div>
         </li>
     <% end %>
 </ul>

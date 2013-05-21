@@ -101,53 +101,31 @@ header {
 .thumbnails {
 
   li {
-    position: relative;
+    a {
+      position: relative;
+    }
 
     &:hover .remove {
       display: block;
     }
 
-    .rating-sum {
-      background: @header-background;
-      color: @link-color;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      top: -7px;
-      right: -15px;
-      text-align: center;
-      line-height: 30px;
-      size: 16px;
-      font-weight: bold;
-      dipslay: block;
-      position: absolute;
-    }
-
-    &.winner-1, &.winner-2, &.winner-3 {
-      &:after {
-        content: "I";
-        dipslay: block;
-        position: absolute;
-        bottom: -7px;
-        right: -15px;
-        width: 30px;
-        height: 30px;
-        color: @link-color;
-        border-radius: 50%;
-        text-align: center;
-        line-height: 30px;
-        size: 16px;
-        font-weight: bold;
+    .caption {
+      .winner-1 {
         background: gold;
       }
-    }
-    &.winner-2:after {
-      content: "II";
-      background: silver;
-    }
-    &.winner-3:after {
-      content: "III";
-      background: #ff8c00;
+      .winner-2 {
+        background: silver;
+      }
+      .winner-3 {
+        background: #ff8c00;
+      }
+      .title {
+        max-width: 150px;
+        text-overflow: ellipsis;
+        vertical-align: sub;
+        white-space: nowrap;
+        overflow: hidden;
+      }
     }
   }
 
