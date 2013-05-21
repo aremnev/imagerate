@@ -84,6 +84,7 @@ exports.create = function (req, res) {
 exports.profile = function (req, res) {
     var user = req.profile,
         page = parseInt(req.param('page') > 0 ? req.param('page') : 1),
+        contestId = req.param('contest'),
         perPage = 10,
         locals = {title: user.name, page: page};
 
@@ -93,11 +94,15 @@ exports.profile = function (req, res) {
         criteria: { user: user.id }
     }
 
+    if(contestId) {
+        options.criteria['contest.contest'] = contestId
+    }
+
     async.parallel([
         function(cb) {
             async.waterfall([
                 function (callback) {
-                    Image.count(options.criteria).exec(safe(callback, function (count) {
+                    Image.count({user: user.id}).exec(safe(callback, function (count) {
                         locals.pages = Math.ceil(count / perPage);
                         locals.imagesCount = count;
                     }));
@@ -117,11 +122,6 @@ exports.profile = function (req, res) {
             );
         },
         function(cb) {
-            Contest.actualList(safe(cb, function(contests){
-                locals.contests = contests;
-            }));
-        },
-        function(cb) {
             var criteria = {
                 'contest.evaluations.user': req.user._id
             };
@@ -131,13 +131,16 @@ exports.profile = function (req, res) {
         },
         function(cb) {
             var opts = {
-                query: options.criteria,
+                query: { user: user.id },
                 map: function() { emit(this.contest.contest, 1); },
                 reduce: function(key, values) { return values.length; }
             };
-            Image.mapReduce(opts, safe(cb, function(result) {
-                locals.contestsCount = result.length;
-            }));
+            Image.mapReduce(opts, function(err, result) {
+                var ids = _.pluck(result, '_id');
+                Contest.find({'_id': { $in: ids}}, safe(cb, function(contests) {
+                    locals.contests = contests;
+                }));
+            });
         }
     ], function(err) {
         if (err) { return req.render('500'); }

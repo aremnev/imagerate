@@ -21,11 +21,21 @@
 <% block 'header-right' : %>
     <h3>Your stats</h3>
     <ul class="photos">
-        <li><i>Contests:</i> <%- @contestsCount %></li>
+        <li><i>Contests:</i> <%- @contests.length %></li>
         <li><i>Images uploaded:</i> <%- @imagesCount %></li>
         <li><i>Images rated:</i> <%- @ratedImagesCount %></li>
     </ul>
 <% end %>
+
+<form action="<%- @req._parsedUrl.pathname %>" class="well well-small form-search">
+    <select name="contest">
+        <option value="">All</option>
+        <% for contest in @contests: %>
+            <option <% if @req.param('contest') == contest._id + '': %>selected="selected"<% end %> value="<%- contest._id %>"><%= contest.title %></option>
+        <% end %>
+    </select>
+    <button type="submit" class="btn">Search</button>
+</form>
 
 
 <h2>Images</h2>
