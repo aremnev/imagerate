@@ -76,7 +76,7 @@ describe('Rating for images', function() {
                     .end(function(err, res) {
                         var data = res.body;
                         assert.equal(data.id, locals.image._id);
-                        assert.equal(data.rating, 4.5);
+                        assert.equal(data.rating, 9);
                         assert.equal(data.newLike.user._id, locals.user2._id);
                         done();
                     });

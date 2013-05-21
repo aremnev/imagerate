@@ -46,7 +46,7 @@ exports.rateImage = function rateImage(req, res) {
 
         res.send({
             id: image._id,
-            rating: image.contest.rating,
+            rating: image.contest.ratingSum,
             count: image.contest.evaluationsCount,
             newLike: newLike
         });
