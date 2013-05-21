@@ -108,7 +108,7 @@ exports.list = function (req, res) {
 
 exports.detail = function(req, res) {
     var contest = req.contest;
-    var locals = {contest: contest};
+    var locals = {title: contest.title, contest: contest};
     var page = parseInt(req.param('page'));
 
     page = locals.page = page > 0 ? page : 1;

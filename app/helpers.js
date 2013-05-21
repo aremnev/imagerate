@@ -12,8 +12,10 @@ function helpers (cfg) {
     return function (req, res, next) {
         if (!res.locals.h) res.locals.h = {}
         res.locals.req = req;
+        res.locals.appName = cfg.app.name;
         res.locals.h.forms = require('./forms');
         res.locals.h._ = _;
+
         res.locals.h.profileLink = function(size, user){
             return profileLink(cfg, req, size, user);
         }

@@ -20,10 +20,11 @@
     </ul>
 <% end %>
 
-
 <h3>Most Recent Images</h3>
-<ul class="thumbnails">
-    <% include 'images/list.ect', {images: @recent_images, h: @h } %>
+<ul class="slides">
+    <% for image, i in @recent_images: %>
+        <li class="item"><a href="/images/<%- image._id %>"><img class="img-rounded img-polaroid" src="<%- @h.imageUrl(image.image, {width: 400, height: 300, crop: 'fill'}) %>" /></a></li>
+    <% end %>
 </ul>
 
 <h3>Most Viewed Images</h3>

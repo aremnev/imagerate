@@ -35,4 +35,8 @@ $(document).ready(function () {
         });
     }());
 
+    $('.slides').roundabout({
+        autoplay: true,
+        autoplayDuration: 3000
+    });
 });

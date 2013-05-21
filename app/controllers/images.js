@@ -103,7 +103,7 @@ exports.remove = function (req, res) {
 
 function imageList(req, res, type) {
     var page = parseInt(req.param('page') > 0 ? req.param('page') : 1),
-        perPage = 5;
+        perPage = 15;
     var soptions = {
         perPage: perPage,
         page: page - 1

@@ -13,7 +13,7 @@ var async = require('async'),
 
 exports.index = function (req, res) {
     var options = {
-        perPage: 5,
+        perPage: 10,
         page: 0
     }
     var locals = { title: 'Main Page'}
@@ -25,7 +25,7 @@ exports.index = function (req, res) {
                 }));
             },
             function(cb){
-                Image.list(_.extend(options, {sort: {'viewsCount': -1}}),  safe(cb, function(images) {
+                Image.list(_.extend(options, {perPage: 5, sort: {'viewsCount': -1}}),  safe(cb, function(images) {
                     locals.viewed_images = images;
                 }));
             }
