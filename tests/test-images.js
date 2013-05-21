@@ -8,20 +8,29 @@ var request = require('supertest'),
     mongoose = require('mongoose'),
     Image = mongoose.model('Image'),
     Contest = mongoose.model('Contest'),
+    User = mongoose.model('User'),
     helpers = require('./helpers');
 
-var loginer = new helpers.Loginer(request(app));
 
-before(function (done) {
-    helpers.resetDb(done);
-});
+var loginer = new helpers.Loginer(request(app));
 
 describe('Images', function() {
     context('When logged in', function() {
         var locals = {};
 
+        before(function(done) {
+            User
+                .find()
+                .limit(2)
+                .exec(function(err, users) {
+                    locals.user1 = users[0];
+                    locals.user2 = users[1];
+                    done();
+                });
+        });
+
         before(function (done) {
-            loginer.login(done);
+            loginer.login(done, locals.user1);
         });
 
         before(function(done) {
@@ -93,7 +102,33 @@ describe('Images', function() {
                 });
         });
 
-//        it('DELETE ')
+        it('DELETE /images/:imageId for arbitrary user should be forbidden', function(done) {
+            loginer.login(function() {
+                var req = request(app).del('/images/' + locals.image._id);
+                req.cookies = loginer.cookies;
+                req
+                    .expect(403)
+                    .end(function (err, res) {
+                        assert.ok(res.body.error);
+                        done();
+                    });
+            }, locals.user2);
+        });
+
+        it('DELETE /images/:imageId for image owner should respond with deletion confirmation', function(done) {
+            loginer.login(function() {
+                var req = request(app).del('/images/' + locals.image._id);
+                req.cookies = loginer.cookies;
+                req
+                    .expect(200)
+                    .end(function (err, res) {
+                        var image = res.body.image;
+                        assert.ok(image.deleted);
+                        assert.equal(image._id, locals.image._id);
+                        done();
+                    });
+            }, locals.user1);
+        });
     });
 
     context('When not logged in', function () {
@@ -168,7 +203,6 @@ describe('Images', function() {
                         done();
                     });
             });
-
         })
 
         it('GET: /images/:imageId (json) should respond with image data', function (done) {

@@ -145,7 +145,7 @@ ImageSchema.methods = {
      */
     getRatingByUser: function(user, callback) {
         var evaluation = _.find(this.contest.evaluations, function(evaluation) {
-            return evaluation.user._id + '' == user._id + '';
+            return evaluation.user + '' === user._id + '';
         })
         callback(null, evaluation ? evaluation.rating : 0);
 //        Image

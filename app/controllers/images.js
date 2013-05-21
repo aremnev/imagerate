@@ -97,7 +97,7 @@ exports.create = function (req, res) {
 exports.remove = function (req, res) {
     var image = req.image
     image.remove(function(err){
-        res.send({});
+        res.send({ image: { _id: req.image._id, deleted: true }});
     })
 }
 
