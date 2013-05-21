@@ -22,7 +22,7 @@ describe('Contests pages', function () {
             req
                 .expect(401)
                 .end(function (err, res) {
-                    assert.ok(res.body.message);
+                    assert.ok(res.body.error);
                     done();
                 });
         })
@@ -30,9 +30,10 @@ describe('Contests pages', function () {
         var contest;
 
         it('POST: /contests should respond with new contest data', function (done) {
-            var req = request(app).post('/contests')
+            var req = request(app).post('/contests');
             req.cookies = loginer.cookies
             req
+                .set('Accept', 'application/json')
                 .field('title', 'Another one contest')
                 .field('description', 'Description for another one contest')
                 .expect(200)

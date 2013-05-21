@@ -56,7 +56,11 @@ function imageUrl (req) {
 
 function formatTime(date, format) {
     format = format || 'HH:mm MMM DD, YYYY';
-    return moment(date).format(format);
+    try {
+        return moment(date).format(format);
+    } catch (e) {
+        return null;
+    }
 }
 
 function formatDate(date) {

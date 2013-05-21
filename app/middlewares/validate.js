@@ -36,6 +36,17 @@ function createImage(req, res, next) {
  * @param next
  */
 function createContest(req, res, next) {
+    if('dueDate' in req.body) {
+        req.assert('dueDate', 'Enter due date').notEmpty();
+    }
+    if('startDate' in req.body) {
+        req.assert('startDate', 'Enter start date').notEmpty();
+    }
+    req.assert('title', 'Enter contest title').notEmpty();
+    var errors = req.validationErrors(true);
+    if (errors) {
+        return res.send(400, { error: errors });
+    }
     next();
 }
 

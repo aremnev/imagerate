@@ -3,17 +3,21 @@ String.prototype.repeat = function(num) {
 }
 
 $(document).ready(function () {
-
-    $('.remove').on('click', function(e) {
-        var $self = $(this);
-        $.ajax({
-            url: $self.data('action'),
-            type: 'delete',
-            success: function(d) {
-                $self.parent().remove();
-            }
-        });
-        return false;
+    $(document).on('click', '.ajax-delete', function(e){
+        e.preventDefault();
+        var button = $(this),
+            text = button.data('confirm'),
+            ok = button.data('ok'),
+            url = button.attr('href');
+        if (confirm(text)) {
+            $.ajax({
+                type: 'delete',
+                url: url
+            }).done(function(msg) {
+               if(ok) window.location.href = ok;
+               else window.location.href = window.location.href;
+            });
+        }
     });
 
     (function(){

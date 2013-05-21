@@ -30,11 +30,18 @@ exports.contest = function(req, res, next, id){
 exports.create = function (req, res) {
     var contest = new Contest(req.body);
     contest.save(function (err) {
-        if (err) return res.json(401, {
-            message: err.message
-        });
-        return res.json({
-            contest: contest
+        if (err) {
+            return res.json(401, {
+                message: err.message
+            });
+        }
+        return res.format({
+            text: function(){
+                res.redirect('/contests/' + contest._id);
+            },
+            json: function(){
+                res.json({ contest: contest });
+            }
         });
     })
 }
@@ -76,7 +83,8 @@ exports.list = function (req, res) {
         function loadContests(callback) {
             var options = {
                     perPage: 30,
-                    criteria: {}
+                    criteria: {},
+                    sort: {'dueDate': -1}
                 };
             Contest.list(options, safe(callback, function(contests) {
                 locals.contests = contests;

@@ -101,7 +101,8 @@ ImageSchema.methods = {
                 self.save(cb);
             }, {transformation: transformation,
                 eager: [
-                {width: 156, height: 156, crop: 'pad'}
+                {width: 156, height: 156, crop: 'pad'},
+                {height: 800, width: 952, crop: 'limit'}
             ]});
 
         imageStream.on('data', cloudStream.write).on('end', cloudStream.end);

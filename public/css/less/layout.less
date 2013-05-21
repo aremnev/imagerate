@@ -107,6 +107,22 @@ header {
       display: block;
     }
 
+    .rating-sum {
+      background: @header-background;
+      color: @link-color;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      top: -7px;
+      right: -15px;
+      text-align: center;
+      line-height: 30px;
+      size: 16px;
+      font-weight: bold;
+      dipslay: block;
+      position: absolute;
+    }
+
     &.winner-1, &.winner-2, &.winner-3 {
       &:after {
         content: "I";
@@ -116,20 +132,22 @@ header {
         right: -15px;
         width: 30px;
         height: 30px;
-        background: @header-background;
         color: @link-color;
         border-radius: 50%;
         text-align: center;
         line-height: 30px;
         size: 16px;
         font-weight: bold;
+        background: gold;
       }
     }
     &.winner-2:after {
       content: "II";
+      background: silver;
     }
     &.winner-3:after {
       content: "III";
+      background: #ff8c00;
     }
   }
 

@@ -29,7 +29,7 @@
 
 
 <h2>Images</h2>
-<% include 'images/list.ect', {images: @images, pages: @pages, page: @page, url: @req._parsedUrl.pathname, h: @h, remove: @req.isAuthenticated() and @req.user.id == @req.profile.id } %>
+<% include 'images/list.ect', {images: @images, pages: @pages, page: @page, url: @req._parsedUrl.pathname, h: @h, remove: true, user: @req.user } %>
 
 
 
