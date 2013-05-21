@@ -29,7 +29,7 @@ module.exports = {
         },
         port: 88654,
         root: require('path').normalize(__dirname + '/..'),
-        mongo: { hostname: 'localhost', port: 27017, username: '', password: '', name: '', db: 'dev-imagerate' },
+        mongo: { hostname: 'localhost', port: 27017, username: '', password: '', name: '', db: 'test-imagerate' },
         google: {
             clientID: '163368963370.apps.googleusercontent.com',
             clientSecret: 'rSsPMMP6MyWsIcnW6ksTg2dR',
