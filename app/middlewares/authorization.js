@@ -32,7 +32,7 @@ var auth = function(cfg) {
         user: {
             hasAuthorization : function (req, res, next) {
                 if (req.profile.id != req.user.id) {
-                    return res.send('403 error');
+                    return res.send(403, { error: 'Forbidden' });
                 }
                 next()
             }
@@ -41,7 +41,7 @@ var auth = function(cfg) {
         image: {
             hasAuthorization : function (req, res, next) {
                 if (req.image.user.id != req.user.id) {
-                    return res.send('403 error');
+                    return res.send(403, { error: 'Forbidden' });
                 }
                 next()
             }
