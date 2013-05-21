@@ -14,28 +14,23 @@ var request = require('supertest'),
 
 var loginer = new helpers.Loginer(request(app));
 
-before(function (done) {
-    helpers.resetDb(done);
-});
-
 describe('Images', function() {
     context('When logged in', function() {
         var locals = {};
-        var user1, user2;
 
         before(function(done) {
             User
                 .find()
                 .limit(2)
                 .exec(function(err, users) {
-                    user1 = users[0];
-                    user2 = users[1];
+                    locals.user1 = users[0];
+                    locals.user2 = users[1];
                     done();
                 });
         });
 
         before(function (done) {
-            loginer.login(done, user1);
+            loginer.login(done, locals.user1);
         });
 
         before(function(done) {
@@ -119,7 +114,7 @@ describe('Images', function() {
                         assert.ok(res.body.error);
                         done();
                     });
-            }, user2);
+            }, locals.user2);
         });
 
         it('DELETE /images/:imageId for image owner should respond with deletion confirmation', function(done) {
@@ -134,7 +129,7 @@ describe('Images', function() {
                         assert.equal(image._id, locals.image._id);
                         done();
                     });
-            }, user1);
+            }, locals.user1);
         });
     });
 
@@ -222,7 +217,6 @@ describe('Images', function() {
                         done();
                     });
             });
-
         })
 
         it('GET: /images/:imageId (json) should respond with image data', function (done) {

@@ -16,14 +16,13 @@ exports.rateImage = function rateImage(req, res) {
     var user = req.user;
     var rateValue = Number(req.params.rateValue.input);
 
-
     image.getRatingByUser(user, checkIfAlreadyRated);
 
     function checkIfAlreadyRated(err, rating) {
         if (rating) {
-            return req.send({
+            return res.send(403, {
                 id: image._id,
-                error: 'already rated'
+                error: 'Already rated'
             });
         }
 
