@@ -39,4 +39,22 @@ $(document).ready(function () {
         autoplay: true,
         autoplayDuration: 3000
     });
+
+    (function(){
+        var wait = $('.wait');
+        if(wait.length) {
+            var loaded = 0;
+            wait.one('load', function(e){
+                loaded++;
+                if(loaded == wait.length) {
+                    console.log("all loaded");
+                    $('.waiting').removeClass('waiting');
+                }
+            }).each(function() {
+                if(this.complete) $(this).load();
+            });
+        } else {
+            $('.waiting').removeClass('waiting');
+        }
+    }());
 });

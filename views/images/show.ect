@@ -45,7 +45,7 @@
          ng-mouseleave="rating.state = rating.defaultState"
     <% end %>
 >
-    <img class="img-polaroid big" ref="<%- @req.image.image.cdnUri %>" title="<%= @req.image.title %>"
+    <img class="img-polaroid big wait" ref="<%- @req.image.image.cdnUri %>" title="<%= @req.image.title %>"
          src="<%- @h.imageUrl(@req.image.image, {width: 952, height: 800, crop: 'limit'}) %>"/>
     <% if @req.isAuthenticated() and @req.image.user._id + '' != @req.user._id + '' : %>
         <% include 'includes/rating.ect', { rating: @req.image.getRating(), thumbnail: false, isPast: @h.isPastDate(@req.image.contest.contest.dueDate) } %>

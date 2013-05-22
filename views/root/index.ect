@@ -23,7 +23,7 @@
 <h3>Most Recent Images</h3>
 <ul class="slides">
     <% for image, i in @recent_images: %>
-        <li class="item"><a href="/images/<%- image._id %>"><img class="img-rounded img-polaroid" src="<%- @h.imageUrl(image.image, {width: 400, height: 300, crop: 'fill'}) %>" /></a></li>
+        <li class="item"><a href="/images/<%- image._id %>"><img class="img-rounded img-polaroid wait" src="<%- @h.imageUrl(image.image, {width: 400, height: 300, crop: 'fill'}) %>" /></a></li>
     <% end %>
 </ul>
 

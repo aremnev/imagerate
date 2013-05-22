@@ -14,71 +14,72 @@
 
     <% content 'scripts' %>
 </head>
-<body <% if @req.isAuthenticated() : %>class="logged-in"<% end %>>
-    <div class="navbar">
-        <div class="">
-            <div class="container">
-                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="brand logo" href="/">ImageRate</a>
-                <div class="nav-collapse collapse">
-                    <ul class="nav">
-                        <% if @req.isAuthenticated() : %>
-                            <li>
-                                <a href="/users/<%= @req.user.id %>">My profile</a>
+<body <% if @req.isAuthenticated() : %>class="logged-in waiting"<% end %>>
+    <div class="wrapper">
+        <div class="navbar">
+            <div class="">
+                <div class="container">
+                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="brand logo" href="/">ImageRate</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <% if @req.isAuthenticated() : %>
+                                <li>
+                                    <a href="/users/<%= @req.user.id %>">My profile</a>
+                                </li>
+                            <% end %>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contests<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <% for contest in @extra.contests: %>
+                                        <li><a href="/contests/<%- contest._id %>"><%= contest.title %></a></li>
+                                    <% end %>
+                                    <li><a href="/contests">See all</a></li>
+                                </ul>
                             </li>
+                        </ul>
+                        <% if @req.isAuthenticated() : %>
+                        <p class="navbar-text pull-right">
+                            <a href="/users/<%= @req.user.id %>" class="navbar-link"><img class="img-bordered" src="<%- @h.profileLink(32) %>" alt="<%= @req.user.name %>" /> <%= @req.user.name %></a> (<a href="/logout" class="navbar-link">logout</a>)
+                        </p>
+                        <% else : %>
+                        <p class="navbar-text pull-right">
+                        <a href="/auth/google"><img height="40" width="40" src="/img/google.png" alt="google" /></a>
+                        </p>
                         <% end %>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contests<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <% for contest in @extra.contests: %>
-                                    <li><a href="/contests/<%- contest._id %>"><%= contest.title %></a></li>
-                                <% end %>
-                                <li><a href="/contests">See all</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <% if @req.isAuthenticated() : %>
-                    <p class="navbar-text pull-right">
-                        <a href="/users/<%= @req.user.id %>" class="navbar-link"><img class="img-bordered" src="<%- @h.profileLink(32) %>" alt="<%= @req.user.name %>" /> <%= @req.user.name %></a> (<a href="/logout" class="navbar-link">logout</a>)
-                    </p>
-                    <% else : %>
-                    <p class="navbar-text pull-right">
-                    <a href="/auth/google"><img height="40" width="40" src="/img/google.png" alt="google" /></a>
-                    </p>
-                    <% end %>
-                </div><!--/.nav-collapse -->
-            </div>
-        </div>
-    </div>
-
-    <div ng-controller="RatingController">
-        <header>
-            <div class="container">
-                <div class="header-left">
-                    <% content 'header-left' %>
-                </div>
-                <div class="header-right">
-                    <% content 'header-right' %>
+                    </div><!--/.nav-collapse -->
                 </div>
             </div>
-        </header>
-
-        <div class="container">
-            <% content %>
-
         </div>
 
-        <footer>
-            <div class="container">
-                <p>(c) 2013</p>
-            </div>
-        </footer>
-    </div>
+        <div ng-controller="RatingController">
+            <header>
+                <div class="container">
+                    <div class="header-left">
+                        <% content 'header-left' %>
+                    </div>
+                    <div class="header-right">
+                        <% content 'header-right' %>
+                    </div>
+                </div>
+            </header>
 
+            <div class="container">
+                <% content %>
+
+            </div>
+
+            <footer>
+                <div class="container">
+                    <p>(c) 2013</p>
+                </div>
+            </footer>
+        </div>
+    </div>
     <script type="text/javascript" src="/js/libs/angular.min.js"></script>
     <script type="text/javascript" src="/js/ng-rating.js"></script>
     <% content 'angular-scripts' %>
