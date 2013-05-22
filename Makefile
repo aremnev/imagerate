@@ -57,6 +57,7 @@ af-install: ;@echo "AppFog gem install....."; \
 	sudo gem install af
 
 af-update: ;@echo "AppFog update ${PROJECT}....."; \
+    $(ACTIVATE_ENV) && \
 	npm shrinkwrap && \
 	if [[ `af user | grep -F "[N/A]"` > /dev/null ]]; then af login; fi && \
 	af update $(NAMESPACE)
