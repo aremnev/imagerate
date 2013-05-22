@@ -90,12 +90,15 @@ module.exports = function (app, config, passport) {
             console.error(err.message);
 
             // error page
-            res.status(500).render('500.ect', { err: err.stack })
+            res.status(500).render('500.ect', {
+                err: config.log ? err.stack : '',
+                title: 'Service unavailable'
+            })
         })
 
         // assume 404 since no middleware responded
         app.use(function(req, res, next){
-            res.status(404).render('404.ect', { url: req.originalUrl, error: 'Not found' })
+            res.status(404).render('404.ect');
         })
     });
 }

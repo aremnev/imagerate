@@ -1,15 +1,17 @@
 REPORTER=spec
 TESTS=$(shell find ./tests -type f -name "test*.js")
+ACTIVATE_ENV=if [ -f env/node/bin/activate ]; then source env/node/bin/activate; fi
 SHELL=/bin/bash
 
 PROJECT = "project"
 NAMESPACE = "contest-app"
 
 all: clean node-virtual install;
-	@echo "*** Nodeenv with node-0.8.14 and installed modules is created. Activate it: 'source env/node/bin/activate'.";
-	@echo "*** After that you can execute 'test' and 'start' commands."
+	@echo "*** Nodeenv with node-0.8.14 and installed modules is created.";
+	@echo "*** Now you can execute 'test' and 'start' commands."
 
 test: ;@echo ""; \
+    $(ACTIVATE_ENV) && \
 	NODE_ENV=test ./node_modules/.bin/mocha \
 		--require should \
 		--reporter $(REPORTER) \
@@ -28,12 +30,12 @@ node-virtual: ;@echo "Prepare nodeenv....."; \
 	source env/bin/activate && \
 	easy_install nodeenv && \
 	nodeenv env/node --node=0.8.14 --npm=1.2.18;
-	@echo "*** Nodeenv with node-0.8.14 is created. Activate it: 'source env/node/bin/activate'."
-	@echo "*** After that you can execute 'install', 'test' and 'start' commands."
+	@echo "*** Nodeenv with node-0.8.14 is created."
+	@echo "*** Now you can execute 'install', 'test' and 'start' commands."
 
 
 install: ;@echo "Installing ${PROJECT}....."; \
-	if [ -f env/node/bin/activate ]; then source env/node/bin/activate; fi && \
+	$(ACTIVATE_ENV) && \
 	sudo apt-get install -y mongodb && \
 	rm -f npm-shrinkwrap.json && \
 	npm install;
@@ -46,6 +48,7 @@ clean: ;@echo "Clean ${PROJECT}....."; \
 	rm -rf app-cov;
 
 start: ;@echo "Starting ${PROJECT}....."; \
+    $(ACTIVATE_ENV) && \
 	npm start;
 
 af-install: ;@echo "AppFog gem install....."; \

@@ -156,8 +156,9 @@ exports.user = function (req, res, next, id) {
     User
         .findOne({ _id : id })
         .exec(function (err, user) {
-            if (err) return next(err);
-            if (!user) return next(new Error('Failed to load User ' + id));
+            if (err || !user) {
+                return res.status(404).render('404.ect');
+            }
             req.profile = user;
             next();
         })

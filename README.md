@@ -21,11 +21,10 @@ How to build (Debian like OS):
     cd imagerate
     </pre>
     
-2. Prepare node virtual environment with node-0.8.14 and installed modules with activation (recommended):
+2. Prepare node virtual environment with node-0.8.14 and installed modules:
 
     <pre>
     make
-    source env/node/bin/activate
     </pre>
 
 3. Also if you don't want to use virtual node, you can skip previous step and install modules with your global node ():
