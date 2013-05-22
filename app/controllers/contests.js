@@ -114,7 +114,7 @@ exports.detail = function(req, res) {
     page = locals.page = page > 0 ? page : 1;
 
     var imageOptions = {
-        perPage: 10,
+        perPage: 15,
         page: page - 1,
         criteria: {'contest.contest': contest._id}
     };

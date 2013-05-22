@@ -96,6 +96,12 @@ exports.create = function (req, res) {
 
 exports.remove = function (req, res) {
     var image = req.image
+    if(res.locals.h.isPastDate(image.contest.contest.dueDate)) {
+        return res.send(403, {
+            id: image._id,
+            error: "Image of finished contest can't be removed."
+        });
+    }
     image.remove(function(err){
         res.send({ image: { _id: req.image._id, deleted: true }});
     })
