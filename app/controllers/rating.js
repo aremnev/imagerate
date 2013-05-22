@@ -35,11 +35,11 @@ exports.rateImage = function rateImage(req, res) {
         }
 
         var newLike = null;
-        if (rateValue == 5) {
+        if (rateValue) {
             var _user = user.toObject();
             _user.image = res.locals.h.profileLink(32, user);
             newLike = {
-                rating: 5,
+                rating: rateValue,
                 user: _user
             };
         }
