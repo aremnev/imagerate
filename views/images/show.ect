@@ -25,10 +25,10 @@
     <ul class="likes-for-image">
         <li class="like" ng-repeat="like in likes">
             <img class="img-bordered" ng-src="{{like.user.image}}" alt="{{like.user.name}}">
-            <div ng-init='starts = "★".repeat(like.rating);' class="like-tooltip">
+            <div class="like-tooltip">
                 <h6>{{like.user.name}}</h6>
                 <% if @h.isPastDate(@req.image.contest.contest.dueDate): %>
-                    <span class="rating">{{starts}}</span>
+                    <span class="rating" ng-init='stars = "★".repeat(like.rating);'>{{stars}}</span>
                 <% end %>
             </div>
         </li>
@@ -44,8 +44,8 @@
     <% if @req.isAuthenticated() : %>
          ng-mouseleave="rating.state = rating.defaultState"
     <% end %>
->   <a href="<%- @req.image.image.data.url %>" target="_blank">
-        <img class="show-image img-polaroid big wait" ref="<%- @req.image.image.cdnUri %>" title="<%= @req.image.title %>"
+>   <a href="<%- @req.image.image.data.url %>" title="Open full image" target="_blank">
+        <img class="show-image img-polaroid big wait" ref="<%- @req.image.image.cdnUri %>"
              src="<%- @h.imageUrl(@req.image.image, {width: 952, height: 800, crop: 'limit'}) %>" /></a>
         <% if @req.isAuthenticated() and @req.image.user._id + '' != @req.user._id + '' : %>
             <% include 'includes/rating.ect', { rating: @req.image.getRating(), thumbnail: false, isPast: @h.isPastDate(@req.image.contest.contest.dueDate) } %>
