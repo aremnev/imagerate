@@ -185,25 +185,33 @@ header {
     }
   }
 
-  .btn {
-    position: relative;
-    top: -1px;
-  }
-
   .image-upload {
     display: inline-block;
+
+    .btn {
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
 
 
     input {
       opacity: 0;
+      filter: alpha(opacity=0);
+      color: #ffffff;
       position: absolute;
       z-index: 1;
-      left: 0;
+      right: 0px;
+      top:0px;
       cursor: pointer;
-      width: 100px;
+      height: 30px;
+      font-size: 23px;
+      direction: ltr;
+      cursor: pointer;
+      line-height: 30px;
     }
 
-    span {
+    .text {
       display: inline-block;
       max-width: 115px;
       overflow-x: hidden;

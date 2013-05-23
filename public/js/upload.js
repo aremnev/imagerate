@@ -14,7 +14,7 @@ $(document).ready(function () {
             dataType: 'json',
             add: function (e, data) {
                 form.data('file', data.files[0]);
-                upload_block.find('span').text(data.files[0].name);
+                upload_block.find('.text').text(data.files[0].name);
                 form.find('[type="submit"]').click(function () {
                     if($.trim(title.val())) {
                         data.submit();
