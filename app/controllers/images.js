@@ -54,6 +54,10 @@ exports.show = function (req, res) {
             var likes = image.contest.evaluations.slice(0, 20).map(function addProfileImage(ev) {
                 var evAsObject = ev.toObject();
                 evAsObject.user.image = res.locals.h.profileLink(32, ev.user);
+                if (!res.locals.h.isPastDate(req.image.contest.contest.dueDate)) {
+                    evAsObject.rating = null;
+                }
+
                 return evAsObject;
             });
             locals.likes = likes;
