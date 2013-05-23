@@ -87,7 +87,7 @@ ImageSchema.methods = {
 
     uploadAndSave: function (image, cb) {
         var self = this,
-            transformation = {format: 'png', width: 6000, height: 6000, crop: 'limit'};
+            transformation = {format: 'png', width: 5000, height: 5000, crop: 'limit'};
 
         var imageStream = fs.createReadStream(image.path, { encoding: 'binary' }),
             cloudStream = cloudinary.uploader.upload_stream(function(data) {
