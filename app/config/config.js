@@ -60,11 +60,6 @@ module.exports = {
             scope: 'https://www.google.com/m8/feeds https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
             photoLink: 'https://lh4.googleusercontent.com/-LnOLxLmyDbM/AAAAAAAAAAI/AAAAAAAAAAA/VYIuGGjpm4o/s{0}-c/photo.jpg'
         },
-        cloudinary: {
-            cloud_name: 'imagerate-local',
-            api_key: '451142758477939',
-            api_secret: 'mz_x6GCybvpFlpFRF5phG4VN8fU'
-        },
         admin: {
             emails: [
                 'dsedelnikov@thumbtack.net',

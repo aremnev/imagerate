@@ -69,7 +69,7 @@ module.exports = function (app, config, passport) {
         app.use(express.favicon());
 
         //Config cloudinary
-        cloudinary.config(config.cloudinary);
+        cloudinary.config(config.cloudinary || true);
 
         // dynamic helpers
         app.use(helpers(config));
