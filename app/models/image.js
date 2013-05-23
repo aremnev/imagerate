@@ -6,6 +6,7 @@ var mongoose = require('mongoose'),
     fs = require('fs'),
     cloudinary = require('cloudinary'),
     _ = require('underscore'),
+    knox = require('../config/knox'),
     Schema = mongoose.Schema;
 
 var Image;
@@ -54,8 +55,17 @@ ImageSchema.pre('remove', function (next) {
     if(!this.image.data || !this.image.data.public_id) {
         return next();
     }
+    var name = this.image.data.public_id + '.' + this.image.data.format;
     cloudinary.uploader.destroy(this.image.data.public_id, function(data){
-        next();
+        var client = knox.instance();
+        if(client) {
+            client.deleteFile(name, function (err, res) {
+                if (err) console.error(err);
+                next();
+            });
+        } else {
+            next();
+        }
     });
 
 })
@@ -87,7 +97,7 @@ ImageSchema.methods = {
 
     uploadAndSave: function (image, cb) {
         var self = this,
-            transformation = {format: 'png', width: 5000, height: 5000, crop: 'limit'};
+            transformation = {format: 'png', width: 1024, height: 1024, crop: 'limit'};
 
         var imageStream = fs.createReadStream(image.path, { encoding: 'binary' }),
             cloudStream = cloudinary.uploader.upload_stream(function(data) {
@@ -95,10 +105,18 @@ ImageSchema.methods = {
                 if (data.error) {
                     return cb({ image: 'Invalid file'});
                 }
-
-                self.image.cdnUri = data.secure_url;
                 self.image.data = data;
-                self.save(cb);
+                var client = knox.instance();
+                if(client) {
+                    var name = data.public_id + '.' + data.format;
+                    client.putFile(image.path, name, { 'x-amz-acl': 'public-read' }, function (err, res) {
+                        self.image.cdnUri = 'http://' + client.bucket + '.' + client.endpoint + '/' + name;
+                        self.save(cb)
+                    });
+                }  else {
+                    self.image.cdnUri = '';
+                    self.save(cb)
+                }
             }, {transformation: transformation,
                 eager: [
                 {width: 156, height: 156, crop: 'pad'},

@@ -29,7 +29,8 @@
         "cloudinary": "latest",
         "express-params": "latest",
         "moment": "latest",
-        "winston": "latest"
+        "winston": "latest",
+        "knox": "latest"
     },
     "devDependencies": {
         "mocha": "latest",

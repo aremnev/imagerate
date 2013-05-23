@@ -20,6 +20,11 @@ module.exports = {
             api_key: '451142758477939',
             api_secret: 'mz_x6GCybvpFlpFRF5phG4VN8fU'
         },
+        storage: {
+            key: 'AKIAINXYBJLOQFJ66FIQ',
+            secret: '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',
+            bucket: 'net_thumbtack_contest'
+        },
         admin: { regexp: '.*' }
     },
 
@@ -42,6 +47,11 @@ module.exports = {
             api_key: '451142758477939',
             api_secret: 'mz_x6GCybvpFlpFRF5phG4VN8fU'
         },
+        storage: {
+            key: 'AKIAINXYBJLOQFJ66FIQ',
+            secret: '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',
+            bucket: 'net_thumbtack_contest'
+        },
         admin: { regexp: '.*' },
         test: true
     },
@@ -60,13 +70,19 @@ module.exports = {
             scope: 'https://www.google.com/m8/feeds https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
             photoLink: 'https://lh4.googleusercontent.com/-LnOLxLmyDbM/AAAAAAAAAAI/AAAAAAAAAAA/VYIuGGjpm4o/s{0}-c/photo.jpg'
         },
+        storage: {
+            key: 'AKIAINXYBJLOQFJ66FIQ',
+            secret: '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',
+            bucket: 'net_thumbtack_contest'
+        },
         admin: {
             emails: [
                 'dsedelnikov@thumbtack.net',
                 'dmnorc@gmail.com',
                 'aremnev@thumbtack.net',
                 'pulyashev@thumbtack.net',
-                'ashipovalov@thumbtack.net'
+                'ashipovalov@thumbtack.net',
+                'epashkevich@thumbtack.net'
             ]
         }
     }

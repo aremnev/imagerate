@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 
 
-module.exports = function (app, config) {
+module.exports = function (config) {
 
     config.db = buildMongoUrl(config.mongo);
     mongoose.connect(config.db);

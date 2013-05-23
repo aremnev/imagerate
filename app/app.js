@@ -17,7 +17,9 @@ var env = process.env.NODE_ENV || 'development',
 var port = cfg.port;
 
 // Bootstrap db connection
-require('./config/mongo')(app, cfg);
+require('./config/mongo')(cfg);
+// Bootstrap imager
+require('./config/knox').config(cfg);
 
 // Bootstrap models
 var models_path = __dirname + '/models';
