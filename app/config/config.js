@@ -70,7 +70,8 @@ module.exports = {
                 'dsedelnikov@thumbtack.net',
                 'dmnorc@gmail.com',
                 'aremnev@thumbtack.net',
-                'pulyashev@thumbtack.net'
+                'pulyashev@thumbtack.net',
+                'ashipovalov@thumbtack.net'
             ]
         }
     }
