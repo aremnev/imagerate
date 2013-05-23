@@ -49,7 +49,7 @@
          ng-mouseleave="rating.state = rating.defaultState"
     <% end %>>
     <% if @req.isAdmin(): %>
-        <a href="http://<%- @req.image.image.cdnUri %>" target="_blank">
+        <a href="<%- @req.image.image.cdnUri %>" target="_blank">
     <% end %>
         <img class="show-image img-polaroid big wait" ref="<%- @req.image.image.cdnUri %>" title="<%= @req.image.title %>"
              src="<%- @h.imageUrl(@req.image.image, {width: 952, height: 800, crop: 'limit'}) %>" />
