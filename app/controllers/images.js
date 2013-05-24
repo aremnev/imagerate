@@ -6,6 +6,8 @@ var mongoose = require('mongoose'),
     User = mongoose.model('User'),
     Image = mongoose.model('Image'),
     async = require('async'),
+    request = require('request'),
+    mime = require('express').mime,
     safe = require('../async_helpers').safe;
 
 
@@ -21,6 +23,15 @@ exports.image = function(req, res, next, id){
         req.image = image;
         next();
     })
+}
+
+exports.raw = function(req, res){
+    var type = mime.lookup(req.image.image.cdnUri);
+    var x = new request(req.image.image.cdnUri);
+    x.pipe(res);
+    x.on('response', function (response) {
+        response.headers['content-type'] = type;
+    });
 }
 
 /**

@@ -21,7 +21,7 @@ var auth = function(cfg) {
 
         adminAccess: function (req, res, next) {
             if (!req.isAdmin()) {
-                return res.send('403 error');
+                return res.status(404).render('404.ect');
             }
             next();
         },

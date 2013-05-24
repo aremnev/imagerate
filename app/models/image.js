@@ -55,7 +55,7 @@ ImageSchema.pre('remove', function (next) {
     if(!this.image.data || !this.image.data.public_id) {
         return next();
     }
-    var name = this.image.data.public_id + '.' + this.image.data.format;
+    var name = this.getCdnId();
     cloudinary.uploader.destroy(this.image.data.public_id, function(data){
         var client = knox.instance();
         if(client) {
@@ -108,9 +108,8 @@ ImageSchema.methods = {
                 self.image.data = data;
                 var client = knox.instance();
                 if(client) {
-                    var name = data.public_id + '.' + data.format;
-                    client.putFile(image.path, name, { 'x-amz-acl': 'public-read' }, function (err, res) {
-                        self.image.cdnUri = 'http://' + client.bucket + '.' + client.endpoint + '/' + name;
+                    client.putFile(image.path, self.getCdnId(), { 'x-amz-acl': 'public-read' }, function (err, res) {
+                        self.image.cdnUri = 'http://' + client.urlBase + '/' + self.getCdnId();
                         self.save(cb)
                     });
                 }  else {
@@ -155,6 +154,13 @@ ImageSchema.methods = {
      */
     getRating: function() {
         return this.contest.ratingSum || 0;
+    },
+
+    /**
+     * Returns sum rating for image
+     */
+    getCdnId: function() {
+        return  this.image.data.public_id + '.' + this.image.data.format;
     },
 
     /**

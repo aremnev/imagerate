@@ -25,7 +25,8 @@ module.exports = function (app, passport, auth, config) {
     //app.get('/images/rated', images.ratedList);
     app.get('/images/viewed', images.viewedList);
     app.get('/images/:imageId', images.show);
-    app.del('/images/:imageId', auth.requiresLogin, auth.image.hasAuthorization, images.remove);
+    app.del('/images/:imageId',  auth.requiresLogin, auth.image.hasAuthorization, images.remove);
+    app.get('/images/:imageId/raw', auth.adminAccess, images.raw);
     app.param('imageId', images.image);
 
 

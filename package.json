@@ -30,7 +30,8 @@
         "express-params": "latest",
         "moment": "latest",
         "winston": "latest",
-        "knox": "latest"
+        "knox": "latest",
+        "request": "latest"
     },
     "devDependencies": {
         "mocha": "latest",
