@@ -56,5 +56,8 @@ $(document).ready(function () {
         } else {
             $('.waiting').removeClass('waiting');
         }
+        setTimeout(function(){
+            $('.waiting').removeClass('waiting');
+        }, 10000);
     }());
 });
