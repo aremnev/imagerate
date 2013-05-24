@@ -4,7 +4,6 @@ ACTIVATE_ENV=if [ -f env/node/bin/activate ]; then source env/node/bin/activate;
 SHELL=/bin/bash
 
 PROJECT = "project"
-NAMESPACE = "contest-app"
 
 all: clean node-virtual install;
 	@echo "*** Nodeenv with node-0.8.14 and installed modules is created.";
@@ -59,8 +58,7 @@ af-install: ;@echo "AppFog gem install....."; \
 af-update: ;@echo "AppFog update ${PROJECT}....."; \
     $(ACTIVATE_ENV) && \
 	npm shrinkwrap && \
-	if [[ `af user | grep -F "[N/A]"` > /dev/null ]]; then af login; fi && \
-	af update $(NAMESPACE)
+	./scripts/af.sh
 
 
 .PHONY: test start install clean test-coverage af-update af-install all node-virtual
