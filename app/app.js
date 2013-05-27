@@ -10,15 +10,14 @@ var express = require('express'),
 
 // Load configurations
 var env = process.env.NODE_ENV || 'development',
-    config = require('./config/config'),
-    cfg = config[env],
+    cfg = require('./config/config')(env),
     auth = require('./middlewares/authorization')(cfg);
 
 var port = cfg.port;
 
 // Bootstrap db connection
 require('./config/mongo')(cfg);
-// Bootstrap imager
+// Bootstrap knox
 require('./config/knox').config(cfg);
 
 // Bootstrap models
