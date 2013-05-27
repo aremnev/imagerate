@@ -8,7 +8,7 @@ var async = require('async'),
     User = mongoose.model('User'),
     Image = mongoose.model('Image'),
     Contest = mongoose.model('Contest'),
-    safe = require('../async_helpers').safe;
+    safe = require('../helpers').safe;
 
 
 exports.index = function (req, res) {

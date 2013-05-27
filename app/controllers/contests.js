@@ -6,7 +6,8 @@ var mongoose = require('mongoose'),
     Contest = mongoose.model('Contest'),
     Image = mongoose.model('Image'),
     async = require('async'),
-    safe = require('../async_helpers').safe;
+    helpers = require('../helpers'),
+    safe = helpers.safe;
 
 
 /**
@@ -119,7 +120,7 @@ exports.detail = function(req, res) {
         criteria: {'contest.contest': contest._id}
     };
 
-    if(res.locals.h.isPastDate(contest.dueDate)) {
+    if(helpers.isPastDate(contest.dueDate)) {
         imageOptions.sort = {'contest.ratingSum': -1}
     }
 

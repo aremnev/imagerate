@@ -16,7 +16,7 @@ exports.create = function (req, res) {
 
     image.comments.push({
         body: req.body.comment.trim(),
-        user: user._id
+        user: user
     });
 
     image.save(function (err) {

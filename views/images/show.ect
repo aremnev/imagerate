@@ -68,6 +68,6 @@
             Put a comment: <input pattern="^(?=\s*\S).*$" name="comment" type="text" maxlength="255" /> <input type="submit" class="btn" value="Send" />
         </form>
         <% end %>
-        <% include 'comments/comments.ect', {comments: @req.image.comments, h: @h, user_id: if @req.isAuthenticated() then @req.user._id else "" } %>
+        <% include 'comments/comments.ect', {comments: @req.image.comments, h: @h, req: @req } %>
     </div>
 </div>

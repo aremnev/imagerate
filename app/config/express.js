@@ -9,8 +9,8 @@ var express = require('express'),
     mongoStore = require('connect-mongo')(express),
     flash = require('connect-flash'),
     cloudinary = require('cloudinary'),
-    helpers = require('../helpers'),
-    subscribers = require('../subscribers');
+    helpers = require('../middlewares/view_helpers'),
+    subscribers = require('../middlewares/subscribers');
 
 module.exports = function (app, config, passport) {
 
@@ -25,19 +25,19 @@ module.exports = function (app, config, passport) {
     var ectRenderer = require('ect')({
         watch: false,
         cache: false,
-        root: config.root + '/../views',
+        root: config.root + '/views',
         ext: '.ect'
     });
     app.engine('.ect', ectRenderer.render);
-    app.set('views', config.root + '/../views');
+    app.set('views', config.root + '/views');
 
     app.configure(function () {
         // less should be placed before express.static
         app.use(require('less-middleware')({
-            src: config.root + '/../public',
+            src: config.root + '/public',
             compress: true
         }));
-        app.use(express.static(config.root + '/../public'));
+        app.use(express.static(config.root + '/public'));
 
         // cookieParser should be above session
         app.use(express.cookieParser())

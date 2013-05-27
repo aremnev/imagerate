@@ -8,7 +8,7 @@ var mongoose = require('mongoose'),
     Contest = mongoose.model('Contest'),
     Image = mongoose.model('Image'),
     async = require('async'),
-    safe = require('../async_helpers').safe;
+    safe = require('../helpers').safe;
 
 exports.signin = function (req, res) {}
 

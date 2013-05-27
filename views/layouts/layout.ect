@@ -44,7 +44,7 @@
                         </ul>
                         <% if @req.isAuthenticated() : %>
                         <p class="navbar-text pull-right">
-                            <a href="/users/<%= @req.user.id %>" class="navbar-link"><img class="img-bordered" src="<%- @h.profileLink(32) %>" alt="<%= @req.user.name %>" /> <%= @req.user.name %></a> (<a href="/logout" class="navbar-link">logout</a>)
+                            <a href="/users/<%= @req.user.id %>" class="navbar-link"><img class="img-bordered" src="<%- @h.profileLink(32, @req.user) %>" alt="<%= @req.user.name %>" /> <%= @req.user.name %></a> (<a href="/logout" class="navbar-link">logout</a>)
                         </p>
                         <% else : %>
                         <p class="navbar-text pull-right">

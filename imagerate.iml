@@ -2,10 +2,13 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/env" />
+    </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Node.js v0.6.12 Core Modules" level="application" />
     <orderEntry type="library" name="Node.js v0.10.1 Core Modules" level="application" />
+    <orderEntry type="library" name="Node.js v0.10.5 Core Modules" level="application" />
   </component>
 </module>
 

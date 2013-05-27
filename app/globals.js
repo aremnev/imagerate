@@ -1,7 +1,6 @@
 module.exports = function() {
 
     String.prototype.format = function(i, safe, arg) {
-
         function format() {
             var str = this, len = arguments.length+1;
 
@@ -15,12 +14,10 @@ module.exports = function() {
         }
 
         // Save a reference of what may already exist under the property native.
-        // Allows for doing something like: if("".format.native) { /* use native */ }
         format.native = String.prototype.format;
 
         // Replace the prototype property
         return format;
-
     }();
 
     String.prototype.trim = function(full){

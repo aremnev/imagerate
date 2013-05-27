@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
     async = require('async');
 
 
-function subscribers (cfg) {
+module.exports = function(cfg) {
 
     return function(req, res, next) {
         async.series([
@@ -50,5 +50,3 @@ function subscribers (cfg) {
         })
     }
 }
-
-module.exports = subscribers;

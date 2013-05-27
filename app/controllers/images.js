@@ -8,7 +8,8 @@ var mongoose = require('mongoose'),
     async = require('async'),
     request = require('request'),
     mime = require('express').mime,
-    safe = require('../async_helpers').safe;
+    helpers = require('../helpers'),
+    safe = helpers.safe;
 
 
 /**
@@ -65,7 +66,7 @@ exports.show = function (req, res) {
             var likes = image.contest.evaluations.slice(0, 20).map(function addProfileImage(ev) {
                 var evAsObject = ev.toObject();
                 evAsObject.user.image = res.locals.h.profileLink(32, ev.user);
-                if (!res.locals.h.isPastDate(req.image.contest.contest.dueDate)) {
+                if (!helpers.isPastDate(req.image.contest.contest.dueDate)) {
                     evAsObject.rating = null;
                 }
 
@@ -111,7 +112,7 @@ exports.create = function (req, res) {
 
 exports.remove = function (req, res) {
     var image = req.image
-    if(res.locals.h.isPastDate(image.contest.contest.dueDate)) {
+    if(helpers.isPastDate(image.contest.contest.dueDate)) {
         return res.send(403, {
             id: image._id,
             error: "Image of finished contest can't be removed."
