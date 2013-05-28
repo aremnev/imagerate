@@ -5,6 +5,7 @@
         <h3 id="uploadModalLabel">Upload image</h3>
     </div>
     <div class="modal-body">
+        <div class="hidden alert alert-error"></div>
         <form class="well well-small form-inline form-upload" action="/contests/<%- @contest._id %>/images" method="post" enctype="multipart/form-data">
         <span class="inputs">
             <input type="text" id="image_title" name="title" placeholder="Title" />

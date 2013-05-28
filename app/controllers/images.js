@@ -97,12 +97,12 @@ exports.create = function (req, res) {
         title: req.body.title
     })
     image.user = req.user;
-
+    res.set('Content-Type', 'text/plain');
     image.uploadAndSave(req.files.image, function (err, savedImage) {
         if (err) {
-            return res.send(400, { error: err });
+            return res.send(400, err.message || err.image);
         }
-        res.send({ image: savedImage });
+        res.send(savedImage._id);
     })
 }
 

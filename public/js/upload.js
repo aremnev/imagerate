@@ -1,6 +1,7 @@
 $(document).ready(function () {
     $('#uploadModal').on('shown', function () {
         var form = $('.form-upload'),
+            error = form.prev(),
             title = $('#image_title'),
             file_input = $('#image'),
             upload_block = $('.image-upload'),
@@ -20,9 +21,17 @@ $(document).ready(function () {
                         data.submit();
                     }
                 });
+                error.addClass('hidden');
             },
-            done: function (e, data) {
-                window.location.href = window.location.pathname;
+            always: function (e, data) {
+                if(!data.jqXHR) return;
+                if(data.jqXHR.status == 200){
+                    window.location.href = window.location.pathname;
+                } else {
+                    form.removeClass('process');
+                    progress.children().css('width', 0);
+                    error.text(data.jqXHR.responseText).removeClass('hidden');
+                }
             },
             progress: function (e, data) {
                 progress.children().css('width', parseInt(data.loaded / data.total * 100, 10) + '%');

@@ -46,10 +46,7 @@ describe('Images', function() {
             req.cookies = loginer.cookies;
             req
                 .expect(400)
-                .end(function(err, res) {
-                    assert.ok(res.body.error);
-                    done();
-                });
+                .end(done);
         });
 
         it('POST /images with invalid file should respond with error message', function(done) {
@@ -59,10 +56,7 @@ describe('Images', function() {
                 .field('title', 'Fabulous Script')
                 .attach('image', './public/js/common.js')
                 .expect(400)
-                .end(function(err, res) {
-                    assert.ok(res.body.error.image);
-                    done();
-                });
+                .end(done);
         });
 
         it('POST /contests/:contestId/images with proper parameters should respond with new image data', function(done) {
@@ -73,17 +67,13 @@ describe('Images', function() {
                 .attach('image', './public/img/google.png')
                 .expect(200)
                 .end(function(err, res) {
-                    var data = res.body;
-                    assert.ok(data.image);
-                    assert.equal(data.image.title, 'Fabulous Image');
-                    assert.equal(data.image.contest.contest, locals.contestId);
-                    locals.image = data.image;
+                    locals.image_id = res.text.replace(/"/g,'');
                     done();
                 });
         });
 
         it('GET /images/:imageId for existing image should respond with Content-Type text/html', function (done) {
-            var req = request(app).get('/images/' + locals.image._id);
+            var req = request(app).get('/images/' + locals.image_id);
             req.cookies = loginer.cookies;
             req
                 .expect(200)
@@ -104,7 +94,7 @@ describe('Images', function() {
 
         it('DELETE /images/:imageId for arbitrary user should be forbidden', function(done) {
             loginer.login(function() {
-                var req = request(app).del('/images/' + locals.image._id);
+                var req = request(app).del('/images/' + locals.image_id);
                 req.cookies = loginer.cookies;
                 req
                     .expect(403)
@@ -117,14 +107,14 @@ describe('Images', function() {
 
         it('DELETE /images/:imageId for image owner should respond with deletion confirmation', function(done) {
             loginer.login(function() {
-                var req = request(app).del('/images/' + locals.image._id);
+                var req = request(app).del('/images/' + locals.image_id);
                 req.cookies = loginer.cookies;
                 req
                     .expect(200)
                     .end(function (err, res) {
                         var image = res.body.image;
                         assert.ok(image.deleted);
-                        assert.equal(image._id, locals.image._id);
+                        assert.equal(image._id, locals.image_id);
                         done();
                     });
             }, locals.user1);

@@ -3,6 +3,10 @@ String.prototype.repeat = function(num) {
 }
 
 $(document).ready(function () {
+    if (/*@cc_on!@*/false && document.documentMode === 10) {
+        $('.modal.fade').removeClass('fade');
+    }
+
     $(document).on('click', '.ajax-delete', function(e){
         e.preventDefault();
         var button = $(this),
