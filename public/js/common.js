@@ -8,20 +8,24 @@ $(document).ready(function () {
     }
 
     $(document).on('click', '.ajax-delete', function(e){
-        e.preventDefault();
-        var button = $(this),
-            text = button.data('confirm'),
-            ok = button.data('ok'),
-            url = button.attr('href');
-        if (confirm(text)) {
-            $.ajax({
-                type: 'delete',
-                url: url
-            }).done(function(msg) {
-               if(ok) window.location.href = ok;
-               else window.location.href = window.location.href;
-            });
-        }
+            e.preventDefault();
+            var button = $(this),
+                text = button.data('confirm'),
+                ok = button.data('ok'),
+                url = button.attr('href');
+            if (confirm(text)) {
+                $.ajax({
+                    type: 'delete',
+                    url: url
+                }).done(function(msg) {
+                   if(ok) window.location.href = ok;
+                   else window.location.href = window.location.href;
+                });
+            }
+        });
+
+    $(window).on('resize', function(){
+        Thumbnails.setColumns();
     });
 
     (function(){
@@ -41,7 +45,8 @@ $(document).ready(function () {
 
     $('.slides').roundabout({
         autoplay: true,
-        autoplayDuration: 3000
+        autoplayDuration: 3000,
+        autoplayPauseOnHover: true
     });
 
     (function(){
@@ -51,16 +56,10 @@ $(document).ready(function () {
             wait.one('load', function(e){
                 loaded++;
                 if(loaded == wait.length) {
-                    console.log("all loaded");
+                    //console.log("all loaded");
                     $('.waiting').removeClass('waiting');
 
-                    // TODO: move to separate func; add columns calculation
-                    $('.thumbnails').masonry({
-                        // options
-                        itemSelector : '.item',
-                        columnWidth: 100,
-                        isResizable: true
-                      });
+                    Thumbnails.init();
                 }
             }).each(function() {
                 if(this.complete) $(this).load();
@@ -72,4 +71,31 @@ $(document).ready(function () {
             $('.waiting').removeClass('waiting');
         }, 10000);
     }());
+
+    var Thumbnails = {
+        options: {
+            columns: 3
+        }, 
+        init: function(){
+            var self = this;
+
+            self.setColumns();
+
+            $('.thumbnails').masonry({
+                itemSelector : '.item',
+                columnWidth:  function(containerWidth) {
+                    return containerWidth / self.options.columns;
+                },
+                isResizable: true
+            });
+        },
+        reload: function(){
+            $('.thumbnails').masonry('reload');
+        },
+        setColumns: function() {
+            this.options.columns = $(window).width() > 767 ? 3 : $( window ).width() > 320 ? 2 : 1;
+            this.reload();
+            console.log(this.options.columns);
+        }
+    }
 });

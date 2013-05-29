@@ -29,11 +29,6 @@
                 <a class="brand logo" href="/">ImageRate</a>
                 <div class="nav-collapse collapse">
                     <ul class="nav">
-                        <% if @req.isAuthenticated() : %>
-                            <li>
-                                <a href="/users/<%= @req.user.id %>">My profile</a>
-                            </li>
-                        <% end %>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contests<b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -43,23 +38,30 @@
                                 <li><a href="/contests">See all</a></li>
                             </ul>
                         </li>
-                    </ul>
-                    <% if @req.isAuthenticated() : %>
-                    <ul class="nav pull-right">
                         <li class="dropdown">
-                            <a href="/users/<%= @req.user.id %>" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="userpic"><img src="<%- @h.profileLink(48, @req.user) %>" alt="<%= @req.user.name %>" /></span>
-                                 <%= @req.user.name %><b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Photos<b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <a href="/logout">logout</a>
+                                <li><a href="/images/recent">Most recent</a></li>
+                                <li><a href="/images/viewed">Most viewed</a></li>
                             </ul>
                         </li>
                     </ul>
-                    <% else : %>
-                    <p class="navbar-text pull-right">
-                    <a href="/auth/google"><img style="height: 40px;" height="40" width="40" src="/img/google.png" alt="google" /></a>
-                    </p>
-                    <% end %>
+                    <ul class="nav pull-right">
+                        <% if @req.isAuthenticated() : %>
+                            <li class="dropdown">
+                                <a href="/users/<%= @req.user.id %>" class="dropdown-toggle" data-toggle="dropdown">
+                                    <span class="userpic"><img src="<%- @h.profileLink(48, @req.user) %>" alt="<%= @req.user.name %>" /></span>
+                                     <%= @req.user.name %><b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <a href="/logout">logout</a>
+                                </ul>
+                            </li>
+                        <% else : %>
+                            <li>
+                                <a href="/auth/google"><img style="height: 40px;" height="40" width="40" src="/img/google.png" alt="google" /> Login</a>
+                            </li>
+                        <% end %>
+                    </ul>
                 </div><!--/.nav-collapse -->
             </div>
         </div>

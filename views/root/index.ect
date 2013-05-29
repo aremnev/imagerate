@@ -13,14 +13,10 @@
 
 
 <% block 'header-right' : %>
-    <h3>Photos</h3>
-    <ul class="photos">
-        <li class="starred"><a href="/images/recent">Most recent</a></li>
-        <li class="starred"><a href="/images/viewed">Most viewed</a></li>
-    </ul>
 <% end %>
 
 <h2>Most Recent Images</h2>
+<hr>
 <ul class="slides">
     <% for image, i in @recent_images: %>
         <li class="item"><a href="/images/<%- image._id %>"><img class="img-rounded img-polaroid wait" src="<%- @h.imageUrl(image.image, {width: 400, height: 300, crop: 'fill'}) %>" /></a></li>
@@ -28,4 +24,5 @@
 </ul>
 
 <h2>Most Viewed Images</h2>
+<hr>
 <% include 'images/list.ect', {images: @viewed_images, h: @h } %>

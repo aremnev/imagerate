@@ -77,6 +77,12 @@ li.starred {
 
 .modal {
   color: #4b3300;
+  overflow: hidden;
+  
+  form,
+  .form-actions {
+    margin: 0;
+  }
 }
 
 .container,
@@ -195,6 +201,10 @@ article {
 .thumbnails {
 
   li {
+    
+    transition: margin .5s;
+    -webkit-transition: margin .5s;
+
     a {
       position: relative;
     }
@@ -258,6 +268,10 @@ article {
       display: inline-block;
       margin-top: 8px;
     }
+  }
+
+  .image-link {
+    display: block;
   }
 
   .image-caption {
@@ -348,11 +362,7 @@ article {
 
     .text {
       display: inline-block;
-      max-width: 115px;
-      overflow-x: hidden;
-      text-overflow: ellipsis;
       vertical-align: sub;
-      white-space: nowrap;
     }
   }
 }
@@ -513,5 +523,27 @@ article {
 .google {
   display: block;
   span { font-size: 18px; }
+}
 
+@media (min-width: 640px) and (max-width: 767px){
+  .container {
+    width: 620px;
+  }
+
+  .thumbnails {
+    margin-left: -20px;
+
+    &> li {
+      float: left;
+      margin-left: 20px;
+      width: 300px;
+    }
+  }
+}
+
+@media (max-width: 640px){
+  .container {
+    width: 96%;
+    margin: 0 auto;
+  }
 }

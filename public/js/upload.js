@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $('#uploadModal').on('shown', function () {
         var form = $('.form-upload'),
-            error = form.prev(),
+            error = form.find('.alert'),
             title = $('#image_title'),
             file_input = $('#image'),
             upload_block = $('.image-upload'),

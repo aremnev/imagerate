@@ -4,25 +4,29 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h3 id="uploadModalLabel">Upload image</h3>
     </div>
-    <div class="modal-body">
-        <div class="hidden alert alert-error"></div>
-        <form class="well well-small form-inline form-upload" action="/contests/<%- @contest._id %>/images" method="post" enctype="multipart/form-data">
-        <span class="inputs">
-            <input type="text" id="image_title" name="title" placeholder="Title" />
-            <div class="image-upload">
-                <span class="btn btn-success">
-                    Add file...
-                    <input type="file" id="image" name="image" maxlength="1">
-                </span>
-                <span class="text"></span>
+    <form class="form-upload" action="/contests/<%- @contest._id %>/images" method="post" enctype="multipart/form-data">
+        <div class="modal-body">
+            <div class="hidden alert alert-error"></div>
+            <div class="inputs">
+                <input type="text" id="image_title" name="title" placeholder="Add title..." required class="span5" />
             </div>
-            <button class="btn btn-primary" type="submit">Upload</button>
-        </span>
+            <div class="inputs">
+                <div class="image-upload">
+                    <span class="btn btn-success">
+                        Add file...
+                        <input type="file" id="image" name="image" maxlength="1">
+                    </span>
+                    <span class="text"></span>
+                </div>
+            </div>
             <div class="progress progress-striped active">
                 <div class="bar bar-warning" style="width: 0%;"></div>
             </div>
-        </form>
-    </div>
+        </div>
+        <div class="inputs form-actions">
+            <button class="btn btn-primary" type="submit">Upload</button>
+        </div>
+    </form>
     <script src="/js/libs/jquery.ui.widget.js"></script>
     <script src="/js/libs/jquery.iframe-transport.js"></script>
     <script src="/js/libs/jquery.fileupload.js"></script>

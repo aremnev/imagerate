@@ -11,7 +11,7 @@ var url = require('url'),
 module.exports = {
     //Url image helpers
     imageUrl: function (image, options) {
-        return cloudinary.url(image.data.public_id, options) + '.png'
+        return cloudinary.url(image.data.public_id, options) + '.jpg'
     },
 
     //Date helpers

@@ -4,23 +4,21 @@
 
 
     <% block 'header-left' : %>
+        <h2><%= @title || 'Photos' %></h2>
     <% end %>
 
 
     <% block 'header-right' : %>
-    <h3><%= @title || 'Photos' %></h3>
-    <ul class="photos">
-        <li class="starred"><a class="<% if @h.isActive('recent'): %>active<%end%>" href="/images/recent">Most recent</a></li>
-        <li class="starred"><a class="<% if @h.isActive('viewed'): %>active<%end%>" href="/images/viewed">Most viewed</a></li>
-    </ul>
+    
     <% end %>
 <% end %>
+
 
 <ul class="thumbnails">
     <% for image, i in @images: %>
         <li class="item span4">
             <div class="thumbnail">
-                <a class="image-to-rate fixed-rating" href="/images/<%- image.id %>">
+                <a class="image-to-rate fixed-rating image-link" href="/images/<%- image.id %>">
                     <% if not @h.isPastDate(image.contest.contest.dueDate) and @remove and @user and (image.user._id + '' == @user._id + ''): %>
                         <span data-confirm="Are you sure?" data-ok="<%- @url || '' %>" href="/images/<%- image.id %>" class="remove ajax-delete">×</span>
                     <% end %>

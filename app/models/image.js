@@ -118,7 +118,7 @@ ImageSchema.methods = {
                 }
             }, {transformation: transformation,
                 eager: [
-                {width: 156, height: 156, crop: 'pad'},
+                {width: 600, height: 360, crop: 'fill'},
                 {height: 800, width: 952, crop: 'limit'}
             ]});
 

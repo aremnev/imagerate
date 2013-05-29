@@ -6,6 +6,7 @@
     <h2><%= @req.contest.title %> <% if @h.isPastDate(@req.contest.dueDate): %> <span class="status">finished</span><% end %></h3>
     <p><%- @h.formatDate(@req.contest.startDate) %> &ndash; <%- @h.formatDate(@req.contest.dueDate) %></p>
     <p><em><%= @req.contest.description %></em></p>
+    <p><%- @imagesTotalCount %> images by <%- @usersCount %> users</p>
 <% end %>
 
 
@@ -30,7 +31,7 @@
 
 <% if @imagesTotalCount : %>
     <ul class="info">
-        <li><%- @imagesTotalCount %> images by <%- @usersCount %> users</li>
+        
         <% if @req.isAuthenticated() : %>
             <li>You rated <%- @ratedImagesCount %> images of <%- @imagesTotalCount %></li>
         <% end %>

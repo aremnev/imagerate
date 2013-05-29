@@ -3,20 +3,18 @@
 
 
 <% block 'header-left' : %>
-    <h3><%- @req.image.title %></h3>
-    <ul>
-        <li><i>Author:</i> <a href="/users/<%- @req.image.user.id %>"><%= @req.image.user.name %></a> </li>
-        <li><i>Contest:</i> <a href="/contests/<%- @req.image.contest.contest._id %>"><%= @req.image.contest.contest.title %> (<%- @h.formatDate(@req.image.contest.contest.dueDate) %>)</a> </li>
-        <% if @h.isPastDate(@req.image.contest.contest.dueDate): %>
-        <li><i>Rating:</i>
-            <span ng-switch on="rating.value">
-                <span ng-switch-when="0">Nobody rated this image</span>
-                <span ng-switch-default>{{rating.value}}</span>
-            </span>
-        </li>
-        <% end %>
-        <li><i>Uploaded:</i>  <%- @h.formatDate(@req.image.createdAt) %></li>
-    </ul>
+    <h2><%- @req.image.title %></h2>
+    <p><i>Author:</i> <a href="/users/<%- @req.image.user.id %>"><%= @req.image.user.name %></a> </p>
+    <p><i>Contest:</i> <a href="/contests/<%- @req.image.contest.contest._id %>"><%= @req.image.contest.contest.title %> (<%- @h.formatDate(@req.image.contest.contest.dueDate) %>)</a> </p>
+    <% if @h.isPastDate(@req.image.contest.contest.dueDate): %>
+    <p><i>Rating:</i>
+        <span ng-switch on="rating.value">
+            <span ng-switch-when="0">Nobody rated this image</span>
+            <span ng-switch-default>{{rating.value}}</span>
+        </span>
+    </p>
+    <% end %>
+    <p><i>Uploaded:</i>  <%- @h.formatDate(@req.image.createdAt) %></p>
 <% end %>
 
 
