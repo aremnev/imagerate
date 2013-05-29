@@ -207,7 +207,7 @@ ImageSchema.statics = {
 
     load: function (id, cb) {
         this.findOne({ _id : id })
-            .populate('user', 'name')
+            .populate('user', 'name google')
             .populate('contest.contest')
             .populate('evaluations', '', null, { sort: [['createdAt', -1 ]] })
             .populate('comments.user')
@@ -227,8 +227,9 @@ ImageSchema.statics = {
             sort = options.sort || {'createdAt': -1}  // sort by date
 
         this.find(criteria)
-            .populate('user', 'name')
+            .populate('user', 'name google')
             .populate('contest.contest')
+            .populate('comments.user')
             .sort(sort)
             .limit(options.perPage)
             .skip(options.perPage * options.page)

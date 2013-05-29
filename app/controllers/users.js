@@ -85,7 +85,7 @@ exports.profile = function (req, res) {
     var user = req.profile,
         page = parseInt(req.param('page') > 0 ? req.param('page') : 1),
         contestId = req.param('contest'),
-        perPage = 10,
+        perPage = 16,
         locals = {title: user.name, page: page};
 
     var options = {

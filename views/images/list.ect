@@ -15,23 +15,32 @@
     </ul>
     <% end %>
 <% end %>
-<% if @pages : %>
-    <% include 'includes/pagination.ect', {pages: @pages, page: @page || 1, url: @url || ''} %>
-<% end %>
+
 <ul class="thumbnails">
     <% for image, i in @images: %>
-        <li>
-            <a class="thumbnail image-to-rate fixed-rating" href="/images/<%- image.id %>">
-                <% if not @h.isPastDate(image.contest.contest.dueDate) and @remove and @user and (image.user._id + '' == @user._id + ''): %>
-                    <span data-confirm="Are you sure?" data-ok="<%- @url || '' %>" href="/images/<%- image.id %>" class="remove ajax-delete">×</span>
-                <% end %>
-                <img class="wait" src="<%- @h.imageUrl(image.image, {width: 156, height: 156, crop: 'pad'}) %>" alt="<%= image.title %>" title="<%= image.title %>"/>
-            </a>
-            <div class="caption center small ">
-                <span class="title"><%= image.title %></span>
-                <% if @h.isPastDate(image.contest.contest.dueDate) and @winners: %>
-                    <br />
-                    <span class="label">Rating: <%- image.getRating() %></span> <span class="label <% if image.getRating() and @winners: %>winner-<%- (i + 1) + ((@page - 1) * 15) %> <%end %>">Rank: <%- (i + 1) + ((@page - 1) * 15) %></span>
+        <li class="item span4">
+            <div class="thumbnail">
+                <a class="image-to-rate fixed-rating" href="/images/<%- image.id %>">
+                    <% if not @h.isPastDate(image.contest.contest.dueDate) and @remove and @user and (image.user._id + '' == @user._id + ''): %>
+                        <span data-confirm="Are you sure?" data-ok="<%- @url || '' %>" href="/images/<%- image.id %>" class="remove ajax-delete">×</span>
+                    <% end %>
+                    <img class="wait" src="<%- @h.imageUrl(image.image, {width: 600, height: 360, crop: 'fill'}) %>" alt="<%= image.title %>" title="<%= image.title %>"/>
+                </a>
+
+                <span class="image-author">
+                    <% include 'includes/userpic.ect', {user: image.user, h: @h, size: 40} %>
+                    <span class="name"><%= image.user.name %></span>
+                </span>
+
+                <div class="image-caption caption">
+                    <span class="title"><%= image.title %></span>
+                    <% if @h.isPastDate(image.contest.contest.dueDate) and @winners: %>
+                        <br />
+                        <span class="label">Rating: <%- image.getRating() %></span> <span class="label <% if image.getRating() and @winners: %>winner-<%- (i + 1) + ((@page - 1) * 15) %> <%end %>">Rank: <%- (i + 1) + ((@page - 1) * 15) %></span>
+                    <% end %>
+                </div>
+                <% if image.comments.length: %>
+                    <% include 'comments/comments.ect', {comments: image.comments, h: @h, req: image, size: 28 } %>
                 <% end %>
             </div>
         </li>

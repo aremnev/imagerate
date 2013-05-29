@@ -53,6 +53,14 @@ $(document).ready(function () {
                 if(loaded == wait.length) {
                     console.log("all loaded");
                     $('.waiting').removeClass('waiting');
+
+                    // TODO: move to separate func; add columns calculation
+                    $('.thumbnails').masonry({
+                        // options
+                        itemSelector : '.item',
+                        columnWidth: 100,
+                        isResizable: true
+                      });
                 }
             }).each(function() {
                 if(this.complete) $(this).load();

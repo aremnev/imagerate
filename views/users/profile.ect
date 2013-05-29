@@ -9,23 +9,20 @@
 
 
 <% block 'header-left' : %>
-    <div class="profile-image">
-        <img class="img-polaroid" src="<%- @h.profileLink(110, @req.profile) %>" />
-    </div>
+    <span class="profile-image userpic">
+        <img src="<%- @h.profileLink(110, @req.profile) %>" />
+    </span>
     <div class="profile-info">
         <h3><%= @req.profile.name %></h3>
-    </div>
-<% end %>
-
-
-<% block 'header-right' : %>
-    <h3>Your stats</h3>
-    <ul class="photos">
+        <ul class="photos">
         <li><i>Contests:</i> <%- @contests.length %></li>
         <li><i>Images uploaded:</i> <%- @imagesCount %></li>
         <li><i>Images rated:</i> <%- @ratedImagesCount %></li>
     </ul>
+    </div>
 <% end %>
+
+<h2>Images</h2>
 
 <form action="<%- @req._parsedUrl.pathname %>" class="well well-small form-search">
     <select name="contest">
@@ -38,7 +35,6 @@
 </form>
 
 
-<h2>Images</h2>
 <% include 'images/list.ect', {images: @images, pages: @pages, page: @page, url: @req._parsedUrl.pathname, h: @h, remove: true, user: @req.user } %>
 
 

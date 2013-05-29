@@ -1,13 +1,20 @@
 @import "vars.less";
 @import "mixins.less";
 
-body {
-  padding-top: 20px;
+html {
+  font-size: 100%;
+  width: 100%;
+  height: 100%;
 }
 
-*, html {
-  font-size: 14px;
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  color: @text-color;
 }
+
 
 html {
   .waiting {
@@ -15,6 +22,12 @@ html {
       visibility: hidden;
     }
   }
+}
+
+.wrapper {
+  height: 100%;
+  height: auto;
+  min-height: 100%;
 }
 
 ul, li {
@@ -35,12 +48,25 @@ li.starred {
 }
 
 
-a, .navbar-link {
+:link {
   color: @link-color;
 
   &:hover, &:active, &.active {
     color: @link-active-color;
     text-decoration: none;
+  }
+}
+
+.navbar .nav > li > a {
+  .border-box();
+
+  color: @navbar-color;
+  text-shadow: none;
+  padding: 5px 15px;
+  line-height: 50px;
+
+  &:hover {
+    background: #fff;
   }
 }
 
@@ -53,25 +79,70 @@ a, .navbar-link {
   color: #4b3300;
 }
 
-.container, .navbar .container {
-  width: 960px;
+.container,
+.navbar .container {
+  max-width: 1400px;
+}
+
+.navbar {
+  min-height: 60px;
+  margin-bottom: 0;
+  color: @navbar-color;
+  background: @navbar-bg;
+
+  .brand {
+    color: @navbar-color;
+    text-shadow: none;
+  }
+
+  .nav {
+    li.dropdown {
+      .dropdown-toggle {
+        padding-right: 25px;
+
+        .caret {
+          position: absolute;
+          top: 50%;
+          margin: -3px 0 0 7px;
+          border-top-color: @navbar-color;
+          border-bottom-color: @navbar-color;
+        }
+      }
+    }
+  }
+}
+
+.dropdown-menu {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+}
+
+.navbar-link {
+  display: inline-block;
+  padding: 7px 10px;
+  color: #fff;
+
+  &:hover {
+    background: #fff;
+  }
 }
 
 footer {
-  border-top: 1px solid fade(@header-background, 50%);
-  box-shadow: inset 0px 4px 4px 0px fade(@header-background, 50%);
-  margin-top: 30px;
-  padding-top: 20px;
+  .border-box();
+
+  font-size: 93%;
+  border-top: 1px solid #ddd;
   width: 100%;
+  height: 70px;
+  margin-top: -70px;
+  padding: 20px 0;
+  background: @footer-bg;
 }
 
 header {
   background: @header-background;
-  box-shadow: inset 0px @header-shadow-size @header-shadow-size -1 * @header-shadow-size @header-shadow-color,
-              inset 0px -1 * @header-shadow-size @header-shadow-size -1 * @header-shadow-size @header-shadow-color,
-              0px 4px 5px rgba(121, 121, 121, 0.8);
   color: @header-text-color;
-  margin: 20px 0;
 
   .container {
     position: relative;
@@ -88,9 +159,6 @@ header {
     margin: 15px 0;
     width: 50%;
 
-    h3 {
-      margin: 0 0 15px;
-    }
     ul {
       font-size: 15px;
     }
@@ -98,8 +166,6 @@ header {
 
   .header-left {
     padding-right: 40px;
-    border-right: 1px solid @header-shadow-color;
-
 
     .profile-image {
       float: left;
@@ -109,6 +175,17 @@ header {
   .header-right {
     padding-left: 40px;
   }
+}
+
+article {
+  padding: 1.5em 0 100px;
+}
+
+.status {
+  font-size: 93%;
+  font-weight: normal;
+  margin-left: 1em;
+  color: #7f7f7f;
 }
 
 .well {
@@ -136,25 +213,15 @@ header {
       .winner-3 {
         background: #ff8c00;
       }
-      .title {
-        max-width: 150px;
-        text-overflow: ellipsis;
-        vertical-align: sub;
-        white-space: nowrap;
-        overflow: hidden;
-      }
     }
   }
 
   .remove {
     position: absolute;
-    top: -10px;
-    right: -10px;
+    top: 2px;
+    right: 2px;
 
-    background: @header-background;
-    border-radius: 50%;
-    box-shadow: 0 0 1px 1px @header-background;
-    color: #fff;
+    color: red;
     cursor: pointer;
     display: none;
     font-size: 24px;
@@ -162,9 +229,77 @@ header {
     text-align: center;
     width: 21px;
     z-index: 100;
+  }
+}
 
-    &:hover {
-      color: @header-text-color;
+.thumbnail {
+  overflow: hidden;
+  padding: 0;
+  border-radius: 4px;
+
+  &:hover {
+    box-shadow: 0 1px 1px rgba(0,0,0,.10);
+    border-color: #d1d1d1;
+  }
+
+  .image-author {
+    font-size: 93%;
+    position: relative;
+    display: block;
+    margin: -20px 0 0 10px;
+
+    .userpic {
+      vertical-align: bottom;
+      border: 3px solid #fff;
+      border-radius: 100%;
+    }
+    
+    .name {
+      display: inline-block;
+      margin-top: 8px;
+    }
+  }
+
+  .image-caption {
+    margin-bottom: 10px;
+  }
+
+  .comments {
+    font-size: 93%;
+    padding: 5px 0;
+    border-top: 1px solid #ddd;
+    background: #f8f8f8;
+
+    li {
+      padding: 5px 10px;
+      margin: 0;
+      padding-left: 50px;
+      box-shadow: none;
+
+      &.me {
+        box-shadow: none;
+      }
+      
+      .title {
+        width: auto;
+      }
+
+      .time {
+        font-size: 93%;
+        display: inline-block;
+        position: relative;
+        top: auto;
+        right: auto;
+        margin-left: .75em;
+        color: #7f7f7f;
+      }
+    }
+
+    .userpic {
+      margin-left: -40px;
+      img {
+        border-radius: 4px;
+      }
     }
   }
 }
@@ -223,14 +358,17 @@ header {
 }
 
 .userpic {
-  text-decoration: none;
   display: inline-block;
-  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
-  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  vertical-align: middle;
+
+  img {
+    display: block;
+    border-radius: 100%;
+  }
 }
 
-.comments ul li {
+.comments li {
   padding: 10px;
   padding-left: 80px;
   margin: 7px 4px;
@@ -277,21 +415,6 @@ header {
 
   display: inline-block;
   position: relative;
-
-  &.thumbnail {
-    border-width: 2px;
-    border-color: fade(#8E6542, 50%);
-
-    &:hover {
-      border-color: fade(#8E6542, 50%);
-      box-shadow: inset 0px 0px 2px 2px fade(#8E6542, 50%);
-
-      .rating {
-        opacity: 1;
-        visibility: visible;
-      }
-    }
-  }
 
   .rating-container {
     position: absolute;

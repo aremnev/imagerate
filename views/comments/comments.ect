@@ -2,7 +2,7 @@
     <ul class="results unstyled">
         <% for comment in @comments : %>
             <li class="clearfix <% if comment.user._id + '' == @req.user._id + '': %>me<% end %>">
-                <% include 'includes/userpic.ect', {user: comment.user, h: @h} %>
+                <% include 'includes/userpic.ect', {user: comment.user, h: @h, size: @size} %>
                 <span class="title">
                     <% if comment.user.id + '' != @req.user._id + '': %>
                         <a href="/users/<%- comment.user._id %>"><%= comment.user.name %></a>

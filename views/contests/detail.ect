@@ -3,12 +3,9 @@
 
 
 <% block 'header-left' : %>
-    <h3><%= @req.contest.title %></h3>
+    <h2><%= @req.contest.title %> <% if @h.isPastDate(@req.contest.dueDate): %> <span class="status">finished</span><% end %></h3>
+    <p><%- @h.formatDate(@req.contest.startDate) %> &ndash; <%- @h.formatDate(@req.contest.dueDate) %></p>
     <p><em><%= @req.contest.description %></em></p>
-    <ul>
-        <li class="starred">Start date: <%- @h.formatDate(@req.contest.startDate) %></li>
-        <li class="starred">Due date: <%- @h.formatDate(@req.contest.dueDate) %><% if @h.isPastDate(@req.contest.dueDate): %> <strong>(finished)</strong><% end %></li>
-    </ul>
 <% end %>
 
 
@@ -31,20 +28,16 @@
 <% end %>
 
 
-<div class="row">
-    <div class="span10">
-        <% if @imagesTotalCount : %>
-            <ul class="info">
-                <li><%- @imagesTotalCount %> images by <%- @usersCount %> users</li>
-                <% if @req.isAuthenticated() : %>
-                    <li>You rated <%- @ratedImagesCount %> images of <%- @imagesTotalCount %></li>
-                <% end %>
-            </ul>
-            <% include 'images/list.ect', {images: @images, pages: @pages, page: @page, url: @url, h: @h, winners: @h.isPastDate(@req.contest.dueDate), remove: true, user: @req.user} %>
-        <% else : %>
-            <ul class="info">
-                <li>There are no images in this contest yet</li>
-            </ul>
+<% if @imagesTotalCount : %>
+    <ul class="info">
+        <li><%- @imagesTotalCount %> images by <%- @usersCount %> users</li>
+        <% if @req.isAuthenticated() : %>
+            <li>You rated <%- @ratedImagesCount %> images of <%- @imagesTotalCount %></li>
         <% end %>
-    </div>
-</div>
+    </ul>
+    <% include 'images/list.ect', {images: @images, pages: @pages, page: @page, url: @url, h: @h, winners: @h.isPastDate(@req.contest.dueDate), remove: true, user: @req.user} %>
+<% else : %>
+    <ul class="info">
+        <li>There are no images in this contest yet</li>
+    </ul>
+<% end %>
