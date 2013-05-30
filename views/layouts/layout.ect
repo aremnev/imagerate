@@ -3,6 +3,7 @@
 <head>
     <title><%- @appName %> - <%- @title %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,700,300&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
     <link href="/css/datepicker.min.css" rel="stylesheet" type="text/css"/>
@@ -12,8 +13,8 @@
     <script src="/js/libs/jquery.roundabout.min.js" type="text/javascript"></script>
     <script src="/js/libs/jquery.masonry.min.js" type="text/javascript"></script>
     <script src="/js/common.js" type="text/javascript"></script>
-
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,700,300&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
 
     <% content 'scripts' %>
 </head>
@@ -35,6 +36,7 @@
                                 <% for contest in @extra.contests: %>
                                     <li><a href="/contests/<%- contest._id %>"><%= contest.title %></a></li>
                                 <% end %>
+                                <li class="divider"></li>
                                 <li><a href="/contests">See all</a></li>
                             </ul>
                         </li>
@@ -48,17 +50,17 @@
                     </ul>
                     <ul class="nav pull-right">
                         <% if @req.isAuthenticated() : %>
-                            <li class="dropdown">
-                                <a href="/users/<%= @req.user.id %>" class="dropdown-toggle" data-toggle="dropdown">
-                                    <span class="userpic"><img src="<%- @h.profileLink(48, @req.user) %>" alt="<%= @req.user.name %>" /></span>
-                                     <%= @req.user.name %><b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <a href="/logout">logout</a>
-                                </ul>
+                            <li>
+                                <a href="/users/<%= @req.user.id %>">
+                                    <span class="userpic"><img src="<%- @h.profileLink(40, @req.user) %>" alt="<%= @req.user.name %>" /></span>
+                                     <%= @req.user.name %></a>
+                            </li>
+                            <li>
+                                <a href="/logout">Logout</a>
                             </li>
                         <% else : %>
                             <li>
-                                <a href="/auth/google"><img style="height: 40px;" height="40" width="40" src="/img/google.png" alt="google" /> Login</a>
+                                <a href="/auth/google"><img style="height: 40px;" height="40" width="40" src="/img/google.png" alt="google" /> Sign in</a>
                             </li>
                         <% end %>
                     </ul>
@@ -66,29 +68,29 @@
             </div>
         </div>
 
-        <div ng-controller="RatingController">
-            <header>
-                <div class="container">
-                    <div class="header-left">
-                        <% content 'header-left' %>
+        <article ng-controller="RatingController">
+            <div class="container">
+                <div class="grid">
+                    <div class="grid__cell grid__cell_size_1-4">
+                        <aside>
+                            <div class="aside-top">
+                                <% content 'aside-top' %>
+                            </div>
+                            <div class="aside-bottom">
+                                <% content 'aside-bottom' %>
+                            </div>
+                        </aside>
                     </div>
-                    <div class="header-right">
-                        <% content 'header-right' %>
+                    <div class="grid__cell grid__cell_size_3-4">
+                        <% content %>
                     </div>
                 </div>
-            </header>
-
-            <article>
-                <div class="container">
-                    <% content %>
-                </div>
-            </article>
-
-        </div>
+            </div>
+        </article>
     </div>
     <footer>
         <div class="container">
-            <p>&copy; 2013 Thumbtack</p>
+            <p>&copy; 2013 Thumbtack Technology, Inc.</p>
         </div>
     </footer>
     <script type="text/javascript" src="/js/libs/angular.min.js"></script>

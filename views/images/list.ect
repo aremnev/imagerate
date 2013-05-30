@@ -3,20 +3,19 @@
     <% extend 'layouts/layout.ect' %>
 
 
-    <% block 'header-left' : %>
+    <% block 'aside-top' : %>
         <h2><%= @title || 'Photos' %></h2>
     <% end %>
 
 
-    <% block 'header-right' : %>
-    
+    <% block 'aside-bottom' : %>
     <% end %>
 <% end %>
 
 
 <ul class="thumbnails">
     <% for image, i in @images: %>
-        <li class="item span4">
+        <li class="item">
             <div class="thumbnail">
                 <a class="image-to-rate fixed-rating image-link" href="/images/<%- image.id %>">
                     <% if not @h.isPastDate(image.contest.contest.dueDate) and @remove and @user and (image.user._id + '' == @user._id + ''): %>
@@ -37,7 +36,7 @@
                         <span class="label">Rating: <%- image.getRating() %></span> <span class="label <% if image.getRating() and @winners: %>winner-<%- (i + 1) + ((@page - 1) * 15) %> <%end %>">Rank: <%- (i + 1) + ((@page - 1) * 15) %></span>
                     <% end %>
                 </div>
-                <% if image.comments.length: %>
+                <% if image.comments.length && !@hideComments : %>
                     <% include 'comments/comments.ect', {comments: image.comments, h: @h, req: image, size: 28 } %>
                 <% end %>
             </div>

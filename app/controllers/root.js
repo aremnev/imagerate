@@ -25,7 +25,7 @@ exports.index = function (req, res) {
                 }));
             },
             function(cb){
-                Image.list(_.extend(options, {perPage: 5, sort: {'viewsCount': -1}}),  safe(cb, function(images) {
+                Image.list(_.extend(options, {perPage: 6, sort: {'viewsCount': -1}}),  safe(cb, function(images) {
                     locals.viewed_images = images;
                 }));
             }

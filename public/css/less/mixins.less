@@ -4,3 +4,18 @@
 	  -ms-box-sizing: border-box;
 	      box-sizing: border-box;
 }
+
+.border-radius(@size) {
+	-webkit-border-radius: @size;
+	   -moz-border-radius: @size;
+	        border-radius: @size;
+}
+
+.gradient(@dir, @from, @to) {
+	background: @to;
+	background: -webkit-linear-gradient(@dir, @from, @to);
+	   background: -moz-linear-gradient(@dir, @from, @to);
+	    background: -ms-linear-gradient(@dir, @from, @to);
+	     background: -o-linear-gradient(@dir, @from, @to);
+	        background: linear-gradient(@dir, @from, @to);
+}

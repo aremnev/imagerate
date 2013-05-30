@@ -2,21 +2,20 @@
 <% extend 'layouts/layout.ect' %>
 
 
-<% block 'header-left' : %>
-    <h3>Contests</h3>
+<% block 'aside-top' : %>
+    <h2>Contests</h2>
     <ul class="contests">
         <% for contest in @extra.contests: %>
-            <li class="starred"><a href="/contests/<%- contest._id %>"><%= contest.title %></a></li>
+            <li><a href="/contests/<%- contest._id %>"><%= contest.title %></a></li>
         <% end %>
     </ul>
 <% end %>
 
 
-<% block 'header-right' : %>
+<% block 'aside-bottom' : %>
 <% end %>
 
 <h2>Most Recent Images</h2>
-<hr>
 <ul class="slides">
     <% for image, i in @recent_images: %>
         <li class="item"><a href="/images/<%- image._id %>"><img class="img-rounded img-polaroid wait" src="<%- @h.imageUrl(image.image, {width: 400, height: 300, crop: 'fill'}) %>" /></a></li>
@@ -24,5 +23,4 @@
 </ul>
 
 <h2>Most Viewed Images</h2>
-<hr>
-<% include 'images/list.ect', {images: @viewed_images, h: @h } %>
+<% include 'images/list.ect', {images: @viewed_images, h: @h, hideComments: true} %>

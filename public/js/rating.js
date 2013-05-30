@@ -23,7 +23,7 @@ RatingController.prototype = {
             type: 'post',
             url: ['/images', imageId, 'rate', rate].join('/')
         }).success(function(data) {
-            console.log(data);
+            //console.log(data);
         });
     },
     bindEvents: function() {

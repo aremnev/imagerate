@@ -1,44 +1,42 @@
 <!-- detail.ect -->
 <% extend 'layouts/layout.ect' %>
 
+<% block 'aside-top' : %>
+            <h2><%= @req.contest.title %> <% if @h.isPastDate(@req.contest.dueDate): %> <span class="status">finished</span><% end %></h2>
+            
+        <div class="contest-details">
+            <p><%- @h.formatDate(@req.contest.startDate) %> &ndash; <%- @h.formatDate(@req.contest.dueDate) %></p>
+            <p><em><%= @req.contest.description %></em></p>
+            <% if @imagesTotalCount : %>
+                <p><%- @imagesTotalCount %> images by <%- @usersCount %> users</p>
+                <% if @req.isAuthenticated() : %>
+                    <p>You rated <%- @ratedImagesCount %> images of <%- @imagesTotalCount %></p>
+                <% end %>
+            <% end %>
+        </div>
 
-<% block 'header-left' : %>
-    <h2><%= @req.contest.title %> <% if @h.isPastDate(@req.contest.dueDate): %> <span class="status">finished</span><% end %></h3>
-    <p><%- @h.formatDate(@req.contest.startDate) %> &ndash; <%- @h.formatDate(@req.contest.dueDate) %></p>
-    <p><em><%= @req.contest.description %></em></p>
-    <p><%- @imagesTotalCount %> images by <%- @usersCount %> users</p>
 <% end %>
 
-
-<% block 'header-right' : %>
-    <h3>Participate contest</h3>
-    <ul class="photos">
+<% block 'aside-bottom' : %>
+    <div class="contest-actions">
         <% if @req.isAuthenticated() and @imageAddedCount < 3 and not @h.isPastDate(@req.contest.dueDate): %>
-            <li class="starred"><a href="#uploadModal" role="button" data-toggle="modal">Add image to contest</a></li>
-        <% end %>
-        <% if @req.isAuthenticated() : %>
-            <li class="starred"><a href="/users/<%- @req.user._id %>">See your images</a></li>
+            <a href="#uploadModal" role="button" data-toggle="modal" class="btn btn-success">Add image to contest</a>
         <% end %>
         <% if @req.isAdmin() : %>
-        <li class="starred"><a class="ajax-delete" data-ok="/contests" href="/contests/<%- @req.contest._id %>" data-confirm="Are you sure?">Remove contest</a></li>
+            <a class="ajax-delete btn btn-small btn-danger" data-ok="/contests" href="/contests/<%- @req.contest._id %>" data-confirm="Are you sure?">Remove contest</a>
         <% end %>
-    </ul>
-    <% if @req.isAuthenticated() and @imageAddedCount < 3: %>
-        <% include 'includes/modals/upload.ect', {contest: @req.contest, user: @req.user} %>
-    <% end %>
+    </div>
 <% end %>
 
+<% if @req.isAuthenticated() and @imageAddedCount < 3: %>
+    <% include 'includes/modals/upload.ect', {contest: @req.contest, user: @req.user} %>
+<% end %>
 
 <% if @imagesTotalCount : %>
-    <ul class="info">
-        
-        <% if @req.isAuthenticated() : %>
-            <li>You rated <%- @ratedImagesCount %> images of <%- @imagesTotalCount %></li>
-        <% end %>
-    </ul>
     <% include 'images/list.ect', {images: @images, pages: @pages, page: @page, url: @url, h: @h, winners: @h.isPastDate(@req.contest.dueDate), remove: true, user: @req.user} %>
 <% else : %>
     <ul class="info">
         <li>There are no images in this contest yet</li>
     </ul>
 <% end %>
+

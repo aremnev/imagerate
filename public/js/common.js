@@ -2,6 +2,36 @@ String.prototype.repeat = function(num) {
     return new Array(num + 1).join(this);
 }
 
+window.Thumbnails = {
+    options: {
+        columns: 3
+    }, 
+    init: function(){
+        var self = this;
+
+        $('.thumbnails').masonry({
+            itemSelector : '.item',
+            columnWidth:  function(containerWidth) {
+                console.log(containerWidth / self.options.columns)
+                return containerWidth / self.options.columns;
+            },
+            isResizable: true,
+            isAnimated: true
+        });
+
+
+        self.setColumns();
+    },
+    reload: function(){
+        $('.thumbnails').masonry('reload');
+    },
+    setColumns: function() {
+        this.options.columns = $(window).width() > 1200 ? 3 : $( window ).width() > 900 ? 2 : $( window ).width() > 767 ? 1 : $( window ).width() > 320 ? 2 : 1 ;
+        this.reload();
+        console.log(this.options.columns);
+    }
+}
+
 $(document).ready(function () {
     if (/*@cc_on!@*/false && document.documentMode === 10) {
         $('.modal.fade').removeClass('fade');
@@ -72,30 +102,4 @@ $(document).ready(function () {
         }, 10000);
     }());
 
-    var Thumbnails = {
-        options: {
-            columns: 3
-        }, 
-        init: function(){
-            var self = this;
-
-            self.setColumns();
-
-            $('.thumbnails').masonry({
-                itemSelector : '.item',
-                columnWidth:  function(containerWidth) {
-                    return containerWidth / self.options.columns;
-                },
-                isResizable: true
-            });
-        },
-        reload: function(){
-            $('.thumbnails').masonry('reload');
-        },
-        setColumns: function() {
-            this.options.columns = $(window).width() > 767 ? 3 : $( window ).width() > 320 ? 2 : 1;
-            this.reload();
-            console.log(this.options.columns);
-        }
-    }
 });
