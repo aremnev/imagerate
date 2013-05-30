@@ -52,7 +52,7 @@ li.starred {
   }
 }
 
-:link {
+a {
   color: @link-color;
 
   &:hover, &:active, &.active {
@@ -131,12 +131,17 @@ li.starred {
         border: none;
         border-radius: 0;
         box-shadow: 0 1px 2px rgba(0,0,0,.1);
+        overflow: hidden;
 
         li {
           margin: .5em 0;
 
           &.divider {
             margin: .75em 1em;
+          }
+
+          a {
+            padding: 5px 20px;
           }
         }
 
@@ -147,6 +152,21 @@ li.starred {
       }
     }
   }
+}
+
+.dropdown-menu>li>a:hover,
+.dropdown-menu>li>a:focus,
+.dropdown-submenu:hover>a,
+.dropdown-submenu:focus>a {
+  background: #f1f1f1;
+  color: @text-color;
+  box-shadow: 0 0 1px rgba(0,0,0,.25);
+}
+
+.navbar .nav li.dropdown.open>.dropdown-toggle,
+.navbar .nav li.dropdown.active>.dropdown-toggle,
+.navbar .nav li.dropdown.open.active>.dropdown-toggle {
+  background: #fff;
 }
 
 .navbar-link {
@@ -201,7 +221,10 @@ article {
 }
 
 .well {
-  background: #fff;
+  background: #fafafa;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(255,255,255,.5);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(255,255,255,.5);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(255,255,255,.5);
 }
 
 .thumbnails {
@@ -263,11 +286,43 @@ article {
     border-color: #d1d1d1;
   }
 
+  &.winner-1,
+  &.winner-2,
+  &.winner-3 {
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-width: 0 0 42px 42px;
+      border-style: none none solid solid;
+    }
+  }
+
+  &.winner-1 {
+    &:after {
+      border-color: transparent transparent transparent gold;
+    }
+  }
+
+  &.winner-2 {
+    &:after {
+      border-color: transparent transparent transparent #bdc3c7;
+    }
+  }
+
+  &.winner-3 {
+    &:after {
+      border-color: transparent transparent transparent #cd7f32;
+    }
+  }
+
   .image-author {
     font-size: 93%;
     position: relative;
     display: block;
-    margin: -20px 0 0 10px;
+    margin: -20px 0 -10px 10px;
 
     .userpic {
       vertical-align: bottom;
@@ -286,7 +341,7 @@ article {
   }
 
   .image-caption {
-    margin-bottom: 10px;
+    margin: 10px 0;
   }
 
   .comments {
@@ -322,6 +377,17 @@ article {
       img {
         border-radius: 4px;
       }
+    }
+  }
+
+  .stats {
+    float: right;
+    font-size: 93%;
+    color: #7f7f7f;
+    margin-left: 1em;
+
+    span {
+      margin-left: .75em;
     }
   }
 }
@@ -525,7 +591,7 @@ article {
       top: -100%;
       left: 0;
       padding: .35em 1em;
-      margin: -16px 0 0 16px;
+      margin: -20px 0 0 0;
       background: #fff;
       box-shadow: 0 1px 1px rgba(0,0,0,.1);
       border-radius: 2px 2px 2px 0;
@@ -563,6 +629,18 @@ article {
   }
 }
 
+.date {
+  font-size: 93%;
+  color: #7f7f7f;
+}
+
+.datepicker {
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.1);
+     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.1);
+          box-shadow: 0 1px 2px rgba(0,0,0,.1);
+  border-radius: 2px;
+  border-color: #ddd;
+}
 
 .contest-details {
   margin-bottom: 2em;
