@@ -12,13 +12,11 @@ window.Thumbnails = {
         $('.thumbnails').masonry({
             itemSelector : '.item',
             columnWidth:  function(containerWidth) {
-                console.log(containerWidth / self.options.columns)
                 return containerWidth / self.options.columns;
             },
             isResizable: true,
             isAnimated: true
         });
-
 
         self.setColumns();
     },
@@ -28,7 +26,6 @@ window.Thumbnails = {
     setColumns: function() {
         this.options.columns = $(window).width() > 1200 ? 3 : $( window ).width() > 900 ? 2 : $( window ).width() > 767 ? 1 : $( window ).width() > 320 ? 2 : 1 ;
         this.reload();
-        console.log(this.options.columns);
     }
 }
 
@@ -76,7 +73,8 @@ $(document).ready(function () {
     $('.slides').roundabout({
         autoplay: true,
         autoplayDuration: 3000,
-        autoplayPauseOnHover: true
+        autoplayPauseOnHover: true,
+        responsive: true
     });
 
     (function(){
