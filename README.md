@@ -1,8 +1,6 @@
 imagerate
 =========
 
-Project for the photo contests. For staging server is used AppFog. http://contest-app.aws.af.cm/
-
 [![Build Status](https://travis-ci.org/aremnev/imagerate.png)](https://travis-ci.org/aremnev/imagerate)
 
 How to build (Debian like OS):
