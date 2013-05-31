@@ -17,10 +17,13 @@ function nowPlusOneMonth() {
  */
 
 var ContestSchema = new Schema({
-    title: {type : String, default : '', trim : true},
-    description: {type : String, default : '', trim : true},
+    title : {type : String, default : '', trim : true},
+    description : {type : String, default : '', trim : true},
     startDate : {type : Date, default : Date.now},
-    dueDate: {type : Date, default : nowPlusOneMonth}
+    dueDate : {type : Date, default : nowPlusOneMonth},
+    showAuthor : {type : Boolean, default : false},
+    showComments : {type : Boolean, default : false},
+    maxPhotos : {type : Number, default : 3}
 });
 
 

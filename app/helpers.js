@@ -36,6 +36,9 @@ module.exports = {
         var now = new Date();
         return date > now;
     },
+    isOwner: function(image, user) {
+        return (image.user._id + '' == user._id + '');
+    },
 
     //Async helpers
     safe: function (callback, func, isExecuteCallback) {

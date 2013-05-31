@@ -2,24 +2,23 @@
 <% extend 'layouts/layout.ect' %>
 
 <% block 'aside-top' : %>
-            <h2><%= @req.contest.title %> <% if @h.isPastDate(@req.contest.dueDate): %> <span class="status">finished</span><% end %></h2>
-            
-        <div class="contest-details">
-            <p><%- @h.formatDate(@req.contest.startDate) %> &ndash; <%- @h.formatDate(@req.contest.dueDate) %></p>
-            <p><em><%= @req.contest.description %></em></p>
-            <% if @imagesTotalCount : %>
-                <p><%- @imagesTotalCount %> images by <%- @usersCount %> users</p>
-                <% if @req.isAuthenticated() : %>
-                    <p>You rated <%- @ratedImagesCount %> images of <%- @imagesTotalCount %></p>
-                <% end %>
+    <h2><%= @req.contest.title %> <% if @h.isPastDate(@req.contest.dueDate): %> <br /><span class="status">finished</span><% end %></h2>
+        
+    <div class="contest-details">
+        <p><%- @h.formatDate(@req.contest.startDate) %> &ndash; <%- @h.formatDate(@req.contest.dueDate) %></p>
+        <p><em><%= @req.contest.description %></em></p>
+        <% if @imagesTotalCount : %>
+            <p><%- @imagesTotalCount %> images by <%- @usersCount %> users</p>
+            <% if @req.isAuthenticated() : %>
+                <p>You rated <%- @ratedImagesCount %> images of <%- @imagesTotalCount %></p>
             <% end %>
-        </div>
-
+        <% end %>
+    </div>
 <% end %>
 
 <% block 'aside-bottom' : %>
     <div class="contest-actions">
-        <% if @req.isAuthenticated() and @imageAddedCount < 3 and not @h.isPastDate(@req.contest.dueDate): %>
+        <% if @req.isAuthenticated() and @imageAddedCount < @req.contest.maxPhotos and not @h.isPastDate(@req.contest.dueDate): %>
             <a href="#uploadModal" role="button" data-toggle="modal" class="btn btn-success">Add image to contest</a>
         <% end %>
         <% if @req.isAdmin() : %>
@@ -28,7 +27,7 @@
     </div>
 <% end %>
 
-<% if @req.isAuthenticated() and @imageAddedCount < 3: %>
+<% if @req.isAuthenticated() and @imageAddedCount < @req.contest.maxPhotos: %>
     <% include 'includes/modals/upload.ect', {contest: @req.contest, user: @req.user} %>
 <% end %>
 

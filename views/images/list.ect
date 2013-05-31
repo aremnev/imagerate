@@ -12,37 +12,41 @@
     <% end %>
 <% end %>
 
-
 <ul class="thumbnails">
     <% for image, i in @images: %>
-        <li class="item">
-            <div class="thumbnail <% if image.getRating() and @winners: %>winner-<%- (i + 1) + ((@page - 1) * 15) %> <%end %>">
-                <a class="image-to-rate fixed-rating image-link" href="/images/<%- image.id %>">
-                    <% if not @h.isPastDate(image.contest.contest.dueDate) and @remove and @user and (image.user._id + '' == @user._id + ''): %>
-                        <span data-confirm="Are you sure?" data-ok="<%- @url || '' %>" href="/images/<%- image.id %>" class="remove ajax-delete">×</span>
-                    <% end %>
-                    <img class="wait" src="<%- @h.imageUrl(image.image, {width: 600, height: 360, crop: 'fill'}) %>" alt="<%= image.title %>" title="<%= image.title %>"/>
-                </a>
-                <% if @h.isPastDate(image.contest.contest.dueDate): %>
-                    <span class="image-author">
-                        <% include 'includes/userpic.ect', {user: image.user, h: @h, size: 40} %>
-                        <span class="name"><%= image.user.name %></span>
-                    </span>
-                <% end %>
-                <div class="image-caption caption">
-                    <% if @h.isPastDate(image.contest.contest.dueDate) and @winners: %>
-                        <span class="stats">
-                            <span>Rating: <%- image.getRating() %></span>
-                            <span>Rank: <%- (i + 1) + ((@page - 1) * 15) %></span>
+        <% if not @hideAnon or (@user and @h.isOwner(image, @user) or (@h.isPastDate(image.contest.contest.dueDate) or image.contest.contest.showAuthor ) ) : %>
+            <li class="item">
+                <div class="thumbnail <% if image.getRating() and @winners: %>winner-<%- (i + 1) + ((@page - 1) * 15) %> <%end %>">
+                    <a class="image-to-rate fixed-rating image-link" href="/images/<%- image.id %>">
+                        <% if not @h.isPastDate(image.contest.contest.dueDate) and @remove and @user and (image.user._id + '' == @user._id + ''): %>
+                            <span data-confirm="Are you sure?" data-ok="<%- @url || '' %>" href="/images/<%- image.id %>" class="remove ajax-delete">×</span>
+                        <% end %>
+                        <img class="wait" src="<%- @h.imageUrl(image.image, {width: 600, height: 360, crop: 'fill'}) %>" alt="<%= image.title %>" title="<%= image.title %>"/>
+                    </a>
+                    <% if image.contest.contest.showAuthor: %>
+                        <span class="image-author">
+                            <% include 'includes/userpic.ect', {user: image.user, h: @h, size: 40} %>
+                            <span class="name"><%= image.user.name %></span>
                         </span>
                     <% end %>
-                    <span class="title"><%= image.title %></span>
+                    <div class="image-caption caption">
+                        <% if @h.isPastDate(image.contest.contest.dueDate) and @winners: %>
+                            <span class="stats">
+                                <span>Rating: <%- image.getRating() %></span>
+                                <span>Rank: <%- (i + 1) + ((@page - 1) * 15) %></span>
+                            </span>
+                        <% end %>
+                        <span class="title"><%= image.title %></span>
+                    </div>
+                    <% if image.comments.length && !@hideComments && image.contest.contest.showComments : %>
+                        <% include 'comments/comments.ect', {comments: image.comments, h: @h, req: image, size: 28 } %>
+                    <% end %>
                 </div>
-                <% if image.comments.length && !@hideComments : %>
-                    <% include 'comments/comments.ect', {comments: image.comments, h: @h, req: image, size: 28 } %>
-                <% end %>
-            </div>
-        </li>
+            </li>
+        <% else : %>
+        
+            
+        <% end %>
     <% end %>
 </ul>
 <% if @pages : %>

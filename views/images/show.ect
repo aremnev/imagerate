@@ -4,7 +4,7 @@
 
 <% block 'aside-top' : %>
     <h2><%- @req.image.title %></h2>
-    <% if @h.isPastDate(@req.image.contest.contest.dueDate): %>
+    <% if @req.image.contest.contest.showAuthor : %>
         <p><i>Author:</i> <a href="/users/<%- @req.image.user.id %>"><%= @req.image.user.name %></a></p>
     <% end %>
     <p><i>Contest:</i> <a href="/contests/<%- @req.image.contest.contest._id %>"><%= @req.image.contest.contest.title %> (<%- @h.formatDate(@req.image.contest.contest.dueDate) %>)</a> </p>

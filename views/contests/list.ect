@@ -14,20 +14,38 @@
 
 <% block 'aside-top' : %>
     <% if @req.isAdmin() : %>
+        <h3>Create new contest:</h3>
         <form class="well well-small" action="/contests/" method="post">
-            <h3>Create new contest:</h3>
             <div class="controls">
                 <input type="text" pattern="^(?=\s*\S).*$" name="title" placeholder="Title" maxlength="255" required/><br>
+
                 <input type="text" pattern="^(?=\s*\S).*$" name="description" placeholder="Description" maxlength="255"/><br>
+
                 <div class="input-append date" id="startDate" data-date="<%- @h.formatTime(new Date(), 'MM-DD-YYYY') %>" data-date-format="mm-dd-yyyy">
                     <input placeholder="Start Date" name="startDate" class="span2" size="16" type="text" value="<%- @h.formatTime(new Date(), 'MM-DD-YYYY') %>" readonly="readonly" required>
                     <span class="add-on"><i class="icon-calendar"></i></span>
                 </div>
+
                 <div class="input-append date" id="dueDate" data-date="<%- @h.formatTime(new Date(), 'MM-DD-YYYY') %>" data-date-format="mm-dd-yyyy">
                     <input placeholder="Due Date" name="dueDate" class="span2" size="16" type="text" value="<%- @h.formatTime(new Date(), 'MM-DD-YYYY') %>" readonly="readonly" required>
                     <span class="add-on"><i class="icon-calendar"></i></span>
-                </div><br>
-                <input type="submit" class="btn" value="Create" />
+                </div>
+
+                <div class="controls">
+                    <label>Max. photos per user <input class="input-mini" type="text" name="maxPhotos" value="3"></label>
+                </div>
+
+                <div class="controls">
+                    <label class="checkbox"><input type="checkbox" name="showAuthor"> Show author during contest</label>
+                </div>
+
+                <div class="controls">
+                    <label class="checkbox"><input type="checkbox" name="showComments"> Show comments during contest</label>
+                </div>
+
+                <div class="form-actions">
+                    <input type="submit" class="btn" value="Create" />
+                </div>
             </div>
         </form>
     <% end %>
