@@ -23,7 +23,7 @@
                         <% end %>
                         <img class="wait" src="<%- @h.imageUrl(image.image, {width: 600, height: 360, crop: 'fill'}) %>" alt="<%= image.title %>" title="<%= image.title %>"/>
                     </a>
-                    <% if image.contest.contest.showAuthor: %>
+                    <% if image.contest.contest.showAuthor or @h.isPastDate(image.contest.contest.dueDate) : %>
                         <span class="image-author">
                             <% include 'includes/userpic.ect', {user: image.user, h: @h, size: 40} %>
                             <span class="name"><%= image.user.name %></span>
