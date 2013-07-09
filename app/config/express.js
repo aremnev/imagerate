@@ -46,7 +46,7 @@ module.exports = function (app, config, passport) {
         app.use(express.bodyParser())
         app.use(express.methodOverride())
 
-        app.use(expressValidator);
+        app.use(expressValidator());
 
         // express/mongo session storage
         app.use(express.session({
@@ -57,7 +57,7 @@ module.exports = function (app, config, passport) {
             })
         }));
 
-//        app.use(express.csrf());
+        //app.use(express.csrf());
 
         // connect flash for flash messages
         app.use(flash());

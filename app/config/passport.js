@@ -42,6 +42,9 @@ module.exports = function (passport, config) {
     },
     function(accessToken, refreshToken, profile, done) {
         var profile = profile._json;
+        if(profile.hd != 'thumbtack.net') {
+            return done(null, false, { message: 'Only Thumbtack users are allowed.' });
+        }
         User.findOne({$or:[
             { 'google.id': profile.id },
             { 'email': profile.email }]}, function (err, user) {

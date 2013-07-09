@@ -2,6 +2,11 @@
 <% extend 'layouts/layout.ect' %>
 <div class="row">
     <div class="well span7">
+    <% if @message and @message.length: %>
+    <div class="alert alert-error">
+        <%- @message %>
+    </div>
+    <% end %>
     <fieldset>
         <legend>Sign-in</legend>
         <a href="/auth/google" class="google pull-center">
