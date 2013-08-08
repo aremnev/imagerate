@@ -55,7 +55,7 @@ const CONFIG = {
         google: {
             clientID: '163368963370-3reqk668cm11vfc3td5rqc2603knb5ca.apps.googleusercontent.com',
             clientSecret: 'yCH74X40e4-mERo4CkNxk3d3',
-            callbackURL: 'https://imagerate.ap01.aws.af.cm/auth/google/callback'
+            callbackURL: 'http://photo.dev.thumbtack.net/auth/google/callback'
         }
     },
 
