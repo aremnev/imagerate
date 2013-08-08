@@ -15,6 +15,8 @@ var env = process.env.NODE_ENV || 'development',
 
 var port = cfg.port;
 
+console.log(process.env.PORT);
+
 // Bootstrap db connection
 require('./config/mongo')(cfg);
 // Bootstrap knox
