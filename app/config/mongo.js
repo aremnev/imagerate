@@ -8,6 +8,9 @@ module.exports = function (config) {
     mongoose.connect(config.db);
 
     function buildMongoUrl(mongo) {
+        if(process.env.MONGOLAB_URL) {
+            return process.env.MONGOLAB_URL;
+        }
         if (!mongo) {
             var env = JSON.parse(process.env.VCAP_SERVICES);
             mongo = env['mongodb-1.8'][0]['credentials'];

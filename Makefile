@@ -6,7 +6,7 @@ SHELL=/bin/bash
 PROJECT = "project"
 
 all: clean node-virtual install;
-	@echo "*** Nodeenv with node-0.8.14 and installed modules is created.";
+	@echo "*** Nodeenv with node-0.10.15 and installed modules is created.";
 	@echo "*** Now you can execute 'test' and 'start' commands."
 
 test: ;@echo ""; \
@@ -28,8 +28,8 @@ node-virtual: ;@echo "Prepare nodeenv....."; \
 	virtualenv env && \
 	source env/bin/activate && \
 	easy_install nodeenv && \
-	nodeenv env/node --node=0.8.14 --npm=1.2.18;
-	@echo "*** Nodeenv with node-0.8.14 is created."
+	nodeenv env/node --node=0.10.15 --npm=1.2.18;
+	@echo "*** Nodeenv with node-0.10.15 is created."
 	@echo "*** Now you can execute 'install', 'test' and 'start' commands."
 
 
@@ -49,6 +49,9 @@ clean: ;@echo "Clean ${PROJECT}....."; \
 start: ;@echo "Starting ${PROJECT}....."; \
     $(ACTIVATE_ENV) && \
 	npm start;
+	
+heroku-install: ;@echo "Heroku install....."; \
+	wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
 af-install: ;@echo "AppFog gem install....."; \
 	sudo apt-get -y install ruby && \
@@ -61,4 +64,4 @@ af-update: ;@echo "AppFog update ${PROJECT}....."; \
 	./scripts/af.sh
 
 
-.PHONY: test start install clean test-coverage af-update af-install all node-virtual
+.PHONY: test start install clean test-coverage af-update af-install all node-virtual heroku-install
