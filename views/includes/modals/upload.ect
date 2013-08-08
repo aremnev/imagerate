@@ -10,7 +10,11 @@
             <div class="inputs">
                 <input type="text" id="image_title" name="title" placeholder="Add title..." required class="span5" />
             </div>
-            <div class="inputs">
+            <div class="inputs type">
+                <input type="radio" data-ref="type-upload" name="type" checked="checked" /> Upload
+                <input type="radio" data-ref="type-url" name="type" /> Add Url
+            </div>
+            <div id="type-upload" class="inputs type-ref">
                 <div class="image-upload">
                     <span class="btn btn-success">
                         Add file...
@@ -18,6 +22,9 @@
                     </span>
                     <span class="text"></span>
                 </div>
+            </div>
+            <div id="type-url" class="inputs type-ref hidden">
+                <input type="text" id="image_url" name="url" placeholder="Image url..." class="span5" />
             </div>
             <div class="progress progress-striped active">
                 <div class="bar bar-warning" style="width: 0%;"></div>

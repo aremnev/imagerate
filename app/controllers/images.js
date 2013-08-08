@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
     Image = mongoose.model('Image'),
     async = require('async'),
     request = require('request'),
+    fs = require('fs'),
     mime = require('express').mime,
     helpers = require('../helpers'),
     safe = helpers.safe;
@@ -98,12 +99,43 @@ exports.create = function (req, res) {
     })
     image.user = req.user;
     res.set('Content-Type', 'text/plain');
-    image.uploadAndSave(req.files.image, function (err, savedImage) {
-        if (err) {
-            return res.send(400, err.message || err.image);
-        }
-        res.send(savedImage._id);
-    })
+    if (req.body.url) {
+        var download = function(uri, filename, cb){
+            request.head(uri, function(err, res, body){
+                if(err || !(res.headers['content-type'].indexOf('image') + 1)) {
+                    return cb('Invalid image url');
+                }
+
+                var r = request(uri),
+                    ws = fs.createWriteStream(filename);
+                r.pipe(ws);
+                r.on('end', function (err) {
+                    if(err) {
+                        return cb(err);
+                    }
+                    image.uploadAndSave(ws, function (err, savedImage) {
+                        if (err) {
+                            return cb(err.message || err.image);
+                        }
+                        return cb(null, savedImage);
+                    });
+                });
+            });
+        };
+        download(req.body.url, '/tmp/filetmp', function(err, image) {
+            if(err) {
+                return res.send(400, err);
+            }
+            res.send(image._id);
+        });
+    } else {
+        image.uploadAndSave(req.files.image, function (err, savedImage) {
+            if (err) {
+                return res.send(400, err.message || err.image);
+            }
+            res.send(savedImage._id);
+        })
+    }
 }
 
 /**

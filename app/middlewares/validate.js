@@ -17,9 +17,9 @@ function createImage(req, res, next) {
     req.assert('title', 'Enter image title').notEmpty();
     var errors = req.validationErrors(true);
 
-    if (!req.files.image) {
+    if (!req.body.url && (!req.files || !req.files.image)) {
         errors = errors || {};
-        errors.image = 'Attach file';
+        errors.image = 'Attach file or input image url';
     }
 
     if (errors) {
