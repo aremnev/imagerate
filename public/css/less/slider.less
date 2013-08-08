@@ -1,6 +1,11 @@
 @import "vars.less";
 @import "mixins.less";
 
+.slides-wrapper {
+  overflow: hidden;
+  width: 100%;
+}
+
 .slides {
   position: relative;
   width: 75%;
@@ -10,5 +15,11 @@
     display: block;
     width: 400px;
     height: 300px;
+  }
+}
+
+@media (max-width: 767px) {
+  .slides-wrapper {
+    display: none;
   }
 }
