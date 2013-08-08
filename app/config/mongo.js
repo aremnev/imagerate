@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 module.exports = function (config) {
 
     config.db = buildMongoUrl(config.mongo);
+    console.log(config.db);
     mongoose.connect(config.db);
 
     function buildMongoUrl(mongo) {
