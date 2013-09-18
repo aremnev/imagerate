@@ -4,10 +4,7 @@ module.exports = function (cfg) {
 
     function profileLink(size, user) {
         var picture = cfg.google.photoLink;
-        if(user && user.google && user.google.picture) {
-            picture = user.google.picture + '?sz={0}';
-        }
-        return picture.format(size || 50);
+        return picture.format(user.google.id, size || 50);
     }
 
     return function (req, res, next) {
