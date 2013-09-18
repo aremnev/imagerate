@@ -1,4 +1,3 @@
-
 const CONFIG = {
     development: {
         app: {
@@ -70,15 +69,12 @@ const CONFIG = {
         },
         google: {
             scope: 'https://www.google.com/m8/feeds https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
-            photoLink: 'https://lh4.googleusercontent.com/-LnOLxLmyDbM/AAAAAAAAAAI/AAAAAAAAAAA/VYIuGGjpm4o/s{0}-c/photo.jpg'
+            photoLink: 'https://profiles.google.com/s2/photos/profile/{0}?sz={1}'
         },
         admin: {
             emails: [
                 'dsedelnikov@thumbtack.net',
-                'dmnorc@gmail.com',
                 'aremnev@thumbtack.net',
-                'pulyashev@thumbtack.net',
-                'ashipovalov@thumbtack.net',
                 'epashkevich@thumbtack.net'
             ]
         }
