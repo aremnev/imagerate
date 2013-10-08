@@ -67,10 +67,24 @@ exports.delete = function (req, res) {
  */
 
 exports.update = function (req, res) {
+    //if form not sending data from checkboxes
+    req.body.showAuthor = !!req.body.showAuthor;
+    req.body.showComments = !!req.body.showComments;
     Contest.findByIdAndUpdate(req.contest._id, req.body, function (err, contest) {
         if (err) return res.render('500');
-        return res.json({contest: contest});
+        return res.redirect('/contests/'+contest._id);
+
     })
+}
+
+/**
+ * Edit contest page
+ * @param req
+ * @param res
+ */
+exports.editPage = function(req, res){
+    var locals = {contest : req.contest};
+    res.render('contests/edit.ect', locals);
 }
 
 /**
