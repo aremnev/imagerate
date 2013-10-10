@@ -16,6 +16,8 @@ results
 npm-debug.log
 npm-shrinkwrap.json
 
+#deploy settings
+scripts/heroku.conf
 
 # Node modules
 node_modules
