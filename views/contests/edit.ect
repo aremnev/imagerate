@@ -9,7 +9,7 @@
 <% block 'aside-top' : %>
     <% if @req.isAdmin() : %>
     <h3>Update <span class="red"><%= @contest.title %></span></h3>
-    <form class="well well-small" action="/contests/<%- @contest._id %>/edit" method="post">
+    <form class="well well-small" action="/contests/<%- @contest._id %>" method="post">
         <div class="controls">
             <input type="text" pattern="^(?=\s*\S).*$" name="title" placeholder="Title" maxlength="255" value="<%= @contest.title %>" required/><br>
 

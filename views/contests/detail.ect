@@ -4,7 +4,7 @@
 <% block 'aside-top' : %>
     <h2>
         <%= @req.contest.title %>
-        <a href="/contests/<%- @req.contest._id %>/edit"><span class="add-on"><i class="icon-pencil"></i></span></a>
+        <% if @req.isAdmin() : %><a href="/contests/<%- @req.contest._id %>/edit"><span class="add-on"><i class="icon-pencil"></i></span></a><% end %>
         <% if @h.isPastDate(@req.contest.dueDate): %> <br /><span class="status">finished</span><% end %>
     </h2>
         

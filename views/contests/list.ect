@@ -60,7 +60,7 @@
     <% for contest, i in @contests: %>
         <li class="item span3">
             <h3>
-                <a href="/contests/<%- contest._id %>"><%= contest.title %></a> <a href="/contests/<%- contest._id %>/edit"><span class="add-on"><i class="icon-pencil"></i></span></a>
+                <a href="/contests/<%- contest._id %>"><%= contest.title %></a> <% if @req.isAdmin() : %><a href="/contests/<%- contest._id %>/edit"><span class="add-on"><i class="icon-pencil"></i></span></a><% end %>
             </h3>
             <span class="date"><%- @h.formatDate(contest.startDate) %> &ndash; <%- @h.formatDate(contest.dueDate) %> <% if @h.isPastDate(contest.dueDate): %><strong>(finished)</strong><% end %></span>
         </li>

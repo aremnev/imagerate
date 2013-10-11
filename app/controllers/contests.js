@@ -72,8 +72,14 @@ exports.update = function (req, res) {
     req.body.showComments = !!req.body.showComments;
     Contest.findByIdAndUpdate(req.contest._id, req.body, function (err, contest) {
         if (err) return res.render('500');
-        return res.redirect('/contests/'+contest._id);
-
+        return res.format({
+            text: function(){
+                res.redirect('/contests/' + contest._id);
+            },
+            json: function(){
+                res.json({ contest: contest });
+            }
+        });
     })
 }
 
