@@ -17,6 +17,11 @@
                 <p>You rated <%- @ratedImagesCount %> images of <%- @imagesTotalCount %></p>
             <% end %>
         <% end %>
+        <%  if @req.contest.private :%>
+            <p class="text-success">This contest is private</p>
+        <% else : %>
+            <p class="text-error">This is not a private contest</p>
+        <% end %>
     </div>
 <% end %>
 

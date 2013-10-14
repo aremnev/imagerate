@@ -70,6 +70,7 @@ exports.update = function (req, res) {
     //if form not sending data from checkboxes
     req.body.showAuthor = !!req.body.showAuthor;
     req.body.showComments = !!req.body.showComments;
+    req.body.private = !!req.body.private;
     Contest.findByIdAndUpdate(req.contest._id, req.body, function (err, contest) {
         if (err) return res.render('500');
         return res.format({

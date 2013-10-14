@@ -23,6 +23,7 @@ var ContestSchema = new Schema({
     dueDate : {type : Date, default : nowPlusOneMonth},
     showAuthor : {type : Boolean, default : false},
     showComments : {type : Boolean, default : false},
+    private : {type : Boolean, default : false},
     maxPhotos : {type : Number, default : 3}
 });
 

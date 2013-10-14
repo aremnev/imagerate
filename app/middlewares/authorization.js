@@ -26,6 +26,21 @@ var auth = function(cfg) {
             next();
         },
 
+        restrictedAccess : function(req, res, next) {
+            var contestIsPrivate = false;
+            if(req.contest){
+                contestIsPrivate = req.contest.private;
+            } else if (req.image) {
+                contestIsPrivate = req.image.contest.contest.private;
+            }
+            if(contestIsPrivate && !req.isAuthenticated()){
+                return res.redirect('/login');
+            }
+            next();
+        },
+
+
+
         user: {
             hasAuthorization : function (req, res, next) {
                 if (req.profile.id != req.user.id) {
