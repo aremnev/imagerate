@@ -9,7 +9,7 @@ $(document).ready(function () {
 
         var type = $('.type', form);
 
-        type.children('input').change(function(e) {
+        type.find('input').change(function(e) {
             if($(this).is(':checked')) {
                 var el = $('#' + $(this).data('ref'));
                 $('.type-ref').addClass('hidden');
@@ -42,7 +42,7 @@ $(document).ready(function () {
             }
         });
 
-        type.children('input').change();
+        type.find('input').change();
 
         $('#image_title').keyup(function(){
 
