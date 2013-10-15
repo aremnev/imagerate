@@ -44,6 +44,7 @@ var ImageSchema = new Schema({
         cdnUri: String,
         data: {}
     },
+    private: {type: Boolean, default: false},
     createdAt  : {type : Date, default : Date.now}
 });
 

@@ -95,7 +95,8 @@ exports.show = function (req, res) {
 exports.create = function (req, res) {
     var image = new Image({
         contest: {contest: req.contest},
-        title: req.body.title
+        title: req.body.title,
+        private: req.body.private || req.contest.private
     })
     image.user = req.user;
     res.set('Content-Type', 'text/plain');
@@ -162,23 +163,26 @@ function imageList(req, res, type) {
         perPage: perPage,
         page: page - 1
     }
+    var criteria = {'private': {$ne : true}};
+    if(req.user){
+       delete criteria.private;
+    }
     var locals = {page: page}
     async.waterfall([
         function(cb) {
-            Image.count({}, safe(cb, function(count) {
+            Image.count(criteria, safe(cb, function(count) {
                 locals.pages = Math.ceil(count / perPage);
             }))
         },
         function(count, cb) {
             if(count) {
-                var options;
+                var options = _.extend(soptions, {criteria: criteria});
                 switch (type) {
                     case 'viewed':
-                        options = _.extend(soptions, {sort: {viewsCount: -1}});
+                        options = _.extend(options, {sort: {viewsCount: -1}});
                         locals.title = 'Most viewed photos';
                         break;
                     default:
-                        options = soptions;
                         locals.title = 'Most recent photos';
                 }
                 Image.list(options, safe(cb, function(images) {

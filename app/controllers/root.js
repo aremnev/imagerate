@@ -14,7 +14,13 @@ var async = require('async'),
 exports.index = function (req, res) {
     var options = {
         perPage: 10,
-        page: 0
+        page: 0,
+        criteria: {
+            private : {$ne : true}
+        }
+    }
+    if(req.user){
+        delete options.criteria.private
     }
     var locals = { title: 'Main Page'}
 

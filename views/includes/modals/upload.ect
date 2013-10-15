@@ -10,10 +10,14 @@
             <div class="inputs">
                 <input type="text" id="image_title" name="title" placeholder="Add title..." required class="span5" />
             </div>
-            <div class="inputs type">
+            <div class="inputs type span2">
                 <label class="radio inline"><input type="radio" data-ref="type-upload" name="type" checked="checked" /> Upload</label>
                 <label class="radio inline"><input type="radio" data-ref="type-url" name="type" /> Add Url</label>
             </div>
+            <div class="inputs span3 <% if @contest.private : %> hidden <% end %>">
+                <label class="checkbox inline"><input type="checkbox"  checked  name="private">Don't show for anonymous</label>
+            </div>
+            <div class="clearfix"></div>
             <div id="type-upload" class="inputs type-ref">
                 <div class="image-upload">
                     <span class="btn btn-success">

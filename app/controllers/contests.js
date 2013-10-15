@@ -67,21 +67,25 @@ exports.delete = function (req, res) {
  */
 
 exports.update = function (req, res) {
-    //if form not sending data from checkboxes
-    req.body.showAuthor = !!req.body.showAuthor;
-    req.body.showComments = !!req.body.showComments;
-    req.body.private = !!req.body.private;
-    Contest.findByIdAndUpdate(req.contest._id, req.body, function (err, contest) {
-        if (err) return res.render('500');
-        return res.format({
-            text: function(){
-                res.redirect('/contests/' + contest._id);
-            },
-            json: function(){
-                res.json({ contest: contest });
-            }
-        });
-    })
+    Contest.findById(req.contest._id, function(err, contest){
+        if (err) res.render('500');
+        contest = _.extend(contest, _.defaults(req.body, {
+            showAuthor:false,
+            showComments:false,
+            private: false
+        }));
+        contest.save(function (err){
+            if (err) res.render('500');
+            return res.format({
+                text: function(){
+                    res.redirect('/contests/' + contest._id);
+                },
+                json: function(){
+                    res.json({ contest: contest });
+                }
+            });
+        })
+    });
 }
 
 /**

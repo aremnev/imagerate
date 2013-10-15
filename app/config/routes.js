@@ -48,7 +48,7 @@ module.exports = function (app, passport, auth, config) {
     app.get('/contests', contests.list);
     app.get('/contests/:contestId', auth.restrictedAccess, contests.detail);
     app.get('/contests/:contestId/edit', auth.requiresLogin, auth.adminAccess, contests.editPage);
-    app.post('/contests/:contestId', auth.requiresLogin, auth.adminAccess, contests.update);
+    app.post('/contests/:contestId', auth.requiresLogin, auth.adminAccess, validate.createContest, contests.update);
     app.post('/contests/:contestId/images', auth.requiresLogin, validate.createImage, images.create);
     app.param('contestId', contests.contest);
 
