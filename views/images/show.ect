@@ -8,7 +8,7 @@
         <p><i>Author:</i> <a href="/users/<%- @req.image.user.id %>"><%= @req.image.user.name %></a></p>
     <% end %>
     <p><i>Contest:</i> <a href="/contests/<%- @req.image.contest.contest._id %>"><%= @req.image.contest.contest.title %> (<%- @h.formatDate(@req.image.contest.contest.dueDate) %>)</a> </p>
-    <% if @h.isPastDate(@req.image.contest.contest.dueDate): %>
+    <% if @h.isPastDate(@req.image.contest.contest.dueDate) and !@req.image.contest.contest.exhibition: %>
         <p><i>Rating:</i>
             <span ng-switch on="rating.value">
                 <span ng-switch-when="0">Nobody rated this image</span>
@@ -22,7 +22,7 @@
 
 
 <% block 'aside-bottom' : %>
-    <% if @h.isPastDate(@req.image.contest.contest.dueDate): %>
+    <% if @h.isPastDate(@req.image.contest.contest.dueDate) and !@req.image.contest.contest.exhibition : %>
         <h3 ng-init='likes = <%- JSON.stringify(@likes) %>;' ng-show="likes.length">Who rated it</h3>
         <ul class="likes-for-image">
             <li class="like" ng-repeat="like in likes">
@@ -56,7 +56,7 @@
         <% if @req.isAdmin(): %>
             </a>
         <% end %>
-            <% if @req.isAuthenticated() and @req.image.user._id + '' != @req.user._id + '' : %>
+            <% if @req.isAuthenticated() and !@req.image.contest.contest.exhibition and @req.image.user._id + '' != @req.user._id + '' : %>
                 <% include 'includes/rating.ect', { rating: @req.image.getRating(), thumbnail: false, isPast: @h.isPastDate(@req.image.contest.contest.dueDate) } %>
             <% end %>
     </div>

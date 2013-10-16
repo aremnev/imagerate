@@ -22,6 +22,9 @@
         <% else : %>
             <p class="text-error">This is not a private contest</p>
         <% end %>
+        <% if @req.contest.exhibition : %>
+            <p class="text-info">This is exhibition</p>
+        <% end %>
     </div>
 <% end %>
 
