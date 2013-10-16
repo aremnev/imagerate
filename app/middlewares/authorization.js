@@ -31,7 +31,7 @@ var auth = function(cfg) {
             if(req.contest){
                 contestIsPrivate = req.contest.private;
             } else if (req.image) {
-                contestIsPrivate = req.image.contest.contest.private;
+                contestIsPrivate = req.image.private;
             }
             if(contestIsPrivate && !req.isAuthenticated()){
                 return res.redirect('/login');

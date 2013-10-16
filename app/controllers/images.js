@@ -144,7 +144,7 @@ exports.create = function (req, res) {
  */
 
 exports.remove = function (req, res) {
-    var image = req.image
+    var image = req.image;
     if(helpers.isPastDate(image.contest.contest.dueDate)) {
         return res.send(403, {
             id: image._id,
@@ -162,12 +162,12 @@ function imageList(req, res, type) {
     var soptions = {
         perPage: perPage,
         page: page - 1
-    }
+    };
     var criteria = {'private': {$ne : true}};
     if(req.user){
        delete criteria.private;
     }
-    var locals = {page: page}
+    var locals = {page: page};
     async.waterfall([
         function(cb) {
             Image.count(criteria, safe(cb, function(count) {

@@ -48,7 +48,7 @@ ContestSchema.pre('remove', function (next) {
  * Post-save hook
  */
 ContestSchema.post('save', function (contest) {
-    mongoose.model('Image').update( {'contest.contest': contest._id}, {'private': contest.private}, {upsert : true, multi: true}, function( err, numberAffected, raw) {
+    mongoose.model('Image').update( {'contest.contest': contest._id}, {'private': contest.private}, {multi: true}, function( err, numberAffected, raw) {
         if(err) console.log(err);
     });
 });
