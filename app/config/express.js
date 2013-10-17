@@ -10,7 +10,8 @@ var express = require('express'),
     flash = require('connect-flash'),
     cloudinary = require('cloudinary'),
     helpers = require('../middlewares/view_helpers'),
-    subscribers = require('../middlewares/subscribers');
+    subscribers = require('../middlewares/subscribers'),
+    i18n = require('i18n-abide');
 
 module.exports = function (app, config, passport) {
 
@@ -58,6 +59,15 @@ module.exports = function (app, config, passport) {
         }));
 
         //app.use(express.csrf());
+
+
+
+        app.use(i18n.abide({
+            supported_languages: ['en', 'ru'],
+            default_lang: 'en',
+            translation_directory: config.root + '/views/i18n',
+            translation_type: 'key-value-json'
+        }));
 
         // connect flash for flash messages
         app.use(flash());

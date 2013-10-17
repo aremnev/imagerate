@@ -14,6 +14,7 @@ module.exports = function (cfg) {
         if (!res.locals.h) res.locals.h = helpers;
         res.locals.h._ = _;
         res.locals.h.profileLink = profileLink;
+        res.locals.t = req.gettext;
         res.locals.h.isActive = function(req) {
             return function(url) {
                 var result = req._parsedUrl.pathname.indexOf(url) + 1;
