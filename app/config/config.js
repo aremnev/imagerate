@@ -86,7 +86,8 @@ const CONFIG = {
             emails: [
                 'dsedelnikov@thumbtack.net',
                 'aremnev@thumbtack.net',
-                'epashkevich@thumbtack.net'
+                'epashkevich@thumbtack.net',
+                'aIvanov@thumbtack.net'
             ]
         }
     }

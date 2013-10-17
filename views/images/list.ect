@@ -30,7 +30,7 @@
                         </span>
                     <% end %>
                     <div class="image-caption caption">
-                        <% if @h.isPastDate(image.contest.contest.dueDate) and @winners: %>
+                        <% if @isAdmin or @h.isPastDate(image.contest.contest.dueDate) and @winners: %>
                             <span class="stats">
                                 <span>Rating: <%- image.getRating() %></span>
                                 <span>Rank: <%- (i + 1) + ((@page - 1) * 15) %></span>

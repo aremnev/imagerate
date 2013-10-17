@@ -4,11 +4,11 @@
 
 <% block 'aside-top' : %>
     <h2><%- @req.image.title %></h2>
-    <% if @req.image.contest.contest.showAuthor or @h.isPastDate(@req.image.contest.contest.dueDate) : %>
+    <% if @req.isAdmin or @req.image.contest.contest.showAuthor or @h.isPastDate(@req.image.contest.contest.dueDate) : %>
         <p><i>Author:</i> <a href="/users/<%- @req.image.user.id %>"><%= @req.image.user.name %></a></p>
     <% end %>
     <p><i>Contest:</i> <a href="/contests/<%- @req.image.contest.contest._id %>"><%= @req.image.contest.contest.title %> (<%- @h.formatDate(@req.image.contest.contest.dueDate) %>)</a> </p>
-    <% if @h.isPastDate(@req.image.contest.contest.dueDate) and !@req.image.contest.contest.exhibition: %>
+    <% if @req.isAdmin() or @h.isPastDate(@req.image.contest.contest.dueDate): %>
         <p><i>Rating:</i>
             <span ng-switch on="rating.value">
                 <span ng-switch-when="0">Nobody rated this image</span>
@@ -22,16 +22,14 @@
 
 
 <% block 'aside-bottom' : %>
-    <% if @h.isPastDate(@req.image.contest.contest.dueDate) and !@req.image.contest.contest.exhibition : %>
+    <% if (@req.isAdmin() or @h.isPastDate(@req.image.contest.contest.dueDate)) and !@req.image.contest.contest.exhibition : %>
         <h3 ng-init='likes = <%- JSON.stringify(@likes) %>;' ng-show="likes.length">Who rated it</h3>
         <ul class="likes-for-image">
             <li class="like" ng-repeat="like in likes">
                 <span class="userpic"><img ng-src="{{like.user.image}}" alt="{{like.user.name}}"></span>
                 <div class="like-tooltip">
                     {{like.user.name}}
-                    <% if @h.isPastDate(@req.image.contest.contest.dueDate): %>
-                        <span class="rating" ng-init='stars = "★".repeat(like.rating);'>{{stars}}</span>
-                    <% end %>
+                    <span class="rating" ng-init='stars = "★".repeat(like.rating);'>{{stars}}</span>
                 </div>
             </li>
         </ul>
@@ -56,7 +54,7 @@
         <% if @req.isAdmin(): %>
             </a>
         <% end %>
-            <% if @req.isAuthenticated() and !@req.image.contest.contest.exhibition and @req.image.user._id + '' != @req.user._id + '' : %>
+            <% if @req.isAuthenticated() and @req.image.user._id + '' != @req.user._id + '' : %>
                 <% include 'includes/rating.ect', { rating: @req.image.getRating(), thumbnail: false, isPast: @h.isPastDate(@req.image.contest.contest.dueDate) } %>
             <% end %>
     </div>
