@@ -2,7 +2,11 @@
 <% extend 'layouts/layout.ect' %>
 
 <% block 'aside-top' : %>
-    <h2><%= @req.contest.title %> <% if @h.isPastDate(@req.contest.dueDate): %> <br /><span class="status">finished</span><% end %></h2>
+    <h2>
+        <%= @req.contest.title %>
+        <% if @req.isAdmin() : %><a href="/contests/<%- @req.contest._id %>/edit"><span class="add-on"><i class="icon-pencil"></i></span></a><% end %>
+        <% if @h.isPastDate(@req.contest.dueDate): %> <br /><span class="status">finished</span><% end %>
+    </h2>
         
     <div class="contest-details">
         <p><%- @h.formatDate(@req.contest.startDate) %> &ndash; <%- @h.formatDate(@req.contest.dueDate) %></p>
@@ -12,6 +16,11 @@
             <% if @req.isAuthenticated() : %>
                 <p>You rated <%- @ratedImagesCount %> images of <%- @imagesTotalCount %></p>
             <% end %>
+        <% end %>
+        <%  if @req.contest.private :%>
+            <p class="text-success">This contest is private</p>
+        <% else : %>
+            <p class="text-error">This is not a private contest</p>
         <% end %>
     </div>
 <% end %>

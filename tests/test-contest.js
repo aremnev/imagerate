@@ -51,6 +51,7 @@ describe('Contests pages', function () {
             var req = request(app).post('/contests/' + contest._id)
             req.cookies = loginer.cookies
             req
+                .set('Accept', 'application/json')
                 .field('title', 'Another one contest updated')
                 .field('description', 'Description for another one contest updated')
                 .expect(200)

@@ -53,6 +53,9 @@ start: ;@echo "Starting ${PROJECT}....."; \
 heroku-install: ;@echo "Heroku install....."; \
 	wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
+heroku-update: ;@echo "Heroku update....."; \
+    ./scripts/heroku.sh
+
 af-install: ;@echo "AppFog gem install....."; \
 	sudo apt-get -y install ruby && \
 	sudo gem update && \

@@ -67,10 +67,35 @@ exports.delete = function (req, res) {
  */
 
 exports.update = function (req, res) {
-    Contest.findByIdAndUpdate(req.contest._id, req.body, function (err, contest) {
-        if (err) return res.render('500');
-        return res.json({contest: contest});
-    })
+    Contest.findById(req.contest._id, function(err, contest){
+        if (err) res.render('500');
+        contest = _.extend(contest, _.defaults(req.body, {
+            showAuthor:false,
+            showComments:false,
+            private: false
+        }));
+        contest.save(function (err){
+            if (err) res.render('500');
+            return res.format({
+                text: function(){
+                    res.redirect('/contests/' + contest._id);
+                },
+                json: function(){
+                    res.json({ contest: contest });
+                }
+            });
+        })
+    });
+}
+
+/**
+ * Edit contest page
+ * @param req
+ * @param res
+ */
+exports.editPage = function(req, res){
+    var locals = {contest : req.contest};
+    res.render('contests/edit.ect', locals);
 }
 
 /**

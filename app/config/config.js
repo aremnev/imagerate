@@ -58,6 +58,17 @@ const CONFIG = {
         }
     },
 
+    herokuStaging: {
+        app: {
+            name: 'ImageRate - staging'
+        },
+        google: {
+            clientID: '89333681933.apps.googleusercontent.com',
+            clientSecret: 'adhsgM9WHKGp5iYgU8Zr9wsp',
+            callbackURL: 'https://thumbtack-imagerate.herokuapp.com/auth/google/callback'
+        }
+    },
+
     default: {
         mongo: { hostname: 'localhost', port: 27017, username: '', password: '', name: '', db: 'imagerate' },
         port : process.env.PORT || process.env.VCAP_APP_PORT || 3000,
