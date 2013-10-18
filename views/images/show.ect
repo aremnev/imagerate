@@ -47,7 +47,7 @@
                 byUser: <%- @ratingByUser || 0 %> });"
         <% if @req.isAuthenticated() : %>
              ng-mouseleave="rating.state = rating.defaultState"
-        <% end %>>
+        <% end %> >
         <% if @req.isAdmin(): %>
             <a href="/images/<%- @req.image._id %>/raw" target="_blank">
         <% end %>

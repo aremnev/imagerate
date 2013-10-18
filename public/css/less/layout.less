@@ -297,28 +297,36 @@ article {
       content: '';
       display: block;
       position: absolute;
-      top: 0;
+	  top:0;
+	  right:0;
+	  background:url('/img/medals.png');
+	  width: 64px;
+	  height: 86px;
+	  
+      /* top: 0;
       left: 0;
       border-width: 0 0 42px 42px;
-      border-style: none none solid solid;
+      border-style: none none solid solid; */
     }
   }
 
   &.winner-1 {
     &:after {
-      border-color: transparent transparent transparent gold;
+      /* border-color: transparent transparent transparent gold; */
     }
   }
 
   &.winner-2 {
     &:after {
-      border-color: transparent transparent transparent #bdc3c7;
+      /* border-color: transparent transparent transparent #bdc3c7; */
+	  background-position: -62px 0;
     }
   }
 
   &.winner-3 {
     &:after {
-      border-color: transparent transparent transparent #cd7f32;
+      /* border-color: transparent transparent transparent #cd7f32; */
+	  background-position: -126px 0;
     }
   }
 
@@ -539,12 +547,12 @@ article {
     .rating {
       background: #fff;
       display: block;
-      opacity: 0;
-      padding: 1.5em 1em;
+	  padding: 1.5em 1em;
+/*       opacity: 0;
       -o-transition: opacity .5s, .5s ease;
       -moz-transition: opacity .5s, .5s ease;
       -webkit-transition: opacity .5s, .5s ease;
-      visibility: hidden;
+      visibility: hidden; */
     }
 
     .rating-message {
@@ -578,12 +586,12 @@ article {
       }
     }
 
-    &:hover {
+/*     &:hover {
       .rating {
         opacity: 1;
         visibility: visible;
       }
-    }
+    } */
   }
 }
 

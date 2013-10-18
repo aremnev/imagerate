@@ -38,6 +38,9 @@
                         <% end %>
                         <span class="title"><%= image.title %></span>
                     </div>
+					
+               <!--  <% include 'includes/rating.ect' %> -->
+					
                     <% if image.comments.length && !@hideComments && image.contest.contest.showComments : %>
                         <% include 'comments/comments.ect', {comments: image.comments, h: @h, req: image, size: 28 } %>
                     <% end %>
