@@ -15,6 +15,7 @@ module.exports = function (cfg) {
         res.locals.h._ = _;
         res.locals.h.profileLink = profileLink;
         res.locals.t = req.gettext;
+        res.locals.f = req.format;
         res.locals.h.isActive = function(req) {
             return function(url) {
                 var result = req._parsedUrl.pathname.indexOf(url) + 1;

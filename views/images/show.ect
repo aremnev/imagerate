@@ -5,18 +5,18 @@
 <% block 'aside-top' : %>
     <h2><%- @req.image.title %></h2>
     <% if @req.isAdmin or @req.image.contest.contest.showAuthor or @h.isPastDate(@req.image.contest.contest.dueDate) : %>
-        <p><i>Author:</i> <a href="/users/<%- @req.image.user.id %>"><%= @req.image.user.name %></a></p>
+        <p><i><%= @t('Author') %>:</i> <a href="/users/<%- @req.image.user.id %>"><%= @req.image.user.name %></a></p>
     <% end %>
-    <p><i>Contest:</i> <a href="/contests/<%- @req.image.contest.contest._id %>"><%= @req.image.contest.contest.title %> (<%- @h.formatDate(@req.image.contest.contest.dueDate) %>)</a> </p>
+    <p><i><%= @t('Contest') %>:</i> <a href="/contests/<%- @req.image.contest.contest._id %>"><%= @req.image.contest.contest.title %> (<%- @h.formatDate(@req.image.contest.contest.dueDate) %>)</a> </p>
     <% if @req.isAdmin() or @h.isPastDate(@req.image.contest.contest.dueDate): %>
-        <p><i>Rating:</i>
+        <p><i><%= @t('Rating') %>:</i>
             <span ng-switch on="rating.value">
-                <span ng-switch-when="0">Nobody rated this image</span>
+                <span ng-switch-when="0"><%= @t('Nobody rated this image') %></span>
                 <span ng-switch-default>{{rating.value}}</span>
             </span>
         </p>
     <% end %>
-    <p><i>Uploaded:</i>  <%- @h.formatDate(@req.image.createdAt) %></p>
+    <p><i><%= @t('Uploaded') %>:</i>  <%- @h.formatDate(@req.image.createdAt) %></p>
 
 <% end %>
 
@@ -55,7 +55,7 @@
             </a>
         <% end %>
             <% if @req.isAuthenticated() and @req.image.user._id + '' != @req.user._id + '' : %>
-                <% include 'includes/rating.ect', { rating: @req.image.getRating(), thumbnail: false, isPast: @h.isPastDate(@req.image.contest.contest.dueDate) } %>
+                <% include 'includes/rating.ect', { rating: @req.image.getRating(), thumbnail: false, isPast: @h.isPastDate(@req.image.contest.contest.dueDate), t: @t } %>
             <% end %>
     </div>
 
@@ -65,7 +65,7 @@
 
             <form class="comment-form" action="/images/<%- @req.image.id %>/comment">
                 <% include 'includes/userpic.ect', {user: @req.user, h: @h, size: 40} %>
-                <input pattern="^(?=\s*\S).*$" name="comment" type="text" maxlength="255" placeholder="Add comment..." /> <input type="submit" class="btn" value="Send" />
+                <input pattern="^(?=\s*\S).*$" name="comment" type="text" maxlength="255" placeholder="<%= @t('Add comment') %>..." /> <input type="submit" class="btn" value="<%= @t('Send') %>" />
             </form>
             <% end %>
             <% include 'comments/comments.ect', {comments: @req.image.comments, h: @h, req: @req } %>

@@ -17,13 +17,13 @@
             </span>
             <span ng-switch-when="not-rated" class="rating-message">
                 <% if @isPast: %>
-                    Contest has finished. You can't rate this image.
+                    <%= @t('Contest has finished. You can\'t rate this image.') %>
                 <% else : %>
-                    You haven't rated this image yet.
-                    <a href ng-click="rating.state = 'rate-it';">Rate it!</a>
+                    <%= @t('You haven\'t rated this image yet.') %>
+                    <a href ng-click="rating.state = 'rate-it';"><%= @t('Rate it!') %></a>
                 <% end %>
             </span>
-            <span ng-switch-when="thanks-for-vote" class="rating-message">Thank you for your vote!</span>
+            <span ng-switch-when="thanks-for-vote" class="rating-message"><%= @t('Thank you for your vote!') %></span>
             <span ng-switch-when="rated" class="star">{{rating.stars}}</span>
         </div>
     <% end %>

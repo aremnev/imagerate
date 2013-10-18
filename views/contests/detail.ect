@@ -12,18 +12,18 @@
         <p><%- @h.formatDate(@req.contest.startDate) %> &ndash; <%- @h.formatDate(@req.contest.dueDate) %></p>
         <p><em><%= @req.contest.description %></em></p>
         <% if @imagesTotalCount : %>
-            <p><%- @imagesTotalCount %> images by <%- @usersCount %> users</p>
+            <p><%= @f(@t('%s images by %s users'), [@imagesTotalCount, @usersCount])  %></p>
             <% if @req.isAuthenticated() : %>
-                <p>You rated <%- @ratedImagesCount %> images of <%- @imagesTotalCount %></p>
+                <p><%= @f( @t('You rated %s images of %s'), [@ratedImagesCount, @imagesTotalCount]) %></p>
             <% end %>
         <% end %>
         <%  if @req.contest.private :%>
-            <p class="text-success">This contest is private</p>
+            <p class="text-success"><%= @t('This contest is private') %></p>
         <% else : %>
-            <p class="text-error">This is not a private contest</p>
+            <p class="text-error"><%= @t('This is not a private contest') %></p>
         <% end %>
         <% if @req.contest.exhibition : %>
-            <p class="text-info">This is exhibition</p>
+            <p class="text-info"><%= @t('This is contest-exhibition') %></p>
         <% end %>
     </div>
 <% end %>
@@ -44,7 +44,7 @@
 <% end %>
 
 <% if @imagesTotalCount : %>
-    <% include 'images/list.ect', {images: @images, pages: @pages, page: @page, url: @url, h: @h, winners: @h.isPastDate(@req.contest.dueDate), remove: true, user: @req.user, isAdmin: @req.isAdmin()} %>
+    <% include 'images/list.ect', {images: @images, pages: @pages, page: @page, url: @url, h: @h, winners: @h.isPastDate(@req.contest.dueDate), remove: true, user: @req.user, isAdmin: @req.isAdmin(), t: @t} %>
 <% else : %>
     <ul class="info">
         <li>There are no images in this contest yet</li>
