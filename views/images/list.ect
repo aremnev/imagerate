@@ -25,7 +25,7 @@
                     </a>
                     <% if image.contest.contest.showAuthor or @h.isPastDate(image.contest.contest.dueDate) : %>
                         <span class="image-author">
-                            <% include 'includes/userpic.ect', {user: image.user, h: @h, size: 40} %>
+                            <% include 'includes/userpic.ect', {user: image.user, h: @h} %>
                             <span class="name"><%= image.user.name %></span>
                         </span>
                     <% end %>

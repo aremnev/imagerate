@@ -9,7 +9,7 @@
 
 <% block 'aside-top' : %>
     <span class="profile-image userpic">
-        <img src="<%- @h.profileLink(110, @req.profile) %>" />
+        <img src="<%- @h.profileLink(@req.profile) %>" width="110" height="110" />
     </span>
     <div class="profile-info">
         <h3><%= @req.profile.name %></h3>

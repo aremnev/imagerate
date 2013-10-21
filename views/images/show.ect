@@ -64,7 +64,7 @@
             <% if @req.isAuthenticated() : %>
 
             <form class="comment-form" action="/images/<%- @req.image.id %>/comment">
-                <% include 'includes/userpic.ect', {user: @req.user, h: @h, size: 40} %>
+                <% include 'includes/userpic.ect', {user: @req.user, h: @h} %>
                 <input pattern="^(?=\s*\S).*$" name="comment" type="text" maxlength="255" placeholder="<%= @t('Add comment') %>..." /> <input type="submit" class="btn" value="<%= @t('Send') %>" />
             </form>
             <% end %>

@@ -30,7 +30,7 @@
                 <% if @req.isAuthenticated() : %>
                     <li>
                         <a href="/users/<%= @req.user.id %>">
-                            <span class="userpic"><img src="<%- @h.profileLink(40, @req.user) %>" alt="<%= @req.user.name %>" /></span>
+                            <span class="userpic"><img src="<%- @h.profileLink(@req.user) %>" alt="<%= @req.user.name %>" height="40" width="40" /></span>
                              <%= @req.user.name %></a>
                     </li>
                     <li>

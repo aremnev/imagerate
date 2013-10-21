@@ -2,9 +2,8 @@ var helpers = require('../helpers');
 
 module.exports = function (cfg) {
 
-    function profileLink(size, user) {
-        var picture = cfg.google.photoLink;
-        return picture.format(user.google.id, size || 50);
+    function profileLink(user) {
+        return user.google.picture || cfg.google.photoPlaceholder.format(user.google.gender);
     }
 
     return function (req, res, next) {
