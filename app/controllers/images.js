@@ -66,7 +66,7 @@ exports.show = function (req, res) {
         Image.populate(req.image, opts, safe(callback, function(image) {
             var likes = image.contest.evaluations.slice(0, 20).map(function addProfileImage(ev) {
                 var evAsObject = ev.toObject();
-                evAsObject.user.image = res.locals.h.profileLink(32, ev.user);
+                evAsObject.user.image = res.locals.h.profileLink(ev.user);
                 if (!helpers.isPastDate(req.image.contest.contest.dueDate)) {
                     evAsObject.rating = null;
                 }
