@@ -33,7 +33,7 @@
 </form>
 
 
-<% include 'images/list.ect', {images: @images, pages: @pages, page: @page, url: @req._parsedUrl.pathname, h: @h, remove: true, user: @req.user, hideAnon: true } %>
+<div class="my-images"><% include 'images/list.ect', {images: @images, pages: @pages, page: @page, url: @req._parsedUrl.pathname, h: @h, remove: true, user: @req.user, hideAnon: true } %></div>
 
 
 

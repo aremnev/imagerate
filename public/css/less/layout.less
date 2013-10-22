@@ -538,35 +538,7 @@ article {
   display: inline-block;
   position: relative;
 
-  .rating-container {
-    .border-box();
-    padding: 1px;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-
-    .rating {
-      background: #fff;
-      display: block;
-	  padding: 1.5em 1em;
-/*       opacity: 0;
-      -o-transition: opacity .5s, .5s ease;
-      -moz-transition: opacity .5s, .5s ease;
-      -webkit-transition: opacity .5s, .5s ease;
-      visibility: hidden; */
-    }
-
-    .rating-message {
-      color: @header-text-color;
-    }
-
-    .star {
-      color: orange;
-      cursor: pointer;
-      font-size: 25px;
-    }
-
-  }
+ 
 
   &.image-large {
     display: block;
@@ -580,11 +552,7 @@ article {
 
     .rating {
 
-      .star {
-        font-size: 24px;
-        vertical-align: sub;
-        line-height: 20px;
-      }
+      
     }
 
 /*     &:hover {
@@ -595,6 +563,50 @@ article {
     } */
   }
 }
+
+ .rating-container {
+    .border-box();
+    padding: 2px;
+    /* position: absolute;
+    bottom: 0; */
+    width: 100%;
+
+    .rating {
+      background: #fff;
+      display: block;
+	  padding: 1em;
+      .star {
+        font-size: 24px;
+        vertical-align: sub;
+        line-height: 20px;
+      }
+	  .image-large & {
+	    padding: 1.5em 1em;
+	  }
+	}
+
+    .rating-message {
+      color: @header-text-color;
+    }
+
+    .star {
+      color: orange;
+      cursor: pointer;
+      font-size: 25px;
+    }
+	
+	.homepage & {
+	  display: none;
+	}
+	.my-images & {
+	  display: none;
+	}
+	.image-large & {
+	  position: absolute;
+	  bottom: 0;
+	}
+}
+
 
 .likes-for-image {
   .like {

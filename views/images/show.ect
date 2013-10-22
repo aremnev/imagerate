@@ -38,7 +38,7 @@
     <% end %>
 <% end %>
         
-    <div class="image-large image-to-rate"
+    <div class="image-large image-to-rate" ng-controller="RatingController"
         ng-init="initRating({ id: '<%= @req.image.id %>',
                 <% if @h.isPastDate(@req.image.contest.contest.dueDate): %>
                 value: <%- @req.image.getRating() %>,
@@ -56,7 +56,7 @@
         <% if @req.isAdmin(): %>
             </a>
         <% end %>
-            <% if @req.isAuthenticated() and @req.image.user._id + '' != @req.user._id + '' : %>
+            <% if @req.isAuthenticated() : %>
                 <% include 'includes/rating.ect', { rating: @req.image.getRating(), thumbnail: false, isPast: @h.isPastDate(@req.image.contest.contest.dueDate) } %>
             <% end %>
     </div>
