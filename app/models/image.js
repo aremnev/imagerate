@@ -119,7 +119,7 @@ ImageSchema.methods = {
                 }
             }, {transformation: transformation,
                 eager: [
-                {width: 600, height: 360, crop: 'fill'},
+                {width: 600, height: 360, crop: 'fill', gravity: 'faces'},
                 {height: 800, width: 952, crop: 'limit'}
             ]});
 

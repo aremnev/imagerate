@@ -1,12 +1,36 @@
 <!-- index.ect -->
 <% extend 'layouts/home.ect' %>
+<% if @recent_images.length >= 3 : %>
 <div class="slides-wrapper">
     <h2>Most Recent Images</h2>
     <ul class="slides">
         <% for image, i in @recent_images: %>
-            <li class="item"><a href="/images/<%- image._id %>"><img class="img-rounded img-polaroid wait" src="<%- @h.imageUrl(image.image, {width: 400, height: 300, crop: 'fill'}) %>" /></a></li>
-        <% end %>
+            <li class="item"><a href="/images/<%- image._id %>"><img class="img-rounded img-polaroid wait" src="<%- @h.imageUrl(image.image, {width: 400, height: 300, crop: 'fill', gravity: 'faces'}) %>" /></a></li>
+		<% end %>
     </ul>
 </div>
-<h2>Most Viewed Images</h2>
-<% include 'images/list.ect', {images: @viewed_images, h: @h, hideComments: true} %>
+<% end %>
+
+<% if @viewed_images.length > 0 : %>
+<div class="list-wrapper">
+	<h2>Most Viewed Images</h2>
+	<% include 'images/list.ect', {images: @viewed_images, h: @h, hideComments: true, req: @req, flag: true} %>
+</div>
+<% else : %>
+	<div class="row">
+		<div class="well span7 pull-center">
+		<% if @message and @message.length: %>
+		<div class="alert alert-error">
+			<%- @message %>
+		</div>
+		<% end %>
+		<fieldset>
+			<legend>Please login to see all photos</legend>
+			<a href="/auth/google" class="google pull-center">
+				<img src="/img/google.png" alt="google" />
+				<span>Sign in with google account</span>
+			</a>
+		</fieldset>
+		</div>
+	</div>
+<% end %>

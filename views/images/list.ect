@@ -1,5 +1,5 @@
 <!-- list.ect -->
-<% if @req and not @req.xhr : %>
+<% if not @flag and not @req.xhr : %>
     <% extend 'layouts/layout.ect' %>
 
 
@@ -31,7 +31,7 @@
                         <% if not @h.isPastDate(image.contest.contest.dueDate) and @remove and @user and (image.user._id + '' == @user._id + ''): %>
                             <span data-confirm="Are you sure?" data-ok="<%- @url || '' %>" href="/images/<%- image.id %>" class="remove ajax-delete">×</span>
                         <% end %>
-                        <img class="wait" src="<%- @h.imageUrl(image.image, {width: 600, height: 360, crop: 'fill'}) %>" alt="<%= image.title %>" title="<%= image.title %>"/>
+                        <img class="wait" src="<%- @h.imageUrl(image.image, {width: 600, height: 360, crop: 'fill', gravity: 'faces'}) %>" alt="<%= image.title %>" title="<%= image.title %>"/>
                     </a>
                     <% if image.contest.contest.showAuthor or @h.isPastDate(image.contest.contest.dueDate) : %>
                         <span class="image-author">
@@ -48,9 +48,9 @@
                         <% end %>
                         <span class="title"><%= image.title %></span>
                     </div>
-
+					<% if @req.isAuthenticated() : %>
 						<% include 'includes/rating.ect', { rating: image.getRating(), thumbnail: false, isPast: @h.isPastDate(image.contest.contest.dueDate) } %>
-
+					<% end %>
 					
                     <% if image.comments.length && !@hideComments && image.contest.contest.showComments : %>
                         <% include 'comments/comments.ect', {comments: image.comments, h: @h, req: image, size: 28 } %>
