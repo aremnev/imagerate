@@ -102,7 +102,7 @@ $(document).ready(function () {
         }, 10000);
     }());
 
-	$.each($('.more-comments'), function () {
+	$.each($('.thumbnail .more-comments'), function () {
 	  $(this).find('li:gt(2)').hide();
 	});
 	
