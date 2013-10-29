@@ -120,4 +120,7 @@ $(document).ready(function () {
         }
 		Thumbnails.reload();
     });
+	
+	$('.my-images').closest('body').addClass('homepage');
+	$('.homepage .link_profile').attr({href:''});
 });
