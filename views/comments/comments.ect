@@ -3,7 +3,7 @@
         
 		<% for comment in @comments : %>
             <li class="clearfix">
-                <% include 'includes/userpic.ect', {user: comment.user, h: @h} %>
+                <% include 'includes/userpic.ect', {user: comment.user, h: @h, size: 32} %>
                 <span class="title">
                     <a href="/users/<%- comment.user._id %>"><%= comment.user.name %></a>
                 </span>

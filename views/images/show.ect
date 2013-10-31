@@ -26,7 +26,7 @@
         <h3 ng-init='likes = <%- JSON.stringify(@likes) %>;' ng-show="likes.length">Who rated it</h3>
         <ul class="likes-for-image">
             <li class="like" ng-repeat="like in likes">
-                <span class="userpic"><img ng-src="{{like.user.image}}" alt="{{like.user.name}}"></span>
+                <span class="userpic"><img ng-src="{{like.user.image}}" alt="{{like.user.name}}" height="32" width="32"/></span>
                 <div class="like-tooltip">
                     {{like.user.name}}
                     <span class="rating" ng-init='stars = "★".repeat(like.rating);'>{{stars}}</span>
