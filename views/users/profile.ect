@@ -21,7 +21,7 @@
     </div>
 <% end %>
 
-<h2>Images</h2>
+<h2>My images</h2>
 <form action="<%- @req._parsedUrl.pathname %>" class="well well-small form-search">
     <select name="contest">
         <option value="">All contests</option>
@@ -33,7 +33,7 @@
 </form>
 
 
-<% include 'images/list.ect', {images: @images, pages: @pages, page: @page, url: @req._parsedUrl.pathname, h: @h, remove: true, user: @req.user, hideAnon: true } %>
+<div class="my-images"><% include 'images/list.ect', {images: @images, pages: @pages, page: @page, url: @req._parsedUrl.pathname, h: @h, remove: true, user: @req.user, hideAnon: true, req: @req, flag: true, t: @t } %></div>
 
 
 

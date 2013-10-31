@@ -170,7 +170,12 @@ exports.detail = function(req, res) {
 
     function loadContestImages(callback) {
         Image.list(imageOptions, safe(callback, function(images){
-            locals.images = images;
+			images.forEach(function(image) {
+				image.getRatingByUser(req.user, function(err, ratingByUser) {
+					image.ratingByUser = ratingByUser;
+				});
+			});
+			locals.images = images;
         }));
     }
 

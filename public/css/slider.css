@@ -1,0 +1,1 @@
+.border-box{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box}.slides-wrapper{overflow:hidden;width:100%}.slides{position:relative;width:75%;height:300px;margin:0 auto 4em}.slides .item{display:block;width:400px;height:300px}@media(max-width:767px){.slides-wrapper{display:none}}

@@ -36,7 +36,7 @@
     <% end %>
 <% end %>
         
-    <div class="image-large image-to-rate"
+    <div class="image-large image-to-rate" ng-controller="RatingController"
         ng-init="initRating({ id: '<%= @req.image.id %>',
                 <% if @h.isPastDate(@req.image.contest.contest.dueDate): %>
                 value: <%- @req.image.getRating() %>,
@@ -45,7 +45,7 @@
                 byUser: <%- @ratingByUser || 0 %> });"
         <% if @req.isAuthenticated() : %>
              ng-mouseleave="rating.state = rating.defaultState"
-        <% end %>>
+        <% end %> >
         <% if @req.isAdmin(): %>
             <a href="/images/<%- @req.image._id %>/raw" target="_blank">
         <% end %>
@@ -54,9 +54,9 @@
         <% if @req.isAdmin(): %>
             </a>
         <% end %>
-            <% if @req.isAuthenticated() and @req.image.user._id + '' != @req.user._id + '' : %>
-                <% include 'includes/rating.ect', { rating: @req.image.getRating(), thumbnail: false, isPast: @h.isPastDate(@req.image.contest.contest.dueDate), t: @t } %>
-            <% end %>
+        <% if @req.isAuthenticated() and @req.image.user._id + '' != @req.user._id + '' : %>
+            <% include 'includes/rating.ect', { rating: @req.image.getRating(), thumbnail: false, isPast: @h.isPastDate(@req.image.contest.contest.dueDate), t: @t } %>
+        <% end %>
     </div>
 
     <div class="comments-block">

@@ -61,10 +61,6 @@ a {
   }
 }
 
-.navbar .btn-navbar {
-  margin-top: 15px;
-}
-
 .navbar .nav > li > a {
   .border-box();
 
@@ -103,6 +99,10 @@ a {
   margin-bottom: 0;
   color: @navbar-color;
   background: @navbar-bg;
+  
+  .btn-navbar {
+    margin-top: 15px;
+  }
 
   .container {
     width: 96%;
@@ -297,28 +297,36 @@ article {
       content: '';
       display: block;
       position: absolute;
-      top: 0;
+	  top:0;
+	  right:0;
+	  background:url('/img/medals.png');
+	  width: 64px;
+	  height: 86px;
+	  
+      /* top: 0;
       left: 0;
       border-width: 0 0 42px 42px;
-      border-style: none none solid solid;
+      border-style: none none solid solid; */
     }
   }
 
   &.winner-1 {
     &:after {
-      border-color: transparent transparent transparent gold;
+      /* border-color: transparent transparent transparent gold; */
     }
   }
 
   &.winner-2 {
     &:after {
-      border-color: transparent transparent transparent #bdc3c7;
+      /* border-color: transparent transparent transparent #bdc3c7; */
+	  background-position: -62px 0;
     }
   }
 
   &.winner-3 {
     &:after {
-      border-color: transparent transparent transparent #cd7f32;
+      /* border-color: transparent transparent transparent #cd7f32; */
+	  background-position: -126px 0;
     }
   }
 
@@ -526,39 +534,13 @@ article {
   }
 }
 
+.comments-block .see-all {
+  display: none;
+}
+
 .image-to-rate {
   display: inline-block;
   position: relative;
-
-  .rating-container {
-    .border-box();
-    padding: 1px;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-
-    .rating {
-      background: #fff;
-      display: block;
-      opacity: 0;
-      padding: 1.5em 1em;
-      -o-transition: opacity .5s, .5s ease;
-      -moz-transition: opacity .5s, .5s ease;
-      -webkit-transition: opacity .5s, .5s ease;
-      visibility: hidden;
-    }
-
-    .rating-message {
-      color: @header-text-color;
-    }
-
-    .star {
-      color: orange;
-      cursor: pointer;
-      font-size: 25px;
-    }
-
-  }
 
   &.image-large {
     display: block;
@@ -569,24 +551,50 @@ article {
       border-color: #ddd;
       box-shadow: inset 0px 0px 2px 2px fade(@header-background, 50%);
     }
+  }
+}
+
+ .rating-container {
+    .border-box();
+    padding: 2px;
+    width: 100%;
 
     .rating {
-
+      background: #fff;
+      display: block;
+	  padding: 0 1em 1em 1em;
       .star {
         font-size: 24px;
         vertical-align: sub;
         line-height: 20px;
       }
+	  .image-large & {
+	    padding: 1.5em 1em;
+	  }
+	}
+
+    .rating-message {
+      color: @header-text-color;
     }
 
-    &:hover {
-      .rating {
-        opacity: 1;
-        visibility: visible;
-      }
+    .star {
+      color: orange;
+      cursor: pointer;
+      font-size: 25px;
     }
-  }
+	
+	.homepage & {
+	  display: none;
+	}
+	.my-images & {
+	  display: none;
+	}
+	.image-large & {
+	  position: absolute;
+	  bottom: 0;
+	}
 }
+
 
 .likes-for-image {
   .like {

@@ -21,10 +21,10 @@
 <body <% if @req.isAuthenticated() : %>class="logged-in waiting"<% end %>>
     <div class="wrapper">
         <% include 'includes/navbar.ect' %>
-
-        <article ng-controller="RatingController">
+		<!-- if all of photos are private, include "Login", else include <article>...</article> -->
+        <article>
             <div class="container">
-                    <div class="span12 pull-center">
+                    <div class="span12 pull-center homepage">
                         <% content %>
                     </div>
                 </div>
