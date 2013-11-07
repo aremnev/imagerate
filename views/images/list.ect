@@ -48,7 +48,7 @@
                         <% end %>
                         <span class="title"><%= image.title %></span>
                     </div>
-					<% if @req.isAuthenticated() : %>
+					<% if @req.isAuthenticated() and image.user._id + '' != @req.user._id + '' : %>
 						<% include 'includes/rating.ect', { rating: image.getRating(), thumbnail: false, isPast: @h.isPastDate(image.contest.contest.dueDate) } %>
 					<% end %>
 					

@@ -52,7 +52,12 @@
                 </div>
             </div>
         </form>
-    <% end %>
+	
+	<% else : %>
+		<script>
+			$('body').addClass('contests-page');
+		</script>
+	<% end %>
 <% end %>
 
 
@@ -60,7 +65,7 @@
 <% end %>
 
 <h2>Contests</h2>
-<ul class="thumbnails">
+<ul class="thumbnails_contests">
     <% for contest, i in @contests: %>
         <li class="item span3">
             <h3>

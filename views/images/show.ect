@@ -48,17 +48,31 @@
         <% if @req.isAuthenticated() : %>
              ng-mouseleave="rating.state = rating.defaultState"
         <% end %> >
-        <% if @req.isAdmin(): %>
-            <a href="/images/<%- @req.image._id %>/raw" target="_blank">
-        <% end %>
-            <img class="show-image img-polaroid big wait" ref="/images/<%- @req.image._id %>/raw" title="<%= @req.image.title %>"
-                 src="<%- @h.imageUrl(@req.image.image, {width: 952, height: 800, crop: 'limit'}) %>" />
-        <% if @req.isAdmin(): %>
-            </a>
-        <% end %>
-            <% if @req.isAuthenticated() : %>
-                <% include 'includes/rating.ect', { rating: @req.image.getRating(), thumbnail: false, isPast: @h.isPastDate(@req.image.contest.contest.dueDate) } %>
-            <% end %>
+       <div class="wrap-photo">
+		<% if @req.isAdmin(): %>
+            	<a href="/images/<%- @req.image._id %>/raw" target="_blank">
+            	        <% end %>
+            	<img class="show-image img-polaroid big wait" ref="/images/<%- @req.image._id %>/raw" title="<%= @req.image.title %>"
+            	     src="<%- @h.imageUrl(@req.image.image, {width: 952, height: 600, crop: 'limit'}) %>" />
+            	        <% if @req.isAdmin(): %>
+            	</a>
+            	        <% end %>
+            	<% if @req.isAuthenticated() and @req.image.user._id + '' != @req.user._id + '' : %>
+            	    <% include 'includes/rating.ect', { rating: @req.image.getRating(), thumbnail: false, isPast: @h.isPastDate(@req.image.contest.contest.dueDate) } %>
+            	<% end %>
+				
+			<div class="arrow-left"> 
+				<span class="arrow"> <
+				<!-- 	<a href="/images/<%- @req.image._id-1 %>"> < </a> -->
+				</span> 
+			</div>
+			<div class="arrow-right"> 
+				<span class="arrow"> >
+					<!-- <a href="/images/<%- @req.image._id+1 %>"> > </a> -->
+				</span> 
+			</div>
+				
+		</div>
     </div>
 
     <div class="comments-block">
