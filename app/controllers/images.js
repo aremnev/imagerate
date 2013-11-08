@@ -50,7 +50,9 @@ exports.show = function (req, res) {
 
     async.series([
             populateLikes,
-            getRatingByUser
+            getRatingByUser,
+            getPrevImage,
+            getNextImage
         ], function render(err) {
             if (err) {
                 return res.status(500).render('500.ect', { err: err });
@@ -85,6 +87,18 @@ exports.show = function (req, res) {
 
         locals.image.getRatingByUser(req.user, safe(callback, function(ratingByUser) {
             locals.ratingByUser = ratingByUser;
+        }));
+    }
+
+    function getPrevImage(callback){
+        Image.prev(locals.image, safe(callback, function(prev){
+            locals.image.prev = prev;
+        }));
+    }
+
+    function getNextImage(callback){
+        Image.next(locals.image, safe(callback, function(next){
+            locals.image.next = next;
         }));
     }
 }

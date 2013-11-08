@@ -71,3 +71,10 @@
             <% include 'comments/comments.ect', {comments: @req.image.comments, h: @h, req: @req } %>
         </div>
     </div>
+    <!--
+        next/prev usage example
+        @req.image.prev contains previous image object
+        @req.image.next contains next image object
+        prev - <% if @req.image.prev : %>  <%= @req.image.prev._id %> <% end %>
+        next - <% if @req.image.next : %>  <%= @req.image.next._id %> <% end %>
+    -->

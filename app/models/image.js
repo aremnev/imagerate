@@ -235,6 +235,30 @@ ImageSchema.statics = {
             .limit(options.perPage)
             .skip(options.perPage * options.page)
             .exec(cb)
+    },
+
+    /**
+     * returns next image for the same contest
+     */
+    next : function(image, cb){
+        this.findOne()
+            .where('contest.contest').equals(image.contest.contest)
+            .where('createdAt').gt(image.createdAt)
+            .sort({'createdAt':1})
+            .limit(1)
+            .exec(cb)
+    },
+
+    /**
+     * returns prev image for the same contest
+     */
+    prev : function(image, cb){
+        this.findOne()
+            .where('contest.contest').equals(image.contest.contest)
+            .where('createdAt').lt(image.createdAt)
+            .sort({'createdAt': -1})
+            .limit(1)
+            .exec(cb)
     }
 }
 
