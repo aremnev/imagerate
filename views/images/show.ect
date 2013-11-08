@@ -4,34 +4,32 @@
 
 <% block 'aside-top' : %>
     <h2><%- @req.image.title %></h2>
-    <% if @req.image.contest.contest.showAuthor or @h.isPastDate(@req.image.contest.contest.dueDate) : %>
-        <p><i>Author:</i> <a href="/users/<%- @req.image.user.id %>"><%= @req.image.user.name %></a></p>
+    <% if @req.isAdmin or @req.image.contest.contest.showAuthor or @h.isPastDate(@req.image.contest.contest.dueDate) : %>
+        <p><i><%= @t('Author') %>:</i> <a href="/users/<%- @req.image.user.id %>"><%= @req.image.user.name %></a></p>
     <% end %>
-    <p><i>Contest:</i> <a href="/contests/<%- @req.image.contest.contest._id %>"><%= @req.image.contest.contest.title %> (<%- @h.formatDate(@req.image.contest.contest.dueDate) %>)</a> </p>
-    <% if @h.isPastDate(@req.image.contest.contest.dueDate): %>
-        <p><i>Rating:</i>
+    <p><i><%= @t('Contest') %>:</i> <a href="/contests/<%- @req.image.contest.contest._id %>"><%= @req.image.contest.contest.title %> (<%- @h.formatDate(@req.image.contest.contest.dueDate) %>)</a> </p>
+    <% if @req.isAdmin() or @h.isPastDate(@req.image.contest.contest.dueDate): %>
+        <p><i><%= @t('Rating') %>:</i>
             <span ng-switch on="rating.value">
-                <span ng-switch-when="0">Nobody rated this image</span>
+                <span ng-switch-when="0"><%= @t('Nobody rated this image') %></span>
                 <span ng-switch-default>{{rating.value}}</span>
             </span>
         </p>
     <% end %>
-    <p><i>Uploaded:</i>  <%- @h.formatDate(@req.image.createdAt) %></p>
+    <p><i><%= @t('Uploaded') %>:</i>  <%- @h.formatDate(@req.image.createdAt) %></p>
 
 <% end %>
 
 
 <% block 'aside-bottom' : %>
-    <% if @h.isPastDate(@req.image.contest.contest.dueDate): %>
+    <% if (@req.isAdmin() or @h.isPastDate(@req.image.contest.contest.dueDate)) and !@req.image.contest.contest.exhibition : %>
         <h3 ng-init='likes = <%- JSON.stringify(@likes) %>;' ng-show="likes.length">Who rated it</h3>
         <ul class="likes-for-image">
             <li class="like" ng-repeat="like in likes">
-                <span class="userpic"><img ng-src="{{like.user.image}}" alt="{{like.user.name}}"></span>
+                <span class="userpic"><img ng-src="{{like.user.image}}" alt="{{like.user.name}}" height="32" width="32"/></span>
                 <div class="like-tooltip">
                     {{like.user.name}}
-                    <% if @h.isPastDate(@req.image.contest.contest.dueDate): %>
-                        <span class="rating" ng-init='stars = "★".repeat(like.rating);'>{{stars}}</span>
-                    <% end %>
+                    <span class="rating" ng-init='stars = "★".repeat(like.rating);'>{{stars}}</span>
                 </div>
             </li>
         </ul>
@@ -80,10 +78,17 @@
             <% if @req.isAuthenticated() : %>
 
             <form class="comment-form" action="/images/<%- @req.image.id %>/comment">
-                <% include 'includes/userpic.ect', {user: @req.user, h: @h, size: 40} %>
-                <input pattern="^(?=\s*\S).*$" name="comment" type="text" maxlength="255" placeholder="Add comment..." /> <input type="submit" class="btn" value="Send" />
+                <% include 'includes/userpic.ect', {user: @req.user, h: @h} %>
+                <input pattern="^(?=\s*\S).*$" name="comment" type="text" maxlength="255" placeholder="<%= @t('Add comment') %>..." /> <input type="submit" class="btn" value="<%= @t('Send') %>" />
             </form>
             <% end %>
             <% include 'comments/comments.ect', {comments: @req.image.comments, h: @h, req: @req } %>
         </div>
     </div>
+    <!--
+        next/prev usage example
+        @req.image.prev contains previous image object
+        @req.image.next contains next image object
+        prev - <% if @req.image.prev : %>  <%= @req.image.prev._id %> <% end %>
+        next - <% if @req.image.next : %>  <%= @req.image.next._id %> <% end %>
+    -->

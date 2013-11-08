@@ -12,10 +12,10 @@
                     <a href="/contests/" class="dropdown-toggle" data-toggle="dropdown">Contests</a>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Photos<b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= @t('Photos') %><b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="/images/recent">Most recent</a></li>
-                        <li><a href="/images/viewed">Most viewed</a></li>
+                        <li><a href="/images/recent"><%= @t('Most recent') %></a></li>
+                        <li><a href="/images/viewed"><%= @t('Most viewed') %></a></li>
                     </ul>
                 </li>
             </ul>
@@ -23,15 +23,15 @@
                 <% if @req.isAuthenticated() : %>
                     <li>
                         <a class="link_profile" href="/users/<%= @req.user.id %>">
-                            <span class="userpic"><img src="<%- @h.profileLink(40, @req.user) %>" alt="<%= @req.user.name %>" /></span>
+                            <span class="userpic"><img src="<%- @h.profileLink(@req.user) %>" alt="<%= @req.user.name %>" height="40" width="40" /></span>
                              <%= @req.user.name %></a>
                     </li>
                     <li>
-                        <a href="/logout">Logout</a>
+                        <a href="/logout"><%= @t('Logout') %></a>
                     </li>
                 <% else : %>
                     <li>
-                        <a href="/auth/google"><img style="height: 40px;" height="40" width="40" src="/img/google.png" alt="google" /> Sign in</a>
+                        <a href="/auth/google"><img style="height: 40px;" height="40" width="40" src="/img/google.png" alt="google" /> <%= @t('Sign in') %></a>
                     </li>
                 <% end %>
             </ul>

@@ -2,9 +2,8 @@ var helpers = require('../helpers');
 
 module.exports = function (cfg) {
 
-    function profileLink(size, user) {
-        var picture = cfg.google.photoLink;
-        return picture.format(user.google.id, size || 50);
+    function profileLink(user) {
+        return user.google.picture || cfg.google.photoPlaceholder.format(user.google.gender);
     }
 
     return function (req, res, next) {
@@ -14,6 +13,8 @@ module.exports = function (cfg) {
         if (!res.locals.h) res.locals.h = helpers;
         res.locals.h._ = _;
         res.locals.h.profileLink = profileLink;
+        res.locals.t = req.gettext;
+        res.locals.f = req.format;
         res.locals.h.isActive = function(req) {
             return function(url) {
                 var result = req._parsedUrl.pathname.indexOf(url) + 1;

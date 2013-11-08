@@ -24,6 +24,7 @@ var ContestSchema = new Schema({
     showAuthor : {type : Boolean, default : false},
     showComments : {type : Boolean, default : false},
     private : {type : Boolean, default : false},
+    exhibition : {type : Boolean, default : false},
     maxPhotos : {type : Number, default : 3}
 });
 

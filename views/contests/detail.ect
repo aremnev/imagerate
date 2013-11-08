@@ -4,7 +4,7 @@
 <% block 'aside-top' : %>
     <h2>
         <%= @req.contest.title %>
-        <% if @req.isAdmin() : %><a href="/contests/<%- @req.contest._id %>/edit"><span class="add-on"><i class="icon-pencil"></i></span></a><% end %>
+        <% if @req.isAdmin() : %><a href="/contests/<%- @req.contest._id %>/edit" title="<%= @t('Edit') %>"><span class="add-on"><i class="icon-pencil"></i></span></a><% end %>
         <% if @h.isPastDate(@req.contest.dueDate): %> <br /><span class="status">finished</span><% end %>
     </h2>
         
@@ -12,15 +12,18 @@
         <p><%- @h.formatDate(@req.contest.startDate) %> &ndash; <%- @h.formatDate(@req.contest.dueDate) %></p>
         <p><em><%= @req.contest.description %></em></p>
         <% if @imagesTotalCount : %>
-            <p><%- @imagesTotalCount %> images by <%- @usersCount %> users</p>
+            <p><%= @f(@t('%s images by %s users'), [@imagesTotalCount, @usersCount])  %></p>
             <% if @req.isAuthenticated() : %>
-                <p>You rated <%- @ratedImagesCount %> images of <%- @imagesTotalCount %></p>
+                <p><%= @f( @t('You rated %s images of %s'), [@ratedImagesCount, @imagesTotalCount]) %></p>
             <% end %>
         <% end %>
         <%  if @req.contest.private :%>
-            <p class="text-success">This contest is private</p>
+            <p class="text-success"><%= @t('This contest is private') %></p>
         <% else : %>
-            <p class="text-error">This is not a private contest</p>
+            <p class="text-error"><%= @t('This is not a private contest') %></p>
+        <% end %>
+        <% if @req.contest.exhibition : %>
+            <p class="text-info"><%= @t('This is contest-exhibition') %></p>
         <% end %>
     </div>
 <% end %>
@@ -28,20 +31,20 @@
 <% block 'aside-bottom' : %>
     <div class="contest-actions">
         <% if @req.isAuthenticated() and @imageAddedCount < @req.contest.maxPhotos and not @h.isPastDate(@req.contest.dueDate): %>
-            <a href="#uploadModal" role="button" data-toggle="modal" class="btn btn-success">Add image to contest</a>
+            <a href="#uploadModal" role="button" data-toggle="modal" class="btn btn-success"><%= @t('Add image to contest') %></a>
         <% end %>
         <% if @req.isAdmin() : %>
-            <a class="ajax-delete btn btn-small btn-danger" data-ok="/contests" href="/contests/<%- @req.contest._id %>" data-confirm="Are you sure?">Remove contest</a>
+            <a class="ajax-delete btn btn-small btn-danger" data-ok="/contests" href="/contests/<%- @req.contest._id %>" data-confirm="<%= @t('Are you sure?') %>"><%= @t('Remove contest') %></a>
         <% end %>
     </div>
 <% end %>
 
 <% if @req.isAuthenticated() and @imageAddedCount < @req.contest.maxPhotos: %>
-    <% include 'includes/modals/upload.ect', {contest: @req.contest, user: @req.user} %>
+    <% include 'includes/modals/upload.ect', {contest: @req.contest, user: @req.user, t : @t} %>
 <% end %>
 
 <% if @imagesTotalCount : %>
-    <% include 'images/list.ect', {images: @images, pages: @pages, page: @page, url: @url, h: @h, winners: @h.isPastDate(@req.contest.dueDate), remove: true, user: @req.user, req: @req, flag: true} %>
+    <% include 'images/list.ect', {images: @images, pages: @pages, page: @page, url: @url, h: @h, winners: @h.isPastDate(@req.contest.dueDate), remove: true, user: @req.user, isAdmin: @req.isAdmin(), t: @t, req: @req, flag: true} %>
 <% else : %>
     <ul class="info">
         <li>There are no images in this contest yet</li>

@@ -80,13 +80,15 @@ const CONFIG = {
         },
         google: {
             scope: 'https://www.google.com/m8/feeds https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
-            photoLink: 'https://profiles.google.com/s2/photos/profile/{0}?sz={1}'
+            photoLink: 'https://profiles.google.com/s2/photos/profile/{0}?sz={1}',
+            photoPlaceholder : '/img/user_{0}.png'
         },
         admin: {
             emails: [
                 'dsedelnikov@thumbtack.net',
                 'aremnev@thumbtack.net',
-                'epashkevich@thumbtack.net'
+                'epashkevich@thumbtack.net',
+                'aIvanov@thumbtack.net'
             ]
         }
     }

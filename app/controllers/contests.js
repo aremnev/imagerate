@@ -72,7 +72,8 @@ exports.update = function (req, res) {
         contest = _.extend(contest, _.defaults(req.body, {
             showAuthor:false,
             showComments:false,
-            private: false
+            private: false,
+            exhibition: false
         }));
         contest.save(function (err){
             if (err) res.render('500');

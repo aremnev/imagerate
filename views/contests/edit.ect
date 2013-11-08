@@ -8,12 +8,12 @@
 
 <% block 'aside-top' : %>
     <% if @req.isAdmin() : %>
-    <h3>Update <a href="/contests/<%- @contest._id %>"><%= @contest.title %></a></h3>
+    <h3><%= @t('Update') %> <a href="/contests/<%- @contest._id %>"><%= @contest.title %></a></h3>
     <form class="well well-small" action="/contests/<%- @contest._id %>" method="post">
         <div class="controls">
-            <input type="text" pattern="^(?=\s*\S).*$" name="title" placeholder="Title" maxlength="255" value="<%= @contest.title %>" required/><br>
+            <input type="text" pattern="^(?=\s*\S).*$" name="title" placeholder="<%= @t('Title') %>" maxlength="255" value="<%= @contest.title %>" required/><br>
 
-            <textarea pattern="^(?=\s*\S).*$" name="description" placeholder="Description" rows="5"/><%= @contest.description %></textarea><br>
+            <textarea pattern="^(?=\s*\S).*$" name="description" placeholder="<%= @t('Description') %>" rows="5"/><%= @contest.description %></textarea><br>
 
             <div class="input-append date" id="startDate" data-date="<%- @h.formatTime(new Date(), 'MM-DD-YYYY') %>" data-date-format="mm-dd-yyyy">
                 <input placeholder="Start Date" name="startDate" class="span2" size="16" type="text" value="<%- @h.formatTime(@contest.startDate, 'MM-DD-YYYY') %>" readonly="readonly" required>
@@ -26,23 +26,27 @@
             </div>
 
             <div class="controls">
-                <label>Max. photos per user <input class="input-mini" type="text" name="maxPhotos" value="<%= @contest.maxPhotos %>"></label>
+                <label><%= @t('Max. photos per user') %> <input class="input-mini" type="text" name="maxPhotos" value="<%= @contest.maxPhotos %>"></label>
             </div>
 
             <div class="controls">
-                <label class="checkbox"><input type="checkbox" name="showAuthor" <% if @contest.showAuthor : %> checked <% end %> > Show author during contest</label>
+                <label class="checkbox"><input type="checkbox" name="showAuthor" <% if @contest.showAuthor : %> checked <% end %> > <%= @t('Show author during contest') %></label>
             </div>
 
             <div class="controls">
-                <label class="checkbox"><input type="checkbox" name="showComments" <% if @contest.showComments : %> checked <% end %> > Show comments during contest</label>
+                <label class="checkbox"><input type="checkbox" name="showComments" <% if @contest.showComments : %> checked <% end %> > <%= @t('Show comments during contest') %></label>
             </div>
 
             <div class="controls">
-                <label class="checkbox"><input type="checkbox" name="private" <% if @contest.private : %> checked <% end %> > Private</label>
+                <label class="checkbox"><input type="checkbox" name="private" <% if @contest.private : %> checked <% end %> > <%= @t('Private') %></label>
+            </div>
+
+            <div class="controls">
+                <label class="checkbox"><input type="checkbox" name="exhibition" <% if @contest.exhibition : %> checked <% end %> > <%= @t('Exhibition') %></label>
             </div>
 
             <div class="form-actions">
-                <input type="submit" class="btn" value="Update" />
+                <input type="submit" class="btn" value="<%= @t('Update') %>" />
             </div>
         </div>
     </form>
