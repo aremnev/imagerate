@@ -3,7 +3,7 @@ var helpers = require('../helpers');
 module.exports = function (cfg) {
 
     function profileLink(user) {
-        return user.google.picture || cfg.google.photoPlaceholder.format(user.google.gender);
+        return user.google.picture || cfg.google.photoPlaceholder.format(user.google.gender || "other");
     }
 
     return function (req, res, next) {
