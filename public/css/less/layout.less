@@ -220,8 +220,8 @@ article {
 }
 
 .status {
-  font-size: 80%;
-  color: #7f7f7f;
+  font-size: 75%;
+  color: #0F4DA8;
 }
 
 .well {
@@ -545,13 +545,48 @@ article {
   &.image-large {
     display: block;
     float: left;
-    margin: 0 0 40px 60px;
+    margin: 0 0 40px 20px;
 
     img {
       border-color: #ddd;
       box-shadow: inset 0px 0px 2px 2px fade(@header-background, 50%);
     }
   }
+}
+
+.arrow-left, .arrow-right {
+  position: absolute;
+  top: 40%;
+  width: 35px;
+  height: 35px;
+  background:rgba(0,0,0,0.1);  
+  cursor: pointer;
+  
+  -webkit-transition: background 0.5s ease-out 0;
+  -moz-transition: background 0.5s ease-out 0;
+  transition: background 0.5s ease-out 0;
+  
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  
+  &:hover {
+    background:rgba(0,0,0,0.25);
+  }
+}
+.arrow-right {
+  right: -35px;
+}
+.arrow-left {
+  left: -35px;
+}
+.arrow {
+  font-size:230%;
+  font-weight:bold;
+  color:white;
+  text-decoration: none;
+  
+  position: absolute;
+  padding: 7px;
 }
 
  .rating-container {
@@ -668,11 +703,32 @@ article {
   .btn {
     margin: 0 1em 1em 0;
   }
+  .btn-success {
+    font-size:16px;
+  }
 }
 
 .google {
   display: block;
   span { font-size: 18px; }
+}
+
+.show-page {
+  .grid__cell_size_1-4 {
+    float: right;
+	padding-right: 0;
+    padding-left: 50px;
+  }
+}
+
+.contests-page {
+  h2 {
+    text-align: center;
+  }
+}
+
+.thumbnails_contests .item {
+  width: 45%;
 }
 
 @media (min-width: 1200px) {
@@ -694,6 +750,27 @@ article {
 
   .profile-image {
     float: none;
+  }
+  
+  .arrow-right {
+    right: -35px;
+  }
+  
+/*   .grid__cell_size_1-4 {
+    width: 30%;
+  } */
+}
+
+@media (max-width: 1200px) and (min-width: 768px) {
+  .show-page {
+    .image-to-rate {
+	  position: relative;
+	  left: 50%;
+	}
+	.wrap-photo {
+	  position: relative;
+	  right: 50%;
+	}
   }
 }
 

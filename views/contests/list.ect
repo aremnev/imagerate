@@ -56,7 +56,12 @@
                 </div>
             </div>
         </form>
-    <% end %>
+	
+	<% else : %>
+		<script>
+			$('body').addClass('contests-page');
+		</script>
+	<% end %>
 <% end %>
 
 
@@ -64,9 +69,9 @@
 <% end %>
 
 <h2>Contests</h2>
-<ul class="thumbnails">
+<ul class="row-fluid">
     <% for contest, i in @contests: %>
-        <li class="item span3">
+        <li class="span4">
             <h3>
                 <a href="/contests/<%- contest._id %>"><%= contest.title %></a> <% if @req.isAdmin() : %><a href="/contests/<%- contest._id %>/edit" title="<%= @t('Edit') %>"><span class="add-on"><i class="icon-pencil"></i></span></a><% end %>
             </h3>
