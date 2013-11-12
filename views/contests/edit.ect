@@ -8,10 +8,12 @@
 
 <% block 'aside-top' : %>
     <% if @req.isAdmin() : %>
-    <h3><%= @t('Update') %> <a href="/contests/<%- @contest._id %>"><%= @contest.title %></a></h3>
+    <h3><%= @t('Update') %> <a href="/contests/<%- @contest.link %>"><%= @contest.title %></a></h3>
     <form class="well well-small" action="/contests/<%- @contest._id %>" method="post">
-        <div class="controls row-fluid">
-            <input type="text" pattern="^(?=\s*\S).*$" name="title" placeholder="<%= @t('Title') %>" maxlength="255" value="<%= @contest.title %>" class="span12" required/><br>
+        <div class="controls row-fluid" ng-controller="ContestsCtrl">
+            <input type="text" pattern="^(?=\s*\S).*$" name="title" ng-model="title" ng-change="createAlias()" placeholder="<%= @t('Title') %>" maxlength="255" value="<%= @contest.title %>" class="span12" required/><br>
+
+            <input type="text" pattern="^(?=\s*\S)[a-zA-Z0-9_\-]*$" name="alias" value="{{alias}}" placeholder="<%= @t('Alias') %>" class="span12" maxlength="255" required/><br>
 
             <textarea pattern="^(?=\s*\S).*$" name="description" placeholder="<%= @t('Description') %>" class="span12" rows="5"/><%= @contest.description %></textarea><br>
 

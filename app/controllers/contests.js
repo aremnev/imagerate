@@ -15,14 +15,20 @@ var mongoose = require('mongoose'),
  */
 
 exports.contest = function(req, res, next, id){
-    Contest.findOne({_id: id}, function (err, contest) {
+    var query = Contest.findOne({});
+    if (id.match(/^[0-9a-fA-F]{24}$/)) { //if id is valid ObjectId
+        query.where('_id').equals(id);
+    }else{
+        query.where('alias').equals(id);
+    }
+    query.exec(function (err, contest) {
         if (!contest) {
             return res.status(404).render('404.ect');
         }
         req.contest = contest;
         next();
     });
-}
+};
 
 /**
  * Contest create

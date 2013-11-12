@@ -18,6 +18,7 @@ function nowPlusOneMonth() {
 
 var ContestSchema = new Schema({
     title : {type : String, default : '', trim : true},
+    alias : {type : String, default : '', trim : true, unique : true},
     description : {type : String, default : '', trim : true},
     startDate : {type : Date, default : Date.now},
     dueDate : {type : Date, default : nowPlusOneMonth},
@@ -27,6 +28,8 @@ var ContestSchema = new Schema({
     exhibition : {type : Boolean, default : false},
     maxPhotos : {type : Number, default : 3}
 });
+
+ContestSchema.index({alias : 1});
 
 
 /**
@@ -52,6 +55,10 @@ ContestSchema.post('save', function (contest) {
     mongoose.model('Image').update( {'contest.contest': contest._id}, {'private': contest.private}, {multi: true}, function( err, numberAffected, raw) {
         if(err) console.log(err);
     });
+});
+
+ContestSchema.post('init', function(contest){
+   contest.link = contest.alias || contest._id;
 });
 
 /**
