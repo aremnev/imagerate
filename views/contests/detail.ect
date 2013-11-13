@@ -44,7 +44,7 @@
 <% end %>
 
 <% if @imagesTotalCount : %>
-    <% include 'images/list.ect', {images: @images, pages: @pages, page: @page, url: @url, h: @h, winners: @h.isPastDate(@req.contest.dueDate), remove: true, user: @req.user, isAdmin: @req.isAdmin(), t: @t, req: @req, flag: true} %>
+    <% include 'images/list.ect', {images: @images, pages: @pages, page: @page, url: @url, h: @h, winners: @h.isPastDate(@req.contest.dueDate), remove: true, user: @req.user, isAdmin: @req.isAdmin(), t: @t, req: @req, flagRate: true} %>
 <% else : %>
     <ul class="info">
         <li>There are no images in this contest yet</li>

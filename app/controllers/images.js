@@ -170,13 +170,21 @@ exports.remove = function (req, res) {
     })
 }
 
-function imageList(req, res, type) {
-    var page = parseInt(req.param('page') > 0 ? req.param('page') : 1),
-        perPage = 15;
-    var soptions = {
-        perPage: perPage,
-        page: page - 1
-    };
+function imageList(req, res, type, usePagination) {
+	if (usePagination) {
+		var page = parseInt(req.param('page') > 0 ? req.param('page') : 1),
+			perPage = 15;
+		var soptions = {
+			perPage: perPage,
+			page: page - 1
+		};
+	}
+	else {
+		var perPage = 15, page = 0;
+		var soptions = {
+			perPage: perPage
+		};
+	}
     var criteria = {'private': {$ne : true}};
     if(req.user){
        delete criteria.private;
@@ -221,7 +229,7 @@ function imageList(req, res, type) {
  */
 
 exports.ratedList = function (req, res) {
-    imageList(req, res, 'rated');
+    imageList(req, res, 'rated', true);
 }
 
 /**
@@ -229,7 +237,7 @@ exports.ratedList = function (req, res) {
  */
 
 exports.recentList = function (req, res) {
-    imageList(req, res, 'recent');
+    imageList(req, res, 'recent', true);
 }
 
 /**
@@ -237,5 +245,5 @@ exports.recentList = function (req, res) {
  */
 
 exports.viewedList = function (req, res) {
-    imageList(req, res, 'viewed');
+    imageList(req, res, 'viewed', false);
 }

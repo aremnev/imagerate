@@ -60,15 +60,17 @@
             	<% end %>
 				
 			<div class="arrow-left"> 
-				<span class="arrow"> <
-				<!-- 	<a href="/images/<%- @req.image._id-1 %>"> < </a> -->
-				</span> 
+				<span class="arrow"> < </span> 
 			</div>
 			<div class="arrow-right"> 
-				<span class="arrow"> >
-					<!-- <a href="/images/<%- @req.image._id+1 %>"> > </a> -->
-				</span> 
+				<span class="arrow"> > </span> 
 			</div>
+			
+			<!-- <script>
+				$('.arrow-left').on('click', function() {
+					window.location.replace('/images/' + @req.image.prev._id);
+				});
+			</script> -->
 				
 		</div>
     </div>

@@ -124,4 +124,6 @@ $(document).ready(function () {
 	$('.my-images').closest('body').addClass('homepage');
 	$('.image-large').closest('body').addClass('show-page');
 	$('.homepage .link_profile').attr({href:''});
+	
+	//$('.thumbnails').jscroll();
 });
