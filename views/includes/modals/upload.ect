@@ -7,8 +7,8 @@
     <form class="form-upload" action="/contests/<%- @contest._id %>/images" method="post" enctype="multipart/form-data">
         <div class="modal-body">
             <div class="hidden alert alert-error"></div>
-            <div class="inputs">
-                <input type="text" id="image_title" name="title" placeholder="Add title..." required class="span5" />
+            <div class="inputs row-fluid">
+                <input type="text" id="image_title" name="title" placeholder="Add title..." required class="span11" />
             </div>
             <div class="inputs type">
                 <label class="radio inline"><input type="radio" data-ref="type-upload" name="type" checked="checked" /> <%= @t('Upload') %></label>
@@ -25,8 +25,8 @@
                     <span class="text"></span>
                 </div>
             </div>
-            <div id="type-url" class="inputs type-ref hidden">
-                <input type="text" id="image_url" name="url" placeholder="<%= @t('Image url') %>..." class="span5" />
+            <div id="type-url" class="inputs type-ref hidden row-fluid">
+                <input type="text" id="image_url" name="url" placeholder="<%= @t('Image url') %>..." class="span11" />
             </div>
             <div class="inputs <% if @contest.private : %> hidden <% end %>">
                 <label class="checkbox inline"><input type="checkbox"  checked  name="private"><%= @t('Don\'t show for anonymous') %></label>
