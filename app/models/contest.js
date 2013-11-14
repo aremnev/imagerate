@@ -55,10 +55,11 @@ ContestSchema.post('save', function (contest) {
     mongoose.model('Image').update( {'contest.contest': contest._id}, {'private': contest.private}, {multi: true}, function( err, numberAffected, raw) {
         if(err) console.log(err);
     });
+    contest.setLink();
 });
 
 ContestSchema.post('init', function(contest){
-   contest.link = contest.alias || contest._id;
+    contest.setLink();
 });
 
 /**
@@ -68,6 +69,16 @@ ContestSchema.post('init', function(contest){
 ContestSchema.path('title').validate(function (title) {
     return title.length > 0
 }, 'Contest title cannot be blank');
+
+
+/**
+ * Methods
+ */
+
+ContestSchema.methods.setLink = function(){
+    this.link = this.alias || this._id;
+};
+
 
 /**
  * Statics
