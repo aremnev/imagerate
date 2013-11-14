@@ -9,7 +9,7 @@
     "Show author during contest" : "Показывать автора во время конкурса",
     "Show comments during contest" : "Показывать комментарии во время конкурса",
     "Max. photos per user" : "Макс. количество фоток на пользователя",
-    "Title" : "Загловок",
+    "Title" : "Заголовок",
     "Description" : "Описание",
     "Create new contest" : "Создать новый конкурс",
     "Photos" : "Фотографии",
@@ -46,5 +46,9 @@
     "Thank you for your vote!" : "Спасибо за ваш голос!",
     "Send" : "Отправить",
     "%s images by %s users" : "%s изображений от %s пользователей",
-    "You rated %s images of %s" : "Вы проголосовали за %s из %s изображений"
+    "You rated %s images of %s" : "Вы проголосовали за %s из %s изображений",
+	"Alias" : "Псевдоним",
+	"Current contests" : "Текущие конкурсы",
+	"Exhibitions" : "Выставки",
+	"Finished contests" : "Завершенные конкурсы"
 }

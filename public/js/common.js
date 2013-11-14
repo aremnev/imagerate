@@ -126,4 +126,25 @@ $(document).ready(function () {
 	$('.homepage .link_profile').attr({href:''});
 	
 	//$('.thumbnails').jscroll();
+	
+	$('.contests-list').each( function() {
+		if ( $(this).children().length == 0 )
+			$(this).prev('h2').hide();
+	});
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

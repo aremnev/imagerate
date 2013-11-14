@@ -21,7 +21,7 @@
     </div>
 <% end %>
 
-<h2>My Images</h2>
+<h2><%= @t('My Images') %></h2>
 <form action="<%- @req._parsedUrl.pathname %>" class="well well-small form-search">
     <label>Sort photos  &nbsp;</label>
 	<select name="contest">
@@ -38,7 +38,7 @@
 	<% if @images.length > 0 : %>
 	<% include 'images/list.ect', {images: @images, pages: @pages, page: @page, url: @req._parsedUrl.pathname, h: @h, remove: true, user: @req.user, hideAnon: true, req: @req, flagRate: true, t: @t } %>
 	<% else : %>
-	<h3>You have not uploaded any photo...</h3>
+	<h3><%= @t('You have not uploaded any photo...') %></h3>
 	<% end %>
 </div>
 
