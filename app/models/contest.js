@@ -57,13 +57,11 @@ ContestSchema.post('save', function (contest) {
     });
 });
 
+/**
+ * Post-init hook
+ */
 ContestSchema.post('init', function(contest){
    contest.link = contest.alias || contest._id;
-   mongoose.model('Image').getByContest(contest, function(image){
-	contest.firstImage = image;
-	console.log('test_in');
-   });
-   console.log('test_out');
 });
 
 /**

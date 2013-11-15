@@ -38,6 +38,11 @@ exports.index = function (req, res) {
 			function(cb){
                 Contest.list({}, safe(cb, function(contests) {
 					locals.contests = contests;
+                    locals.contests.map(function(contest){
+                        Image.getByContest(contest, safe(cb, function(image){
+                            contest.firstImage = image;
+                        }, true));
+                    });
 				}));
             },
 			function(cb){

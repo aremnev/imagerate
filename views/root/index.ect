@@ -16,8 +16,8 @@
 <div id="carousel">
 	<% for contest in @contests: %>
 		<div>
-			<img class="img-front" src="<%= @h.imageUrl(contest.firstImage.image, {width: 400, height: 300, crop: 'fill', gravity: 'faces'}) %>" /> 
-			<img class="img-back" src="/images/" alt="dot2" width="350" height="275" />
+			<img class="img-front" src="<%= @h.imageUrl(contest.firstImage.image, {width: 400, height: 300, crop: 'fill', gravity: 'faces'}) %>" />
+			<img class="img-back" src="<%= @h.imageUrl(contest.firstImage.image, {width: 400, height: 300, crop: 'fill', gravity: 'faces'}) %>" alt="dot2" width="350" height="275" />
 			<h3><%= contest.title %></h3>
 			<p><%= contest.description %></p>
 			<a href="/contests/<%- contest.link %>" target="_blank">Show</a>
