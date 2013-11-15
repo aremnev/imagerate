@@ -2,6 +2,7 @@
 /*
  *  Generic require login routing middleware
  */
+var url = require('url');
 
 var auth = function(cfg) {
     return {
@@ -38,6 +39,18 @@ var auth = function(cfg) {
             }
             next();
         },
+
+        setCallbackUrl : function(req, res, next){
+            var referrer = req.header('Referrer');
+            if(referrer){
+                var urlParts = url.parse(referrer);
+                if(urlParts.hostname === req.host && urlParts.path !== '/login'){
+                    res.cookie('redirectPath', urlParts.path, {secure : false});
+                }
+            }
+            next();
+        },
+
 
 
 

@@ -17,7 +17,12 @@ exports.signin = function (req, res) {}
  */
 
 exports.authCallback = function (req, res, next) {
-    res.redirect('/users/' + req.user.id);
+    if(req.cookies.redirectPath){
+        res.clearCookie('redirectPath');
+        res.redirect(req.cookies.redirectPath);
+    }else{
+        res.redirect('/users/' + req.user.id);
+    }
 }
 
 /**
