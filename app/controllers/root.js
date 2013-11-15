@@ -34,7 +34,17 @@ exports.index = function (req, res) {
                 Image.list(_.extend(options, {perPage: 6, sort: {'viewsCount': -1}}),  safe(cb, function(images) {
                     locals.viewed_images = images;
                 }));
-            }
+            },
+			function(cb){
+                Contest.list({}, safe(cb, function(contests) {
+					locals.contests = contests;
+				}));
+            },
+			function(cb){
+                Image.list({}, safe(cb, function(images) {
+                    locals.images = images;
+                }));
+            },
         ],
         function(err) {
             if (err) {

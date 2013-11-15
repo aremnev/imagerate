@@ -163,6 +163,10 @@ ImageSchema.methods = {
     getCdnId: function() {
         return  this.image.data.public_id + '.' + this.image.data.format;
     },
+	
+	getData: function() {
+        return  this.image.data.public_id;
+    },
 
     /**
      * Returns rate by concrete user if that user rated the image.
@@ -190,6 +194,7 @@ ImageSchema.methods = {
             image.save(callback);
         });
     }
+
 }
 
 /**
@@ -245,7 +250,6 @@ ImageSchema.statics = {
             .where('contest.contest').equals(image.contest.contest)
             .where('createdAt').gt(image.createdAt)
             .sort({'createdAt':1})
-            .limit(1)
             .exec(cb)
     },
 
@@ -257,9 +261,15 @@ ImageSchema.statics = {
             .where('contest.contest').equals(image.contest.contest)
             .where('createdAt').lt(image.createdAt)
             .sort({'createdAt': -1})
-            .limit(1)
             .exec(cb)
-    }
+    },
+	
+	getByContest : function(contest, callback) {
+		this.findOne()
+            .where('contest.contest').equals(contest)
+            .exec(callback)
+	}
+
 }
 
 Image = mongoose.model('Image', ImageSchema)

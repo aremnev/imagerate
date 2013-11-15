@@ -1,6 +1,6 @@
 <!-- index.ect -->
 <% extend 'layouts/home.ect' %>
-<% if @recent_images.length >= 4 : %>
+<!-- <% if @recent_images.length >= 4 : %>
 <div class="slides-wrapper">
     <h2><%= @t('Most Recent Images') %></h2>
     <ul class="slides">
@@ -9,7 +9,27 @@
 		<% end %>
     </ul>
 </div>
-<% end %>
+<% end %> -->
+
+<div id="wrapper">
+<div id="bg"></div>
+<div id="carousel">
+	<% for contest in @contests: %>
+		<div>
+			<img class="img-front" src="<%= @h.imageUrl(contest.firstImage.image, {width: 400, height: 300, crop: 'fill', gravity: 'faces'}) %>" /> 
+			<img class="img-back" src="/images/" alt="dot2" width="350" height="275" />
+			<h3><%= contest.title %></h3>
+			<p><%= contest.description %></p>
+			<a href="/contests/<%- contest.link %>" target="_blank">Show</a>
+		</div>
+	<% end %>
+</div>
+<a id="prev" href="#"><span></span></a>
+<a id="next" href="#"><span></span></a>
+</div>
+
+
+
 
 <% if @viewed_images.length > 0 : %>
 <div class="list-wrapper">
@@ -37,3 +57,8 @@
 	</div>
 	<% end %>
 <% end %>
+
+
+
+
+
