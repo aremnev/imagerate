@@ -35,7 +35,11 @@ var auth = function(cfg) {
                 contestIsPrivate = req.image.private;
             }
             if(contestIsPrivate && !req.isAuthenticated()){
-                return res.redirect('/login');
+                var locals = {
+                    message: "Contest &laquo;%s&raquo; is private. Please sign in to view images.",
+                    contest : req.contest
+                };
+                return res.render('users/login.ect', locals);
             }
             next();
         },

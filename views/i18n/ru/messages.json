@@ -45,5 +45,8 @@
     "Send" : "Отправить",
     "%s images by %s users" : "%s изображений от %s пользователей",
     "You rated %s images of %s" : "Вы проголосовали за %s из %s изображений",
-    "Alias" : "Псевдоним"
+    "Alias" : "Псевдоним",
+    "Contest &laquo;%s&raquo; is private. Please sign in to view images." : "Конкурс &laquo;%s&raquo; является закрытым. Авторизуйтесь для просмотра изображений.",
+    "Sign-in" : "Авторизация",
+    "Sign in with google account" : "Авторизоваться с помощью Google-аккаунта"
 }
