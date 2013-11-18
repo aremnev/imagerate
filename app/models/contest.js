@@ -70,6 +70,10 @@ ContestSchema.path('title').validate(function (title) {
     return title.length > 0
 }, 'Contest title cannot be blank');
 
+ContestSchema.path('alias').validate(function (alias) {
+    return alias.length > 0
+}, 'Contest alias cannot be blank');
+
 
 /**
  * Methods

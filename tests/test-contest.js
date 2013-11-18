@@ -35,12 +35,14 @@ describe('Contests pages', function () {
             req
                 .set('Accept', 'application/json')
                 .field('title', 'Another one contest')
+                .field('alias', 'another_one_contest')
                 .field('description', 'Description for another one contest')
                 .expect(200)
                 .end(function (err, res) {
                     var data = res.body;
                     assert.ok(data.contest);
                     assert.equal(data.contest.title, 'Another one contest');
+                    assert.equal(data.contest.alias, 'another_one_contest');
                     assert.equal(data.contest.description, 'Description for another one contest');
                     contest = data.contest;
                     done();
@@ -53,12 +55,14 @@ describe('Contests pages', function () {
             req
                 .set('Accept', 'application/json')
                 .field('title', 'Another one contest updated')
+                .field('alias', 'another_one_contest_updated')
                 .field('description', 'Description for another one contest updated')
                 .expect(200)
                 .end(function (err, res) {
                     var data = res.body;
                     assert.ok(data.contest);
                     assert.equal(data.contest.title, 'Another one contest updated');
+                    assert.equal(data.contest.alias, 'another_one_contest_updated');
                     assert.equal(data.contest.description, 'Description for another one contest updated');
                     contest = data.contest;
                     done();

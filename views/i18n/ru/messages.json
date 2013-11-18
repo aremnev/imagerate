@@ -13,10 +13,10 @@
     "Description" : "Описание",
     "Create new contest" : "Создать новый конкурс",
     "Photos" : "Фотографии",
-    "Most recent" : "Наисвежаишие",
-    "Most viewed" : "Популярнейшие",
-    "Most Viewed Images" : "Популярнейшие фоточки",
-    "Most Recent Images" : "Наисвежайшие фоточки",
+    "Most recent" : "Последние",
+    "Most viewed" : "Популярные",
+    "Most Viewed Images" : "Популярные фото",
+    "Most Recent Images" : "Последние фото",
     "See all" : "Посмотреть всё",
     "Logout" : "Выйти",
     "Sign in" : "Войти",
@@ -44,5 +44,6 @@
     "Thank you for your vote!" : "Спасибо за ваш голос!",
     "Send" : "Отправить",
     "%s images by %s users" : "%s изображений от %s пользователей",
-    "You rated %s images of %s" : "Вы проголосовали за %s из %s изображений"
+    "You rated %s images of %s" : "Вы проголосовали за %s из %s изображений",
+    "Alias" : "Псевдоним"
 }
