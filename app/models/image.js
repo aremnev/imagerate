@@ -265,8 +265,9 @@ ImageSchema.statics = {
     },
 	
 	getByContest : function(contest, callback) {
-		this.findOne()
+		this.find()
             .where('contest.contest').equals(contest)
+			.limit(2)
             .exec(callback)
 	}
 

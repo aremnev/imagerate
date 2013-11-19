@@ -4,14 +4,14 @@
     <div class="well span7">
     <% if @message and @message.length: %>
     <div class="alert alert-error">
-        <%- @message %>
+        <%- @f(@t(@message), [@contest.title]) %>
     </div>
     <% end %>
     <fieldset>
-        <legend>Sign-in</legend>
+        <legend><%= @t('Sign-in') %></legend>
         <a href="/auth/google" class="google pull-center">
             <img src="/img/google.png" alt="google" />
-            <span>Sign in with google account</span>
+            <span><%= @t('Sign in with google account') %></span>
         </a>
     </fieldset>
     </div>

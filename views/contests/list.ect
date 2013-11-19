@@ -19,7 +19,7 @@
             <div class="controls row-fluid" ng-controller="ContestsCtrl">
                 <input type="text" pattern="^(?=\s*\S).*$" name="title" ng-model="title" ng-change="createAlias()" placeholder="<%= @t('Title') %>" class="span12" maxlength="255" required/><br>
 
-                <input type="text" pattern="^(?=\s*\S)[a-zA-Z0-9_\-]*$" name="alias" value="{{alias}}" placeholder="<%= @t('Alias') %>" class="span12" maxlength="255" required/><br>
+                <input type="text" pattern="^(?=\s*\S)[a-zA-Z0-9_\-]*$" name="alias" ng-model="alias" ng-change="disableTranslit()" placeholder="<%= @t('Alias') %>" class="span12" maxlength="255" required/><br>
 
                 <textarea pattern="^(?=\s*\S).*$" name="description" placeholder="<%= @t('Description') %>" class="span12" rows="5"/></textarea><br>
 
