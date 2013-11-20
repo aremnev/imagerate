@@ -25,6 +25,9 @@
         <% if @req.contest.exhibition : %>
             <p class="text-info"><%= @t('This is contest-exhibition') %></p>
         <% end %>
+		<% if !@h.isPastDate(@req.contest.dueDate) : %>
+			<p class="text-success" style="font-size:1.25em;"><%= @t('Days left: ') %><%= @h.remainderDays(@req.contest.dueDate) %></p>
+		<% end %>
     </div>
 <% end %>
 

@@ -50,5 +50,6 @@
 	"Alias" : "Псевдоним",
 	"Current contests" : "Текущие конкурсы",
 	"Exhibitions" : "Выставки",
-	"Finished contests" : "Завершенные конкурсы"
+	"Finished contests" : "Завершенные конкурсы",
+	"Days left: " : "Дней осталось: "
 }
