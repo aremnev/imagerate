@@ -180,7 +180,7 @@ function imageList(req, res, type, usePagination) {
 		};
 	}
 	else {
-		var perPage = 15, page = 0;
+		var perPage = 15, page = 1;
 		var soptions = {
 			perPage: perPage
 		};

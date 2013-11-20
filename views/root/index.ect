@@ -6,26 +6,24 @@
 <div id="bg"></div>
 <div id="carousel">
 	<% for contest in @contests: %>
-		<% if !@h.isPastDate(contest.dueDate) : %>
 			<div>
-				<% if contest.firstImage and contest.secondImage : %>
-				<img class="img-front" src="<%= @h.imageUrl(contest.firstImage.image, {width: 400, height: 300, crop: 'fill', gravity: 'faces'}) %>" />
-				<img class="img-back" src="<%= @h.imageUrl(contest.secondImage.image, {width: 300, height: 250, crop: 'fill', gravity: 'faces'}) %>" />
+				<% if contest.images.length >= 2 : %>
+                    <img class="img-front" src="<%= @h.imageUrl(contest.images[0].image, {width: 400, height: 300, crop: 'fill', gravity: 'faces'}) %>" />
+                    <img class="img-back" src="<%= @h.imageUrl(contest.images[1].image, {width: 300, height: 250, crop: 'fill', gravity: 'faces'}) %>" />
 				<% end %>
 				
-				<% if contest.firstImage and !contest.secondImage : %>
-				<img class="img-front" src="<%= @h.imageUrl(contest.firstImage.image, {width: 400, height: 300, crop: 'fill', gravity: 'faces'}) %>"  style="margin-left: 100px;"/>
+				<% if contest.images.length == 1 : %>
+				    <img class="img-front" src="<%= @h.imageUrl(contest.images[0].image, {width: 400, height: 300, crop: 'fill', gravity: 'faces'}) %>"  style="margin-left: 100px;"/>
 				<% end %>
 				
-				<% if !contest.firstImage and !contest.secondImage : %>
-				<img class="img-front" src="http://lorempixel.com/400/300/abstract/4/no%20images/" style="margin-left: 100px;"/>
+				<% if contest.images.length == 0 : %>
+				    <img class="img-front" src="http://lorempixel.com/400/300/abstract/4/no%20images/" style="margin-left: 100px;"/>
 				<% end %>
 				
 				<h3><%= contest.title %></h3>
 				<p><%= contest.description %></p>
 				<a href="/contests/<%- contest.link %>" >Show</a>
 			</div>
-		<% end %>
 	<% end %>
 </div>
 <a id="prev" href="#"><span></span></a>

@@ -36,15 +36,24 @@ exports.index = function (req, res) {
                 }));
             },
 			function(cb){
-                Contest.actualList(safe(cb, function(contests) {
-					locals.contests = contests;
-                    locals.contests.map(function(contest){
-                        Image.getByContest(contest, safe(cb, function(images){
-                            contest.firstImage = images[0];
-							contest.secondImage = images[1];
-                        }, true));
-                    });
-				}));
+                Contest.actualList(function(err, contests) {
+                    if(err){
+                        cb(err);
+                    }
+                    locals.contests = contests;
+                    if(locals.contests){
+                        var i = 1;
+                        locals.contests.map(function(contest){
+                            Image.getByContest(contest, function(err, images){
+                                contest.images = images;
+                                if(i === locals.contests.length){
+                                    cb();
+                                }
+                                i++;
+                            });
+                        });
+                    }
+				});
             },
 			function(cb){
                 Image.list({}, safe(cb, function(images) {
