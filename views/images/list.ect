@@ -16,17 +16,17 @@
     <% for image, i in @images: %>
         <% if not @hideAnon or (@user and @h.isOwner(image, @user) or (@h.isPastDate(image.contest.contest.dueDate) or image.contest.contest.showAuthor ) ) : %>
             <li class="item">
-                <div class="thumbnail <% if image.getRating() and @winners: %>winner-<%- (i + 1) + ((@page - 1) * 15) %> <%end %>" 
-					ng-controller="RatingController"
-					ng-init="initRating({ id: '<%= image.id %>',
-							<% if @h.isPastDate(image.contest.contest.dueDate): %>
-							value: <%- image.getRating() %>,
-							<% end %>
-							count: <%- image.contest.evaluationsCount %>,
-							byUser: <%- image.ratingByUser || 0 %> });"
-					
-						 ng-mouseleave="rating.state = rating.defaultState" >
-					
+                <div class="thumbnail <% if image.getRating() and @winners: %>winner-<%- (i + 1) + ((@page - 1) * 15) %> <%end %>"
+                    ng-controller="RatingController"
+                    ng-init="initRating({ id: '<%= image.id %>',
+                        <% if @h.isPastDate(image.contest.contest.dueDate): %>
+                            value: <%- image.getRating() %>,
+                            <% end %>
+                            count: <%- image.contest.evaluationsCount %>,
+                            byUser: <%- image.ratingByUser || 0 %> });"
+
+                        ng-mouseleave="rating.state = rating.defaultState" >
+
                     <a class="image-to-rate fixed-rating image-link" href="/images/<%- image.id %>">
                         <% if not @h.isPastDate(image.contest.contest.dueDate) and @remove and @user and (image.user._id + '' == @user._id + ''): %>
                             <span data-confirm="Are you sure?" data-ok="<%- @url || '' %>" href="/images/<%- image.id %>" class="remove ajax-delete">×</span>
@@ -48,18 +48,18 @@
                         <% end %>
                         <span class="title"><%= image.title %></span>
                     </div>
-					<% if @req.isAuthenticated() and @user and image.user._id + '' != @user._id + '': %>
-						<% include 'includes/rating.ect', { rating: image.getRating(), thumbnail: false, isPast: @h.isPastDate(image.contest.contest.dueDate), t: @t} %>
-					<% end %>
-					
+                    <% if @req.isAuthenticated() and @user and image.user._id + '' != @user._id + '': %>
+                        <% include 'includes/rating.ect', { rating: image.getRating(), thumbnail: false, isPast: @h.isPastDate(image.contest.contest.dueDate), t: @t} %>
+                    <% end %>
+
                     <% if image.comments.length && !@hideComments && image.contest.contest.showComments : %>
                         <% include 'comments/comments.ect', {comments: image.comments, h: @h, req: image, size: 28 } %>
                     <% end %>
                 </div>
             </li>
         <% else : %>
-        
-            
+
+
         <% end %>
     <% end %>
 </ul>

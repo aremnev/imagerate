@@ -51,7 +51,7 @@ exports.create = function (req, res) {
             }
         });
     })
-}
+};
 
 
 /**
@@ -65,7 +65,7 @@ exports.delete = function (req, res) {
         });
         return res.json({ ok: true });
     })
-}
+};
 
 
 /**
@@ -93,7 +93,7 @@ exports.update = function (req, res) {
             });
         })
     });
-}
+};
 
 /**
  * Edit contest page
@@ -103,7 +103,7 @@ exports.update = function (req, res) {
 exports.editPage = function(req, res){
     var locals = {contest : req.contest};
     res.render('contests/edit.ect', locals);
-}
+};
 
 /**
  * Contest page
@@ -137,7 +137,7 @@ exports.list = function (req, res) {
     );
 
 
-}
+};
 
 exports.detail = function(req, res) {
     var contest = req.contest;
@@ -176,12 +176,12 @@ exports.detail = function(req, res) {
 
     function loadContestImages(callback) {
         Image.list(imageOptions, safe(callback, function(images){
-			images.forEach(function(image) {
-				image.getRatingByUser(req.user, function(err, ratingByUser) {
-					image.ratingByUser = ratingByUser;
-				});
-			});
-			locals.images = images;
+            images.forEach(function(image) {
+                image.getRatingByUser(req.user, function(err, ratingByUser) {
+                    image.ratingByUser = ratingByUser;
+                });
+            });
+            locals.images = images;
         }));
     }
 

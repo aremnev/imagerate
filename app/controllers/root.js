@@ -18,7 +18,7 @@ exports.index = function (req, res) {
         criteria: {
             private : {$ne : true}
         }
-    }
+    };
     if(req.user){
         delete options.criteria.private
     }
@@ -35,7 +35,7 @@ exports.index = function (req, res) {
                     locals.viewed_images = images;
                 }));
             },
-			function(cb){
+            function(cb){
                 Contest.actualList(function(err, contests) {
                     if(err){
                         cb(err);
@@ -53,9 +53,9 @@ exports.index = function (req, res) {
                             });
                         });
                     }
-				});
+                });
             },
-			function(cb){
+            function(cb){
                 Image.list({}, safe(cb, function(images) {
                     locals.images = images;
                 }));
@@ -68,4 +68,4 @@ exports.index = function (req, res) {
             res.render('root/index.ect', locals);
         }
     );
-}
+};

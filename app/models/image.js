@@ -163,8 +163,8 @@ ImageSchema.methods = {
     getCdnId: function() {
         return  this.image.data.public_id + '.' + this.image.data.format;
     },
-	
-	getData: function() {
+
+    getData: function() {
         return  this.image.data.public_id;
     },
 
@@ -263,13 +263,13 @@ ImageSchema.statics = {
             .sort({'createdAt': -1})
             .exec(cb)
     },
-	
-	getByContest : function(contest, callback) {
-		this.find()
+
+    getByContest : function(contest, callback) {
+        this.find()
             .where('contest.contest').equals(contest)
-			.limit(2)
+            .limit(2)
             .exec(callback)
-	}
+    }
 
 }
 
