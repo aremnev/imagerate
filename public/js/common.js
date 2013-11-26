@@ -131,6 +131,29 @@ $(document).ready(function () {
 		if ( $(this).children().length == 0 )
 			$(this).prev('h2').hide();
 	});
+    
+    $('.edit-title__link').on('click', function() {
+        $(this).hide()
+            .siblings('.edit-title')
+            .show()
+            .end()
+            .siblings('.title')
+            .hide();
+    }); 
+    $('.edit-title__submit').on('click', function(e) {
+        e.preventDefault();
+        var input = $('.edit-title__input'),
+            form = $(this).parent('.edit-title');
+        form.siblings('.title, .edit-title__link')
+            .show()
+            .end()
+            .hide();
+        
+        if(!$.trim(input.val())) return;
+        $.post(form.attr('action'), form.serialize(), function(d){
+           form.siblings('.title').html(d); console.log('data', d)
+        });    
+    });
 
 	
 	

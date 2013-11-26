@@ -20,11 +20,12 @@
     <h3><%= @t('Update') %> <a href="/contests/<%- @contest.link %>"><%= @contest.title %></a></h3>
     <form class="well well-small" action="/contests/<%- @contest._id %>" method="post">
         <div class="controls row-fluid" ng-controller="ContestsCtrl">
-            <input type="text" pattern="^(?=\s*\S).*$" name="title" ng-model="title" ng-change="createAlias()" ng-init="check()" placeholder="<%= @t('Title') %>" maxlength="255" value="<%= @contest.title %>" class="span12" required/><br>
 
-            <input type="text" pattern="^(?=\s*\S)[a-zA-Z0-9_\-]*$" name="alias" ng-model="alias" ng-change="disableTranslit()" ng-init="alias='<%= @contest.alias %>'" placeholder="<%= @t('Alias') %>" class="span12" maxlength="255" required/><br>
+            <input type="text" pattern="^(?=\s*\S).*$" name="title" ng-model="title" ng-change="createAlias()" ng-init="check()" placeholder="<%= @t('Title') %>" maxlength="60" value="<%= @contest.title %>" class="span12" required/><br>
 
-            <textarea pattern="^(?=\s*\S).*$" name="description" placeholder="<%= @t('Description') %>" class="span12" rows="5"/><%= @contest.description %></textarea><br>
+            <input type="text" pattern="^(?=\s*\S)[a-zA-Z0-9_\-]*$" name="alias" ng-model="alias" ng-change="disableTranslit()" ng-init="alias='<%= @contest.alias %>'" placeholder="<%= @t('Alias') %>" class="span12" maxlength="60" required/><br>
+
+            <textarea pattern="^(?=\s*\S).*$" name="description" placeholder="<%= @t('Description') %>" maxlength="210" class="span12" rows="5"/><%= @contest.description %></textarea><br>
 
             <div class="input-append date span12" id="startDate" data-date="<%- @h.formatTime(new Date(), 'MM-DD-YYYY') %>" data-date-format="mm-dd-yyyy">
                 <input placeholder="Start Date" name="startDate" class="span6" size="16" type="text" value="<%- @h.formatTime(@contest.startDate, 'MM-DD-YYYY') %>" readonly="readonly" required>

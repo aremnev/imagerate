@@ -14,6 +14,15 @@
 
 <ul class="thumbnails">
     <% for image, i in @images: %>
+    
+    <script type="text/javascript">
+        function getImageTitle(){
+            return {
+                title : '<%= image.title %>'
+            };
+    }
+    </script>
+    
         <% if not @hideAnon or (@user and @h.isOwner(image, @user) or (@h.isPastDate(image.contest.contest.dueDate) or image.contest.contest.showAuthor ) ) : %>
             <li class="item">
                 <div class="thumbnail <% if image.getRating() and @winners: %>winner-<%- (i + 1) + ((@page - 1) * 15) %> <%end %>" 
@@ -46,7 +55,20 @@
                                 <span><%= @t('Rank') %>: <%- (i + 1) + ((@page - 1) * 15) %></span>
                             </span>
                         <% end %>
-                        <span class="title"><%= image.title %></span>
+                        
+
+                            <span class="title"><%= image.title %></span>
+                            <% if @remove and @user and (image.user._id + '' == @user._id + ''): %>
+                                <a href="" class="edit-title__link" title="<%= @t('Edit') %>">
+                                    <span class="add-on"><i class="icon-pencil"></i></span>
+                                </a>
+                                <form action="/images/<%- image.id %>" method="post" class="edit-title"> 
+                                    <input type="text" name="edit-title" class="edit-title__input" value="<%= image.title %>">
+                                    <input type="submit" class="edit-title__submit btn btn-success" value="Save">
+                                </form>
+                            <% end %>
+
+                        
                     </div>
 					<% if @req.isAuthenticated() and @user and image.user._id + '' != @user._id + '': %>
 						<% include 'includes/rating.ect', { rating: image.getRating(), thumbnail: false, isPast: @h.isPastDate(image.contest.contest.dueDate), t: @t} %>
