@@ -34,7 +34,23 @@ exports.index = function (req, res) {
                 Image.list(_.extend(options, {perPage: 6, sort: {'viewsCount': -1}}),  safe(cb, function(images) {
                     locals.viewed_images = images;
                 }));
-            }
+            },
+			function(cb){
+                Contest.actualList(safe(cb, function(contests) {
+					locals.contests = contests;
+                    locals.contests.map(function(contest){
+                        Image.getByContest(contest, safe(cb, function(images){
+                            contest.firstImage = images[0];
+							contest.secondImage = images[1];
+                        }, true));
+                    });
+				}));
+            },
+			function(cb){
+                Image.list({}, safe(cb, function(images) {
+                    locals.images = images;
+                }));
+            },
         ],
         function(err) {
             if (err) {

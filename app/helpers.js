@@ -14,6 +14,10 @@ module.exports = {
         options.secure = true;
         return cloudinary.url(image.data.public_id, options) + '.jpg'
     },
+	imageUrl2: function (image, options) {
+        options.secure = true;
+        return cloudinary.url(image.getData, options) + '.jpg'
+    },
 
     //Date helpers
     formatTime: function(date, format) {
@@ -37,11 +41,13 @@ module.exports = {
         var now = new Date();
         return date > now;
     },
+
 	remainderDays: function (date) {
 		var date = new Date(date);
         var now = new Date();
         return Math.floor((date-now)/86400000)+1;
 	},
+
     isOwner: function(image, user) {
         return (image.user._id + '' == user._id + '');
     },

@@ -58,6 +58,9 @@ ContestSchema.post('save', function (contest) {
     contest.setLink();
 });
 
+/**
+ * Post-init hook
+ */
 ContestSchema.post('init', function(contest){
     contest.setLink();
 });
