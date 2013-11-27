@@ -170,6 +170,16 @@ exports.remove = function (req, res) {
     })
 }
 
+exports.editTitle = function (req, res) {
+    var image = req.image; 
+    image.title = req.body['edit-title']; 
+    
+    image.save(function (err) {
+        if (err) return res.render('500');
+        res.send(image.title);
+    })
+}
+
 function imageList(req, res, type, usePagination) {
 	if (usePagination) {
 		var page = parseInt(req.param('page') > 0 ? req.param('page') : 1),

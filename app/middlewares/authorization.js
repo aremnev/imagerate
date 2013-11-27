@@ -2,6 +2,7 @@
 /*
  *  Generic require login routing middleware
  */
+var url = require('url');
 
 var auth = function(cfg) {
     return {
@@ -34,10 +35,26 @@ var auth = function(cfg) {
                 contestIsPrivate = req.image.private;
             }
             if(contestIsPrivate && !req.isAuthenticated()){
-                return res.redirect('/login');
+                var locals = {
+                    message: "Contest &laquo;%s&raquo; is private. Please sign in to view images.",
+                    contest : req.contest
+                };
+                return res.render('users/login.ect', locals);
             }
             next();
         },
+
+        setCallbackUrl : function(req, res, next){
+            var referrer = req.header('Referrer');
+            if(referrer){
+                var urlParts = url.parse(referrer);
+                if(urlParts.hostname === req.host && urlParts.path !== '/login'){
+                    res.cookie('redirectPath', urlParts.path, {secure : false});
+                }
+            }
+            next();
+        },
+
 
 
 

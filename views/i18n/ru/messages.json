@@ -15,10 +15,10 @@
     "Photos" : "Фотографии",
 	"My Images" : "Мои фотографии",
 	"You have not uploaded any photo..." : "Вы пока не загрузили ни одной фотографии...",
-    "Most recent" : "Наисвежаишие",
-    "Most viewed" : "Популярнейшие",
-    "Most Viewed Images" : "Популярнейшие фоточки",
-    "Most Recent Images" : "Наисвежайшие фоточки",
+    "Most recent" : "Последние",
+    "Most viewed" : "Популярные",
+    "Most Viewed Images" : "Популярные фото",
+    "Most Recent Images" : "Последние фото",
     "See all" : "Посмотреть всё",
     "Logout" : "Выйти",
     "Sign in" : "Войти",
@@ -51,5 +51,8 @@
 	"Current contests" : "Текущие конкурсы",
 	"Exhibitions" : "Выставки",
 	"Finished contests" : "Завершенные конкурсы",
-	"Days left: " : "Дней осталось: "
+	"Days left: " : "Дней осталось: ",
+    "Contest &laquo;%s&raquo; is private. Please sign in to view images." : "Конкурс &laquo;%s&raquo; является закрытым. Авторизуйтесь для просмотра изображений.",
+    "Sign-in" : "Авторизация",
+    "Sign in with google account" : "Авторизоваться с помощью Google-аккаунта"
 }

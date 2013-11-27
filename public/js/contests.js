@@ -4,12 +4,27 @@ $(document).ready(function() {
 
 
 function ContestsCtrl($scope){
-    $scope.title = document.querySelector("input[name=title]").defaultValue;
-    $scope.alias = translit($scope.title);
+    if(typeof getContestInitData == "function"){
+        $scope.title = getContestInitData().title;
+        $scope.alias = getContestInitData().alias;
+    }
+
+    var need_to_translit = true;
+
+    if($scope.title && $scope.alias && translit($scope.title) !== $scope.alias){
+        need_to_translit = false;
+    }
+
+    $scope.disableTranslit = function(){
+        need_to_translit = false;
+    }
 
     $scope.createAlias = function(){
-        $scope.alias = translit($scope.title);
-    }
+        if(need_to_translit || !$scope.alias){
+            $scope.alias = translit($scope.title);
+            need_to_translit = true;
+        }
+    };
 }
 
 function translit(str){

@@ -44,7 +44,7 @@ exports.create = function (req, res) {
         }
         return res.format({
             text: function(){
-                res.redirect('/contests/' + contest._id);
+                res.redirect('/contests/' + contest.link);
             },
             json: function(){
                 res.json({ contest: contest });
@@ -85,7 +85,7 @@ exports.update = function (req, res) {
             if (err) res.render('500');
             return res.format({
                 text: function(){
-                    res.redirect('/contests/' + contest._id);
+                    res.redirect('/contests/' + contest.link);
                 },
                 json: function(){
                     res.json({ contest: contest });

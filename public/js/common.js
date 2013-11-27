@@ -125,12 +125,37 @@ $(document).ready(function () {
 	$('.image-large').closest('body').addClass('show-page');
 	$('.homepage .link_profile').attr({href:''});
 	
-	//$('.thumbnails').jscroll();
-	
 	$('.contests-list').each( function() {
 		if ( $(this).children().length == 0 )
 			$(this).prev('h2').hide();
 	});
+    
+    $('.edit-title__link').on('click', function() {
+        $(this).hide()
+            .siblings('.edit-title')
+            .show()
+            .end()
+            .siblings('.title')
+            .hide();
+        Thumbnails.reload();    
+    }); 
+    $('.edit-title__submit').on('click', function(e) {
+        e.preventDefault();
+        var input = $('.edit-title__input'),
+            form = $(this).parent('.edit-title');
+        form.siblings('.title, .edit-title__link')
+            .show()
+            .end()
+            .hide();
+        Thumbnails.reload();
+        if(!$.trim(input.val())) return;
+        $.post(form.attr('action'), form.serialize(), function(d){
+            if(d){
+                form.siblings('.title').html(d); 
+            }
+           
+        });    
+    });
 
 });
 

@@ -6,7 +6,7 @@ var mongoose = require('mongoose')
     User = mongoose.model('User');
 
 
-module.exports = function (passport, config) {
+module.exports = function (passport, config, app) {
 
     // serialize sessions
     passport.serializeUser(function(user, done) {
@@ -32,7 +32,7 @@ module.exports = function (passport, config) {
             return done(null, user)
         })
     }
-    ))
+    ));
 
     // use google strategy
     passport.use(new GoogleStrategy({

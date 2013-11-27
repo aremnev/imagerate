@@ -1,14 +1,17 @@
 [
     {
         "title": "First contest",
+        "alias": "first_contest",
         "description": "Our First contest"
     },
     {
         "title": "Second contest",
+        "alias": "second_contest",
         "description": "Our second contest"
     },
     {
         "title": "Third contest",
+        "alias": "third_contest",
         "description": "Our third contest"
     }
 ]
