@@ -53,5 +53,6 @@
     "Finished contests" : "Завершенные конкурсы",
     "Contest &laquo;%s&raquo; is private. Please sign in to view images." : "Конкурс &laquo;%s&raquo; является закрытым. Авторизуйтесь для просмотра изображений.",
     "Sign-in" : "Авторизация",
-    "Sign in with google account" : "Авторизоваться с помощью Google-аккаунта"
+    "Sign in with google account" : "Авторизоваться с помощью Google-аккаунта",
+    "Days left: " : "Дней осталось: "
 }
