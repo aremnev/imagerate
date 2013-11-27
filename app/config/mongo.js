@@ -6,6 +6,7 @@ module.exports = function (config) {
 
     config.db = buildMongoUrl(config.mongo);
     mongoose.connect(config.db);
+    mongoose.set('debug', true);
 
     function buildMongoUrl(mongo) {
         if(process.env.MONGOLAB_URL) {
