@@ -28,6 +28,7 @@ module.exports = function (app, passport, auth, config) {
     app.del('/images/:imageId',  auth.requiresLogin, auth.image.hasAuthorization, images.remove);
     app.get('/images/:imageId/raw', auth.adminAccess, images.raw);
     app.param('imageId', images.image);
+    app.post('/images/:imageId', images.editTitle);
 
 
     // Rating routes
@@ -56,4 +57,6 @@ module.exports = function (app, passport, auth, config) {
     // home route
     var root = require('../controllers/root');
     app.get('/', root.index);
+    
+    
 }

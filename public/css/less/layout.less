@@ -13,7 +13,7 @@ body {
   padding: 0;
   margin: 0;
   color: @text-color;
-  background: #f2f2f2;
+  background: @page-bg;
 }
 
 
@@ -538,6 +538,11 @@ article {
   display: none;
 }
 
+.wrap-photo {
+  margin: 0 48px;
+  position: relative;
+}
+
 .image-to-rate {
   display: inline-block;
   position: relative;
@@ -554,42 +559,35 @@ article {
   }
 }
 
-.arrow-left, .arrow-right {
+.link-arrow-left, .link-arrow-right {
   position: absolute;
   top: 40%;
-  width: 40px;
-  height: 40px;
-  background:rgba(0,0,0,0.1);  
+  width: 48px;
+  height: 48px;
+  background:url('/img/arrows.png');  
   cursor: pointer;
   
-  -webkit-transition: background 0.5s ease-out 0;
-  -moz-transition: background 0.5s ease-out 0;
-  transition: background 0.5s ease-out 0;
-  
-  -webkit-border-radius: 5px;
-  border-radius: 50%;
-  
+  -webkit-transition: opacity .5s ease;
+  -moz-transition: opacity .5s ease;
+  transition: opacity .5s ease;
+}
+.link-arrow-right {
+  right: -48px;
+  background-position:48px 0px;
+  opacity:0.4;
   &:hover {
-    background:rgba(0,0,0,0.25);
+    opacity:1;
   }
-}
-.arrow-right {
-  right: -40px;
-}
-.arrow-left {
-  left: -40px;
-}
-.arrow {
-  font-size:230%;
-  font-weight:bold;
- 
-  position: absolute;
-  padding: 10px;
   
-  a {
-    color:white;
-    text-decoration: none;
+}
+.link-arrow-left {
+  left: -48px;
+  background-position:0px 0px;
+  opacity:0.4;
+  &:hover {
+    opacity:1;
   }
+  
 }
 
  .rating-container {
@@ -741,6 +739,17 @@ article {
   margin-top: 2em;
 }
 
+.edit-title {
+  display: none;
+}
+.edit-title__input {
+  width: 50%;
+}
+.edit-title__submit {
+  padding: 3px 10px !important;
+  vertical-align: top;
+}
+
 @media (min-width: 1200px) {
   .container,
   .navbar-static-top .container,
@@ -762,13 +771,9 @@ article {
     float: none;
   }
   
-  .arrow-right {
-    right: -35px;
+  .link-arrow-right {
+    right: -58px;
   }
-  
-/*   .grid__cell_size_1-4 {
-    width: 30%;
-  } */
 }
 
 @media (max-width: 1200px) and (min-width: 768px) {
@@ -798,6 +803,9 @@ article {
       margin-bottom: 5%;
       width: 100%;
     }
+  }
+  img.wait {
+    width: 100%;
   }
 }
 
@@ -864,6 +872,23 @@ article {
   .contest-actions {
     float: none;
     width: 100%;
+  }
+  
+  .wrap-photo {
+    margin:0;
+    
+    .link-arrow-left {
+      top: 100%;
+      left: 0;
+    }
+    .link-arrow-right {
+      top: 100%;
+      right: 0;
+    }
+  }
+  
+  .comments-block {
+    padding-top: 30px;
   }
 }
 
