@@ -62,7 +62,7 @@ exports.index = function (req, res) {
                     };
                     Image.mapReduce(opts, function(err, results) {
                         _.each(results, function(result){
-                            var contest = _.findWhere(contests, {'_id.value': result._id.value});
+                            var contest = _.findWhere(contests, {'id': result._id + ''});
                             contest.images = result.value.images ? result.value.images : [result.value];
                         });
                         cb();
