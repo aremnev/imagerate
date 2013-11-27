@@ -125,12 +125,36 @@ $(document).ready(function () {
 	$('.image-large').closest('body').addClass('show-page');
 	$('.homepage .link_profile').attr({href:''});
 	
-	//$('.thumbnails').jscroll();
-	
 	$('.contests-list').each( function() {
 		if ( $(this).children().length == 0 )
 			$(this).prev('h2').hide();
 	});
+    
+    $('.edit-title__link').on('click', function() {
+        $(this).hide()
+            .siblings('.edit-title')
+            .show()
+            .end()
+            .siblings('.title')
+            .hide();
+        Thumbnails.reload();    
+    }); 
+    $('.edit-title__submit').on('click', function(e) {
+        e.preventDefault();
+        var input = $('.edit-title__input'),
+            form = $(this).parent('.edit-title');
+        form.siblings('.title, .edit-title__link')
+            .show()
+            .end()
+            .hide();
+        Thumbnails.reload();
+        if(!$.trim(input.val())) return;
+        $.post(form.attr('action'), form.serialize(), function(d){
+            if(d){
+                form.siblings('.title').html(d); 
+            }
+        });    
+    });
 
 	
 	
@@ -139,27 +163,53 @@ $(document).ready(function () {
 	/******************************************************************/
 	
 	$(function() {
-	var left = {
-		imgFront	: -450,
-		imgBack		: -350,
-		h3			: -300,
-		p			: -275,
-		a			: -200
-	}
-	var current = {
-		imgFront	: 30,
-		imgBack		: 300,
-		h3			: 675,
-		p			: 675,
-		a			: 700
-	}
-	var right = {
-		imgFront	: 990,
-		imgBack		: 990,
-		h3			: 990,
-		p			: 990,
-		a			: 990
-	}
+	var doc_w = window.innerWidth;
+    if ( doc_w>750 && doc_w<1008 ) {
+        var left = {
+            imgFront	: -350,
+            imgBack		: -300,
+            h3			: -270,
+            p			: -260,
+            a			: -200
+        }
+        var current = {
+            imgFront	: 30,
+            imgBack		: 200,
+            h3			: 465,
+            p			: 465,
+            a			: 560
+        }
+        var right = {
+            imgFront	: 745,
+            imgBack		: 745,
+            h3			: 745,
+            p			: 745,
+            a			: 745
+        }
+    }
+    else {
+        var left = {
+            imgFront	: -450,
+            imgBack		: -350,
+            h3			: -300,
+            p			: -275,
+            a			: -200
+        }
+        var current = {
+            imgFront	: 30,
+            imgBack		: 300,
+            h3			: 675,
+            p			: 675,
+            a			: 700
+        }
+        var right = {
+            imgFront	: 990,
+            imgBack		: 990,
+            h3			: 990,
+            p			: 990,
+            a			: 990
+        }
+    }
 	
 	var isScrolling = false;
  

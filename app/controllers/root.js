@@ -22,46 +22,58 @@ exports.index = function (req, res) {
     if(req.user){
         delete options.criteria.private
     }
-    var locals = { title: 'Main Page'}
+    var locals = { title: 'Main Page' };
 
-    async.parallel([
-            function(cb){
+    async.auto({
+            recent_images: function(cb) {
                 Image.list(options, safe(cb, function(images) {
-                    locals.recent_images = images;
+                    cb(null, images);
                 }));
             },
-            function(cb){
+            viewed_images: function(cb) {
                 Image.list(_.extend(options, {perPage: 6, sort: {'viewsCount': -1}}),  safe(cb, function(images) {
-                    locals.viewed_images = images;
+                    cb(null, images);
                 }));
             },
-            function(cb){
+            images: function(cb) {
+                Image.list({}, safe(cb, function(images) {
+                    cb(null, images);
+                }));
+            },
+            contests: function(cb) {
                 Contest.actualList(function(err, contests) {
                     if(err){
                         cb(err);
                     }
-                    locals.contests = contests;
-                    if(locals.contests){
-                        var i = 1;
-                        locals.contests.map(function(contest){
-                            Image.getByContest(contest, function(err, images){
-                                contest.images = images;
-                                if(i === locals.contests.length){
-                                    cb();
-                                }
-                                i++;
-                            });
-                        });
-                    }
+                    cb(null, contests);
                 });
             },
-            function(cb){
-                Image.list({}, safe(cb, function(images) {
-                    locals.images = images;
-                }));
-            },
-        ],
-        function(err) {
+            contests_images: ['contests', function(cb, result) {
+                var contests = result.contests;
+                if (contests && contests.length) {
+                    var opts = {
+                        query: { 'contest.contest': { $in: contests} },
+                        map: function() {
+                            emit(this.contest.contest, this);
+                        },
+                        reduce: function(key, values) {
+                            return { images: values.slice(0, 2) };
+                        }
+                    };
+                    Image.mapReduce(opts, function(err, results) {
+                        _.each(results, function(result){
+                            var contest = _.findWhere(contests, {'id': result._id + ''});
+                            contest.images = result.value.images ? result.value.images : [result.value];
+                        });
+                        cb();
+                    });
+                } else {
+                    cb();
+                }
+            }]
+        },
+        function(err, results) {
+            locals = _.defaults(locals, results);
             if (err) {
                 return req.render('500');
             }

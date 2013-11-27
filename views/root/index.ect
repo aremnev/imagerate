@@ -1,30 +1,55 @@
 <!-- index.ect -->
 <% extend 'layouts/home.ect' %>
 
-<h2 style="text-align: center;"><%= @t('Current contests') %></h2>
+<h2 class="slider-title"><%= @t('Current contests') %></h2>
 <div id="wrapper">
 <div id="bg"></div>
 <div id="carousel">
-    <% for contest in @contests: %>
-            <div>
-                <% if contest.images.length >= 2 : %>
-                    <img class="img-front" src="<%= @h.imageUrl(contest.images[0].image, {width: 400, height: 300, crop: 'fill', gravity: 'faces'}) %>" />
-                    <img class="img-back" src="<%= @h.imageUrl(contest.images[1].image, {width: 300, height: 250, crop: 'fill', gravity: 'faces'}) %>" />
-                <% end %>
-
-                <% if contest.images.length == 1 : %>
-                    <img class="img-front" src="<%= @h.imageUrl(contest.images[0].image, {width: 400, height: 300, crop: 'fill', gravity: 'faces'}) %>"  style="margin-left: 100px;"/>
-                <% end %>
-
-                <% if contest.images.length == 0 : %>
+	<% for contest in @contests: %>
+		<% if @req.isAuthenticated() : %>
+            <% if !@h.isPastDate(contest.dueDate) : %>
+                <div>
+                    <% if contest.firstImage and contest.secondImage : %>
+                    <img class="img-front" src="<%= @h.imageUrl(contest.firstImage.image, {width: 400, height: 300, crop: 'fill', gravity: 'faces'}) %>" />
+                    <img class="img-back" src="<%= @h.imageUrl(contest.secondImage.image, {width: 300, height: 250, crop: 'fill', gravity: 'faces'}) %>" />
+                    <% end %>
+                    
+                    <% if contest.firstImage and !contest.secondImage : %>
+                    <img class="img-front" src="<%= @h.imageUrl(contest.firstImage.image, {width: 400, height: 300, crop: 'fill', gravity: 'faces'}) %>"  style="margin-left: 100px;"/>
+                    <% end %>
+                    
+                    <% if !contest.firstImage and !contest.secondImage : %>
                     <img class="img-front" src="http://lorempixel.com/400/300/abstract/4/no%20images/" style="margin-left: 100px;"/>
-                <% end %>
-
-                <h3><%= contest.title %></h3>
-                <p><%= contest.description %></p>
-                <a href="/contests/<%- contest.link %>" >Show</a>
-            </div>
-    <% end %>
+                    <% end %>
+                    
+                    <h3><%= contest.title %></h3>
+                    <p><%= contest.description %></p>
+                    <a href="/contests/<%- contest.link %>" >Show</a>
+                </div>
+            <% end %>
+        <% else : %>
+            <% if !@h.isPastDate(contest.dueDate) and !contest.private : %>
+                <div>
+                    <% if contest.firstImage and contest.secondImage : %>
+                    <img class="img-front" src="<%= @h.imageUrl(contest.firstImage.image, {width: 400, height: 300, crop: 'fill', gravity: 'faces'}) %>" />
+                    <img class="img-back" src="<%= @h.imageUrl(contest.secondImage.image, {width: 300, height: 250, crop: 'fill', gravity: 'faces'}) %>" />
+                    <% end %>
+                    
+                    <% if contest.firstImage and !contest.secondImage : %>
+                    <img class="img-front" src="<%= @h.imageUrl(contest.firstImage.image, {width: 400, height: 300, crop: 'fill', gravity: 'faces'}) %>"  style="margin-left: 100px;"/>
+                    <% end %>
+                    
+                    <% if !contest.firstImage and !contest.secondImage : %>
+                    <img class="img-front" src="http://lorempixel.com/400/300/abstract/4/no%20images/" style="margin-left: 100px;"/>
+                    <% end %>
+                    
+                    <h3><%= contest.title %></h3>
+                    <p><%= contest.description %></p>
+                    <a href="/contests/<%- contest.link %>" >Show</a>
+                </div>
+            <% end %>
+        <% end %>
+	<% end %>
 </div>
 <a id="prev" href="#"><span></span></a>
 <a id="next" href="#"><span></span></a>
@@ -35,29 +60,29 @@
 
 <% if @viewed_images.length > 0 : %>
 <div class="list-wrapper">
-    <h2><%= @t('Most Viewed Images') %></h2>
-    <% include 'images/list.ect', {images: @viewed_images, h: @h, hideComments: true, req: @req, flagRate: true, t: @t} %>
+	<h2><%= @t('Most Viewed Images') %></h2>
+	<% include 'images/list.ect', {images: @viewed_images, h: @h, hideComments: true, req: @req, flagRate: true, t: @t} %>
 </div>
 <% else : %>
-    <% if @req.isAuthenticated() : %> <h3>Contests don't exist. Create it :)</h3>
-    <% else : %>
-    <div class="row">
-    <div class="well span7 pull-center">
-        <% if @message and @message.length: %>
-        <div class="alert alert-error">
-            <%- @message %>
-        </div>
-        <% end %>
-        <fieldset>
-            <legend>Please login to see all photos</legend>
-            <a href="/auth/google" class="google pull-center">
-                <img src="/img/google.png" alt="google" />
-                <span>Sign in with google account</span>
-            </a>
-        </fieldset>
-        </div>
-    </div>
-    <% end %>
+	<% if @req.isAuthenticated() : %> <h3>Contests don't exist. Create it :)</h3>
+	<% else : %>
+	<div class="row">
+		<div class="well span7 pull-center">
+		<% if @message and @message.length: %>
+		<div class="alert alert-error">
+			<%- @message %>
+		</div>
+		<% end %>
+		<fieldset>
+			<legend>Please login to see all photos</legend>
+			<a href="/auth/google" class="google pull-center">
+				<img src="/img/google.png" alt="google" />
+				<span>Sign in with google account</span>
+			</a>
+		</fieldset>
+		</div>
+	</div>
+	<% end %>
 <% end %>
 
 

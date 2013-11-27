@@ -104,7 +104,6 @@ ContestSchema.statics = {
     list: function (options, cb) {
         var criteria = options.criteria || {},
             sort = options.sort || {'startDate': -1} // sort by start date
-
         this.find(criteria)
             .sort(sort)
             .limit(options.perPage)

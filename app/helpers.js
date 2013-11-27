@@ -41,10 +41,10 @@ module.exports = {
         var now = new Date();
         return date > now;
     },
-    remainderDays: function (date) {
+remainderDays: function (date) {
         var date = new Date(date);
         var now = new Date();
-        return Math.floor((date-now)/86400000);
+        return Math.floor((date-now)/86400000)+1;
     },
     isOwner: function(image, user) {
         return (image.user._id + '' == user._id + '');

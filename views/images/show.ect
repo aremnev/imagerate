@@ -51,7 +51,7 @@
             	<a href="/images/<%- @req.image._id %>/raw" target="_blank">
             	        <% end %>
             	<img class="show-image img-polaroid big wait" ref="/images/<%- @req.image._id %>/raw" title="<%= @req.image.title %>"
-            	     src="<%- @h.imageUrl(@req.image.image, {width: 952, height: 600, crop: 'limit'}) %>" />
+            	     src="<%- @h.imageUrl(@req.image.image, {width: 952, height: 580, crop: 'limit'}) %>" />
             	        <% if @req.isAdmin(): %>
             	</a>
             	        <% end %>
@@ -59,18 +59,10 @@
             	    <% include 'includes/rating.ect', { rating: @req.image.getRating(), thumbnail: false, isPast: @h.isPastDate(@req.image.contest.contest.dueDate), t: @t } %>
             	<% end %>
            <% if @req.image.next : %>
-			<div class="arrow-left"> 
-				<span class="arrow">
-				    <a href="/images/<%- @req.image.next._id %>"> < </a>
-				</span> 
-			</div>
+            <a href="/images/<%- @req.image.next._id %>" class="link-arrow-left"> </a>
            <% end %>
            <% if @req.image.prev : %>
-			<div class="arrow-right"> 
-				<span class="arrow">
-					<a href="/images/<%- @req.image.prev._id %>"> > </a>
-				</span> 
-			</div>
+            <a href="/images/<%- @req.image.prev._id %>" class="link-arrow-right"></a>	
            <% end %>
 				
 		</div>
@@ -82,7 +74,8 @@
 
             <form class="comment-form" action="/images/<%- @req.image.id %>/comment">
                 <% include 'includes/userpic.ect', {user: @req.user, h: @h} %>
-                <input pattern="^(?=\s*\S).*$" name="comment" type="text" maxlength="255" placeholder="<%= @t('Add comment') %>..." /> <input type="submit" class="btn" value="<%= @t('Send') %>" />
+                <input pattern="^(?=\s*\S).*$" name="comment" type="text" maxlength="255" placeholder="<%= @t('Add comment') %>..." /> 
+                <input type="submit" class="btn" value="<%= @t('Send') %>" />
             </form>
             <% end %>
             <% include 'comments/comments.ect', {comments: @req.image.comments, h: @h, req: @req } %>
