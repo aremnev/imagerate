@@ -72,6 +72,13 @@ a {
   &:hover {
     background: #fff;
   }
+
+  &.link-profile {
+    &.active:hover {
+      color: #fff;
+      background: none;
+    }
+  }
 }
 
 .brand.logo {
@@ -559,35 +566,36 @@ article {
   }
 }
 
-.link-arrow-left, .link-arrow-right {
+.link-arrow {
+  .border-radius(50%);
   position: absolute;
   top: 40%;
-  width: 48px;
-  height: 48px;
-  background:url('/img/arrows.png');  
+  width: 2em;
+  height: 2em;
+  line-height: 1.8;
+  font-size: 2em;
+  color: white;
+  text-align: center;
+  background: @navbar-bg;
+
   cursor: pointer;
+  opacity: 0.4;
+
+  &:hover {
+    opacity: 1;
+  }
   
   -webkit-transition: opacity .5s ease;
   -moz-transition: opacity .5s ease;
   transition: opacity .5s ease;
-}
-.link-arrow-right {
-  right: -48px;
-  background-position:48px 0px;
-  opacity:0.4;
-  &:hover {
-    opacity:1;
+
+  &.next {
+    right: -2.5em;
   }
-  
-}
-.link-arrow-left {
-  left: -48px;
-  background-position:0px 0px;
-  opacity:0.4;
-  &:hover {
-    opacity:1;
+
+  &.prev {
+    left: -2.5em;
   }
-  
 }
 
  .rating-container {
@@ -618,17 +626,17 @@ article {
       cursor: pointer;
       font-size: 25px;
     }
-	
-	.homepage & {
-	  display: none;
-	}
-	.my-images & {
-	  display: none;
-	}
-	.image-large & {
-	  position: absolute;
-	  bottom: 0;
-	}
+
+    .home-page & {
+      display: none;
+    }
+    .my-images & {
+      display: none;
+    }
+    .image-large & {
+      position: absolute;
+      bottom: 0;
+    }
 }
 
 
@@ -770,10 +778,6 @@ article {
   .profile-image {
     float: none;
   }
-  
-  .link-arrow-right {
-    right: -58px;
-  }
 }
 
 @media (max-width: 1200px) and (min-width: 768px) {
@@ -877,13 +881,14 @@ article {
   .wrap-photo {
     margin:0;
     
-    .link-arrow-left {
-      top: 100%;
-      left: 0;
-    }
-    .link-arrow-right {
-      top: 100%;
-      right: 0;
+    .link-arrow {
+      top: 102%;
+      &.prev {
+        left: 0;
+      }
+      &.next {
+        right: 0;
+      }
     }
   }
   

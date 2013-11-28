@@ -1,91 +1,72 @@
 <!-- list.ect -->
 <% if not @flagRate and not @req.xhr : %>
-    <% extend 'layouts/layout.ect' %>
+  <!-- Not xhr, include layout -->
+  <% extend 'layouts/layout.ect' %>
 
-
-    <% block 'aside-top' : %>
-        <h2><%= @title || 'Photos' %></h2>
-    <% end %>
-
-
-    <% block 'aside-bottom' : %>
-    <% end %>
+  <% block 'aside-top' : %>
+    <h2><%= @title || 'Photos' %></h2>
+  <% end %>
 <% end %>
 
 <ul class="thumbnails">
-    <% for image, i in @images: %>
-    
-    <script type="text/javascript">
-        function getImageTitle(){
-            return {
-                title : '<%= image.title %>'
-            };
-    }
-    </script>
-    
-        <% if not @hideAnon or (@user and @h.isOwner(image, @user) or (@h.isPastDate(image.contest.contest.dueDate) or image.contest.contest.showAuthor ) ) : %>
-            <li class="item">
-                <div class="thumbnail <% if image.getRating() and @winners: %>winner-<%- (i + 1) + ((@page - 1) * 15) %> <%end %>"
-                    ng-controller="RatingController"
-                    ng-init="initRating({ id: '<%= image.id %>',
-                        <% if @h.isPastDate(image.contest.contest.dueDate): %>
-                            value: <%- image.getRating() %>,
+  <% for image, i in @images: %>
+    <% if not @hideAnon or @h.isOwner(image, @user) or @h.dateCondition(image.contest.contest.showAuthor, image.contest.contest.dueDate): %>
+      <li class="item">
+        <div class="thumbnail <% if image.getRating() and @winners: %>winner-<%- (i + 1) + ((@page - 1) * 15) %> <%end %>"
+             ng-controller="RatingController"
+             ng-init="initRating({ id: '<%= image.id %>'
+                            <% if @h.authCondition(@h.isPastDate(image.contest.contest.dueDate), true, 'admin'): %>
+                                ,
+                                value: <%- image.getRating() %>,
+                                count: <%- image.contest.evaluationsCount %>,
+                                byUser: <%- image.ratingByUser || 0 %>
                             <% end %>
-                            count: <%- image.contest.evaluationsCount %>,
-                            byUser: <%- image.ratingByUser || 0 %> });"
+                              });"
+             ng-mouseleave="rating.state = rating.defaultState" >
 
-                        ng-mouseleave="rating.state = rating.defaultState" >
+          <a class="image-to-rate fixed-rating image-link" href="/images/<%- image.id %>">
+            <% if @h.dateCondition(@remove and @user and image.user._id + '' == @user._id + '', image.contest.contest.dueDate, true): %>
+              <span data-confirm="Are you sure?" data-ok="<%- @url || '' %>" href="/images/<%- image.id %>" class="remove ajax-delete">×</span>
+            <% end %>
+            <img class="wait" src="<%- @h.imageUrl(image.image, {width: 600, height: 360, crop: 'fill', gravity: 'faces'}) %>" alt="<%= image.title %>" title="<%= image.title %>"/>
+          </a>
+          <% if @h.dateCondition(image.contest.contest.showAuthor, image.contest.contest.dueDate): %>
+            <span class="image-author">
+              <% include 'includes/userpic.ect', {user: image.user, h: @h} %>
+              <span class="name"><%= image.user.name %></span>
+            </span>
+          <% end %>
+          <div class="image-caption caption">
+            <% if @h.authCondition(@h.dateCondition(@winners, image.contest.contest.dueDate), true, 'admin'): %>
+              <span class="stats">
+                <span ng-bind="reloadPage(); '<%= @t('Rating') %>: ' + rating.value"></span>
+                <span><%= @t('Rank') %>: <%- (i + 1) + ((@page - 1) * 15) %></span>
+              </span>
+            <% end %>
 
-                    <a class="image-to-rate fixed-rating image-link" href="/images/<%- image.id %>">
-                        <% if not @h.isPastDate(image.contest.contest.dueDate) and @remove and @user and (image.user._id + '' == @user._id + ''): %>
-                            <span data-confirm="Are you sure?" data-ok="<%- @url || '' %>" href="/images/<%- image.id %>" class="remove ajax-delete">×</span>
-                        <% end %>
-                        <img class="wait" src="<%- @h.imageUrl(image.image, {width: 600, height: 360, crop: 'fill', gravity: 'faces'}) %>" alt="<%= image.title %>" title="<%= image.title %>"/>
-                    </a>
-                    <% if image.contest.contest.showAuthor or @h.isPastDate(image.contest.contest.dueDate) : %>
-                        <span class="image-author">
-                            <% include 'includes/userpic.ect', {user: image.user, h: @h} %>
-                            <span class="name"><%= image.user.name %></span>
-                        </span>
-                    <% end %>
-                    <div class="image-caption caption">
-                        <% if @isAdmin or @h.isPastDate(image.contest.contest.dueDate) and @winners: %>
-                            <span class="stats">
-                                <span><%= @t('Rating') %>: <%- image.getRating() %></span>
-                                <span><%= @t('Rank') %>: <%- (i + 1) + ((@page - 1) * 15) %></span>
-                            </span>
-                        <% end %>
-                        
-
-                            <span class="title"><%= image.title %></span>
-                            <% if @remove and @user and (image.user._id + '' == @user._id + ''): %>
-                                <a href="" class="edit-title__link" title="<%= @t('Edit') %>">
-                                    <span class="add-on"><i class="icon-pencil"></i></span>
-                                </a>
-                                <form action="/images/<%- image.id %>" method="post" class="edit-title"> 
-                                    <input type="text" name="edit-title" class="edit-title__input" value="<%= image.title %>">
-                                    <input type="submit" class="edit-title__submit btn btn-success" value="Save">
-                                </form>
-                            <% end %>
-
-                        
-                    </div>
-                    <% if @req.isAuthenticated() and @user and image.user._id + '' != @user._id + '': %>
-                        <% include 'includes/rating.ect', { rating: image.getRating(), thumbnail: false, isPast: @h.isPastDate(image.contest.contest.dueDate), t: @t} %>
-                    <% end %>
-
-                    <% if image.comments.length && !@hideComments && image.contest.contest.showComments : %>
-                        <% include 'comments/comments.ect', {comments: image.comments, h: @h, req: image, size: 28 } %>
-                    <% end %>
-                </div>
-            </li>
-        <% else : %>
-
-
-        <% end %>
+            <span class="title"><%= image.title %></span>
+            <% if @remove and @user and (image.user._id + '' == @user._id + ''): %>
+              <a href="" class="edit-title__link" title="<%= @t('Edit') %>">
+                <span class="add-on"><i class="icon-pencil"></i></span>
+              </a>
+              <form action="/images/<%- image.id %>" method="post" class="edit-title">
+                <input type="text" name="edit-title" class="edit-title__input" value="<%= image.title %>">
+                <input type="submit" class="edit-title__submit btn btn-success" value="Save">
+              </form>
+            <% end %>
+          </div>
+          <% if @h.authCondition(@user and image.user._id + '' != @user._id + ''): %>
+            <% include 'includes/rating.ect', { rating: image.getRating(), thumbnail: false, isPast: @h.isPastDate(image.contest.contest.dueDate), t: @t} %>
+          <% end %>
+          <% if image.comments.length && @h.dateCondition(!@hideComments && image.contest.contest.showComments, image.contest.contest.dueDate): %>
+            <% include 'comments/comments.ect', {comments: image.comments, h: @h, req: image, size: 28 } %>
+          <% end %>
+        </div>
+      </li>
     <% end %>
+  <% end %>
 </ul>
 <% if @pages : %>
-    <% include 'includes/pagination.ect', {pages: @pages, page: @page || 1, url: @url || ''} %>
+  <% include 'includes/pagination.ect', {pages: @pages, page: @page || 1, url: @url || ''} %>
 <% end %>
 

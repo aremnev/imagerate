@@ -4,7 +4,11 @@
     <div class="well span7">
     <% if @message and @message.length: %>
     <div class="alert alert-error">
-        <%- @f(@t(@message), [@contest.title]) %>
+        <% if @contest: %>
+          <%- @f(@t(@message), [@contest.title]) %>
+        <% else: %>
+          <%- @f(@t(@message)) %>
+        <% end %>
     </div>
     <% end %>
     <fieldset>

@@ -1,5 +1,10 @@
 $(document).ready(function() {
     $('#startDate, #dueDate').datepicker();
+
+    $('.contests-list').each( function() {
+        if ($(this).children().length == 0)
+            $(this).prev('h2').hide();
+    });
 });
 
 

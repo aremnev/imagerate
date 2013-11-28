@@ -1,83 +1,80 @@
 <!-- show.ect -->
 <% extend 'layouts/layout.ect' %>
+<% block 'body-class' : %>show-page<% end %>
 
+<!-- Adds controller to container tag !-->
+<% block 'container-attrs' : %>
+  ng-controller="RatingController"
+  ng-init="initRating({ id: '<%= @req.image.id %>'
+  <% if @h.authCondition(@h.isPastDate(@req.image.contest.contest.dueDate), true, 'admin'): %>
+    ,
+    value: <%- @req.image.getRating() %>,
+    count: <%- @req.image.contest.evaluationsCount %>,
+    byUser: <%- @ratingByUser || 0 %>
+  <% end %>
+  });"
+<% end %>
 
 <% block 'aside-top' : %>
-    <h2><%- @req.image.title %></h2>
-    <% if @req.isAdmin or @req.image.contest.contest.showAuthor or @h.isPastDate(@req.image.contest.contest.dueDate) : %>
-        <p><i><%= @t('Author') %>:</i> <a href="/users/<%- @req.image.user.id %>"><%= @req.image.user.name %></a></p>
-    <% end %>
-    <p><i><%= @t('Contest') %>:</i> <a href="/contests/<%- @req.image.contest.contest.link %>"><%= @req.image.contest.contest.title %> (<%- @h.formatDate(@req.image.contest.contest.dueDate) %>)</a> </p>
-    <% if @req.isAdmin() or @h.isPastDate(@req.image.contest.contest.dueDate): %>
-        <p><i><%= @t('Rating') %>:</i>
-            <span ng-switch on="rating.value">
-                <span ng-switch-when="0"><%= @t('Nobody rated this image') %></span>
-                <span ng-switch-default>{{rating.value}}</span>
-            </span>
-        </p>
-    <% end %>
-    <p><i><%= @t('Uploaded') %>:</i>  <%- @h.formatDate(@req.image.createdAt) %></p>
-
+  <h2><%- @req.image.title %></h2>
+  <% if @h.authCondition(@h.dateCondition(@req.image.contest.contest.showAuthor, @req.image.contest.contest.dueDate), true, 'admin'): %>
+    <p><i><%= @t('Author') %>:</i> <a href="/users/<%- @req.image.user.id %>"><%= @req.image.user.name %></a></p>
+  <% end %>
+  <p><i><%= @t('Contest') %>:</i> <a href="/contests/<%- @req.image.contest.contest.link %>"><%= @req.image.contest.contest.title %> (<%- @h.formatDate(@req.image.contest.contest.dueDate) %>)</a> </p>
+  <% if @h.authCondition(@h.isPastDate(@req.image.contest.contest.dueDate), true, 'admin'): %>
+    <p>
+      <i><%= @t('Rating') %>:</i>
+      <span ng-switch on="rating.value">
+        <span ng-switch-when="0"><%= @t('Nobody rated this image') %></span>
+        <span ng-switch-default>{{rating.value}}</span>
+      </span>
+    </p>
+  <% end %>
+  <p><i><%= @t('Uploaded') %>:</i>  <%- @h.formatDate(@req.image.createdAt) %></p>
 <% end %>
 
 
 <% block 'aside-bottom' : %>
-    <% if (@req.isAdmin() or @h.isPastDate(@req.image.contest.contest.dueDate)) and !@req.image.contest.contest.exhibition : %>
-        <h3 ng-init='likes = <%- JSON.stringify(@likes) %>;' ng-show="likes.length">Who rated it</h3>
-        <ul class="likes-for-image">
-            <li class="like" ng-repeat="like in likes">
-                <span class="userpic"><img ng-src="{{like.user.image}}" alt="{{like.user.name}}" height="32" width="32"/></span>
-                <div class="like-tooltip">
-                    {{like.user.name}}
-                    <span class="rating" ng-init='stars = "★".repeat(like.rating);'>{{stars}}</span>
-                </div>
-            </li>
-        </ul>
-    <% end %>
-<% end %>
-        
-    <div class="image-large image-to-rate" ng-controller="RatingController"
-        ng-init="initRating({ id: '<%= @req.image.id %>',
-                <% if @h.isPastDate(@req.image.contest.contest.dueDate): %>
-                value: <%- @req.image.getRating() %>,
-                <% end %>
-                count: <%- @req.image.contest.evaluationsCount %>,
-                byUser: <%- @ratingByUser || 0 %> });"
-        <% if @req.isAuthenticated() : %>
-             ng-mouseleave="rating.state = rating.defaultState"
-        <% end %> >
-       <div class="wrap-photo">
-		<% if @req.isAdmin(): %>
-            	<a href="/images/<%- @req.image._id %>/raw" target="_blank">
-            	        <% end %>
-            	<img class="show-image img-polaroid big wait" ref="/images/<%- @req.image._id %>/raw" title="<%= @req.image.title %>"
-            	     src="<%- @h.imageUrl(@req.image.image, {width: 952, height: 580, crop: 'limit'}) %>" />
-            	        <% if @req.isAdmin(): %>
-            	</a>
-            	        <% end %>
-            	<% if @req.isAuthenticated() and @req.image.user._id + '' != @req.user._id + '' : %>
-            	    <% include 'includes/rating.ect', { rating: @req.image.getRating(), thumbnail: false, isPast: @h.isPastDate(@req.image.contest.contest.dueDate), t: @t } %>
-            	<% end %>
-           <% if @req.image.next : %>
-            <a href="/images/<%- @req.image.next._id %>" class="link-arrow-left"> </a>
-           <% end %>
-           <% if @req.image.prev : %>
-            <a href="/images/<%- @req.image.prev._id %>" class="link-arrow-right"></a>	
-           <% end %>
-				
-		</div>
-    </div>
-
-    <div class="comments-block">
-        <div class="ajax-add">
-            <% if @req.isAuthenticated() : %>
-
-            <form class="comment-form" action="/images/<%- @req.image.id %>/comment">
-                <% include 'includes/userpic.ect', {user: @req.user, h: @h} %>
-                <input pattern="^(?=\s*\S).*$" name="comment" type="text" maxlength="255" placeholder="<%= @t('Add comment') %>..." /> 
-                <input type="submit" class="btn" value="<%= @t('Send') %>" />
-            </form>
-            <% end %>
-            <% include 'comments/comments.ect', {comments: @req.image.comments, h: @h, req: @req } %>
+  <% if (@req.isAdmin() or @h.isPastDate(@req.image.contest.contest.dueDate)) and !@req.image.contest.contest.exhibition : %>
+    <h3 ng-init='likes = <%- JSON.stringify(@likes) %>;' ng-show="likes.length">Who rated it</h3>
+    <ul class="likes-for-image">
+      <li class="like" ng-repeat="like in likes">
+        <span class="userpic"><img ng-src="{{like.user.image}}" alt="{{like.user.name}}" height="32" width="32"/></span>
+        <div class="like-tooltip">
+          {{like.user.name}}
         </div>
-    </div>
+      </li>
+    </ul>
+  <% end %>
+<% end %>
+
+<div class="image-large image-to-rate" <% if @req.isAuthenticated() : %>ng-mouseleave="rating.state = rating.defaultState"<% end %> >
+  <div class="wrap-photo">
+    <% if @req.isAdmin(): %><a href="/images/<%- @req.image._id %>/raw" target="_blank"><% end %>
+      <img class="show-image img-polaroid big wait" ref="/images/<%- @req.image._id %>/raw" title="<%= @req.image.title %>"
+           src="<%- @h.imageUrl(@req.image.image, {width: 952, height: 580, crop: 'limit'}) %>" />
+    <% if @req.isAdmin(): %></a><% end %>
+    <% if @req.isAuthenticated() and @req.image.user._id + '' != @req.user._id + '' : %>
+      <% include 'includes/rating.ect', { rating: @req.image.getRating(), thumbnail: false, isPast: @h.isPastDate(@req.image.contest.contest.dueDate), t: @t } %>
+    <% end %>
+    <% if @req.image.next : %>
+      <a href="/images/<%- @req.image.next._id %>" class="link-arrow next">&#10095;</a>
+    <% end %>
+    <% if @req.image.prev : %>
+      <a href="/images/<%- @req.image.prev._id %>" class="link-arrow prev">&#10094;</a>
+    <% end %>
+  </div>
+</div>
+
+<div class="comments-block">
+  <div class="ajax-add">
+    <% if @req.isAuthenticated() : %>
+      <form class="comment-form" action="/images/<%- @req.image.id %>/comment">
+        <% include 'includes/userpic.ect', {user: @req.user, h: @h} %>
+        <input pattern="^(?=\s*\S).*$" name="comment" type="text" maxlength="255" placeholder="<%= @t('Add comment') %>..." />
+        <input type="submit" class="btn" value="<%= @t('Send') %>" />
+      </form>
+    <% end %>
+    <% include 'comments/comments.ect', {comments: @req.image.comments, h: @h, req: @req } %>
+  </div>
+</div>
