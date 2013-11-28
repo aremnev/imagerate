@@ -21,7 +21,7 @@
 
     <% content 'scripts' %>
 </head>
-<body <% if @req.isAuthenticated() : %>class="logged-in waiting"<% end %>>
+<body class="<% if @req.isAuthenticated() : %>logged-in waiting<% end %> <% content 'body-class' %>">
     <div class="wrapper">
         <% include 'includes/navbar.ect' %>
         <article>

@@ -1,29 +1,54 @@
-/******************************************************************/
 $(function() {
-    var left = {
-        imgFront	: -450,
-        imgBack		: -350,
-        h3			: -300,
-        p			: -275,
-        a			: -200
+    var doc_w = window.innerWidth;
+    if ( doc_w>750 && doc_w<1008 ) {
+        var left = {
+            imgFront	: -350,
+            imgBack		: -300,
+            h3			: -270,
+            p			: -260,
+            a			: -200
+        }
+        var current = {
+            imgFront	: 30,
+            imgBack		: 200,
+            h3			: 465,
+            p			: 465,
+            a			: 560
+        }
+        var right = {
+            imgFront	: 745,
+            imgBack		: 745,
+            h3			: 745,
+            p			: 745,
+            a			: 745
+        }
     }
-    var current = {
-        imgFront	: 30,
-        imgBack		: 300,
-        h3			: 675,
-        p			: 675,
-        a			: 700
-    }
-    var right = {
-        imgFront	: 990,
-        imgBack		: 990,
-        h3			: 990,
-        p			: 990,
-        a			: 990
+    else {
+        var left = {
+            imgFront	: -450,
+            imgBack		: -350,
+            h3			: -300,
+            p			: -275,
+            a			: -200
+        }
+        var current = {
+            imgFront	: 30,
+            imgBack		: 300,
+            h3			: 675,
+            p			: 675,
+            a			: 700
+        }
+        var right = {
+            imgFront	: 990,
+            imgBack		: 990,
+            h3			: 990,
+            p			: 990,
+            a			: 990
+        }
     }
 
     var isScrolling = false;
-
+    if (!$('#carousel').length) return;
     $('#carousel').carouFredSel({
         scroll	: {
             duration		: 0,

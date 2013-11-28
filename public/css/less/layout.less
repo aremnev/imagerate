@@ -72,6 +72,13 @@ a {
   &:hover {
     background: #fff;
   }
+
+  &.link-profile {
+    &.active:hover {
+      color: #fff;
+      background: none;
+    }
+  }
 }
 
 .brand.logo {
@@ -619,17 +626,17 @@ article {
       cursor: pointer;
       font-size: 25px;
     }
-	
-	.homepage & {
-	  display: none;
-	}
-	.my-images & {
-	  display: none;
-	}
-	.image-large & {
-	  position: absolute;
-	  bottom: 0;
-	}
+
+    .home-page & {
+      display: none;
+    }
+    .my-images & {
+      display: none;
+    }
+    .image-large & {
+      position: absolute;
+      bottom: 0;
+    }
 }
 
 

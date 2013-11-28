@@ -1,5 +1,7 @@
 <!-- show.ect -->
 <% extend 'layouts/layout.ect' %>
+<% block 'body-class' : %>show-page<% end %>
+
 <!-- Adds controller to container tag !-->
 <% block 'container-attrs' : %>
   ng-controller="RatingController"
