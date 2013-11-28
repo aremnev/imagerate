@@ -47,4 +47,12 @@ function RatingController($scope, $http) {
             }
         });
     };
+
+    $scope.reloadPage = function() {
+        if($scope.rating.state == 'thanks-for-vote') {
+            setTimeout(function(){
+                location.reload();
+            }, 500);
+        }
+    }
 }

@@ -56,10 +56,10 @@
       <% include 'includes/rating.ect', { rating: @req.image.getRating(), thumbnail: false, isPast: @h.isPastDate(@req.image.contest.contest.dueDate), t: @t } %>
     <% end %>
     <% if @req.image.next : %>
-      <a href="/images/<%- @req.image.next._id %>" class="link-arrow-left"> </a>
+      <a href="/images/<%- @req.image.next._id %>" class="link-arrow next">&#10095;</a>
     <% end %>
     <% if @req.image.prev : %>
-      <a href="/images/<%- @req.image.prev._id %>" class="link-arrow-right"></a>
+      <a href="/images/<%- @req.image.prev._id %>" class="link-arrow prev">&#10094;</a>
     <% end %>
   </div>
 </div>
