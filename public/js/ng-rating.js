@@ -10,6 +10,7 @@ function RatingController($scope, $http) {
     $scope.likes = [];
 
     $scope.initRating = function(rating) {
+        console.log(rating)
         this.rating.id = rating.id;
         if (rating.value) {
             this.rating.value = rating.value;
