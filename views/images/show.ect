@@ -4,15 +4,14 @@
 
 <% block 'aside-top' : %>
     <h2><%- @req.image.title %></h2>
-    <% if @req.isAdmin or @req.image.contest.contest.showAuthor or @h.isPastDate(@req.image.contest.contest.dueDate) : %>
+    <% if @h.authCondition(@h.dateCondition(@req.image.contest.contest.showAuthor, @req.image.contest.contest.dueDate), true, 'admin'): %>
         <p><i><%= @t('Author') %>:</i> <a href="/users/<%- @req.image.user.id %>"><%= @req.image.user.name %></a></p>
     <% end %>
     <p><i><%= @t('Contest') %>:</i> <a href="/contests/<%- @req.image.contest.contest.link %>"><%= @req.image.contest.contest.title %> (<%- @h.formatDate(@req.image.contest.contest.dueDate) %>)</a> </p>
-    <% if @req.isAdmin() or @h.isPastDate(@req.image.contest.contest.dueDate): %>
+    <% if @h.authCondition(@h.isPastDate(@req.image.contest.contest.dueDate), true, 'admin'): %>
         <p><i><%= @t('Rating') %>:</i>
-            <span ng-switch on="rating.value">
-                <span ng-switch-when="0"><%= @t('Nobody rated this image') %></span>
-                <span ng-switch-default>{{rating.value}}</span>
+            <span>
+              <span><%= @req.image.getRating() || @t('Nobody rated this image') %></span>
             </span>
         </p>
     <% end %>

@@ -14,7 +14,7 @@ const CONFIG = {
             api_key: '451142758477939',
             api_secret: 'mz_x6GCybvpFlpFRF5phG4VN8fU'
         },
-        admin: { regexp: '.*' }
+        admin: { regexp: 'dmnorc' }
     },
 
     test: {
@@ -85,12 +85,13 @@ const CONFIG = {
         },
         admin: {
             emails: [
-                'dsedelnikov@thumbtack.net',
+                //'dsedelnikov@thumbtack.net',
                 'aremnev@thumbtack.net',
                 'epashkevich@thumbtack.net',
                 'aIvanov@thumbtack.net'
             ]
-        }
+        },
+        allowedDomains: ['thumbtack.net', 'aldigit.com', undefined]
     }
 }
 

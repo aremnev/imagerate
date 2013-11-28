@@ -29,7 +29,6 @@ function RatingController($scope, $http) {
 
     $scope.rateIt = function(rateValue) {
         var url = ['/images', this.rating.id, 'rate', rateValue].join('/');
-		console.log(url);
         $http.post(url).success(function(data) {
             $scope.rating.value = data.rating; 
             $scope.rating.count = data.count; 

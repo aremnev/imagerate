@@ -42,8 +42,8 @@ module.exports = function (passport, config, app) {
     },
     function(accessToken, refreshToken, profile, done) {
         var profile = profile._json;
-        if(['thumbtack.net', 'aldigit.com'].indexOf(profile.hd) === -1) {
-            return done(null, false, { message: 'Only Thumbtack and Al Digit users are allowed.' });
+        if(config.allowedDomains.indexOf(profile.hd) === -1) {
+            return done(null, false, { message: 'Users of this domain are not allowed' });
         }
         User.findOne({$or:[
             { 'google.id': profile.id },

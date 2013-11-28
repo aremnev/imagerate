@@ -32,7 +32,7 @@ module.exports = function (cfg) {
                 }
                 return ifOr ? condition || auth : auth && condition;
             }
-        }
+        }(req);
         res.locals.t = req.gettext;
         res.locals.f = req.format;
         res.locals.h.isActive = function(req) {
