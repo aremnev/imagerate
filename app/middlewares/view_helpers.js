@@ -12,7 +12,27 @@ module.exports = function (cfg) {
 
         if (!res.locals.h) res.locals.h = helpers;
         res.locals.h._ = _;
+        //Profile link helper
         res.locals.h.profileLink = profileLink;
+        //Date condition helper, becomes true if date in the past
+        res.locals.h.dateCondition = function (condition, date, isOp) {
+            return condition || (!isOp && helpers.isPastDate(date));
+        };
+        //Condition for user permissions.
+        res.locals.h.authCondition = function(req) {
+            return function(condition, ifOr, type) {
+                var auth;
+                switch(type) {
+                    case 'admin':
+                        auth = req.isAdmin();
+                        break;
+                    default:
+                        auth = req.isAuthenticated();
+
+                }
+                return ifOr ? condition || auth : auth && condition;
+            }
+        }
         res.locals.t = req.gettext;
         res.locals.f = req.format;
         res.locals.h.isActive = function(req) {

@@ -234,6 +234,7 @@ ImageSchema.statics = {
 
         this.find(criteria)
             .populate('user', 'name google')
+            .populate('contest.contest', 'title dueDate')
             .populate('comments.user')
             .sort(sort)
             .limit(options.perPage)

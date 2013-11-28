@@ -2,36 +2,6 @@ String.prototype.repeat = function(num) {
     return new Array(num + 1).join(this);
 }
 
-window.Thumbnails = {
-    options: {
-        columns: 3
-    }, 
-    init: function(){
-        var self = this;
-
-        $('.thumbnails').masonry({
-            itemSelector : '.item',
-            columnWidth:  function(containerWidth) {
-                return containerWidth / self.options.columns;
-            },
-            isResizable: true,
-            isAnimated: true
-        });
-
-        self.setColumns();
-    },
-    reload: function(){
-        $('.thumbnails').masonry('reload');
-    },
-    setColumns: function() {
-        this.options.columns = $(window).width() > 1200 ? 3 : $( window ).width() > 900 ? 2 : $( window ).width() > 767 ? 1 : $( window ).width() > 320 ? 2 : 1 ;
-        this.reload();
-    }
-}
-$(window).on('load', function(){
-	Thumbnails.init();
-});
-
 $(document).ready(function () {
     if (/*@cc_on!@*/false && document.documentMode === 10) {
         $('.modal.fade').removeClass('fade');
@@ -53,10 +23,6 @@ $(document).ready(function () {
                 });
             }
         });
-
-    $(window).on('resize', function(){
-        Thumbnails.setColumns();
-    });
 
     (function(){
         var form = $('.ajax-add').find('form'),
@@ -88,7 +54,6 @@ $(document).ready(function () {
                 loaded++;
                 if(loaded == wait.length) {
                     $('.waiting').removeClass('waiting');
-
                     Thumbnails.reload();
                 }
             }).each(function() {
@@ -107,11 +72,10 @@ $(document).ready(function () {
 	});
 	
 	$(document).on('click', '.see-all',function(e) {
-		e.preventDefault();
+        e.preventDefault();
         var cur = $(this);
         if (cur.hasClass('hide-link')) {
             $(cur.siblings('li:gt(2)')).hide();
-			//$(document).scrollTop(cur.closest('.item').offset().top); //if you want to go back
             cur.text(cur.data('show')).removeClass('hide-link');
         }
         else {
@@ -212,7 +176,7 @@ $(document).ready(function () {
     }
 
 	var isScrolling = false;
-
+    if (!$('#carousel').length) return;
 	$('#carousel').carouFredSel({
 		scroll	: {
 			duration		: 0,

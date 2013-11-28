@@ -12,7 +12,7 @@
     "test": "make test"
   },
   "dependencies": {
-    "express": "latest",
+    "express": "3.4.5",
     "less-middleware": "latest",
     "express-validator": "latest",
     "ect": "latest",
