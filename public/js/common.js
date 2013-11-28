@@ -49,7 +49,7 @@ $(document).ready(function () {
                     url: url
                 }).done(function(msg) {
                    if(ok) window.location.href = ok;
-                   else window.location.href = window.location.href;
+                   else window.location.reload();
                 });
             }
         });
@@ -210,9 +210,9 @@ $(document).ready(function () {
             a			: 990
         }
     }
-	
+
 	var isScrolling = false;
- 
+
 	$('#carousel').carouFredSel({
 		scroll	: {
 			duration		: 0,
@@ -226,33 +226,33 @@ $(document).ready(function () {
 			},
 			onBefore	: function( data ) {
 				isScrolling = true;
- 
+
 				$(this).delay(900);
- 
+
 				data.items.old.find('img.img-front')
 					.delay(400)
 					.animate({
 						left: right.imgFront
 					});
- 
+
 				data.items.old.find('img.img-back')
 					.delay(300)
 					.animate({
 						left: right.imgBack
 					});
- 
+
 				data.items.old.find('h3')
 					.delay(200)
 					.animate({
 						left: right.h3
 					});
- 
+
 				data.items.old.find('p')
 					.delay(100)
 					.animate({
 						left: right.p
 					});
- 
+
 				data.items.old.find('a')
 					.animate({
 						left: right.a
@@ -263,27 +263,27 @@ $(document).ready(function () {
 					.css({
 						left: current.imgFront
 					});
- 
+
 				data.items.old.find('img.img-back')
 					.css({
 						left: current.imgBack
 					});
- 
+
 				data.items.old.find('h3')
 					.animate({
 						left: current.h3
 					});
- 
+
 				data.items.old.find('p')
 					.css({
 						left: current.p
 					});
- 
+
 				data.items.old.find('a')
 					.css({
 						left: current.a
 					});
- 
+
 				data.items.visible.find('img.img-front')
 					.css({
 						left: left.imgFront
@@ -293,7 +293,7 @@ $(document).ready(function () {
 					}, function() {
 						isScrolling = false;
 					});
- 
+
 				data.items.visible.find('img.img-back')
 					.css({
 						left: left.imgBack
@@ -301,7 +301,7 @@ $(document).ready(function () {
 					.animate({
 						left: current.imgBack
 					});
- 
+
 				data.items.visible.find('h3')
 					.css({
 						left: left.h3
@@ -309,7 +309,7 @@ $(document).ready(function () {
 					.animate({
 						left: current.h3
 					});
- 
+
 				data.items.visible.find('p')
 					.css({
 						left: left.p
@@ -317,7 +317,7 @@ $(document).ready(function () {
 					.animate({
 						left: current.p
 					});
- 
+
 				data.items.visible.find('a')
 					.css({
 						left: left.a
@@ -334,32 +334,32 @@ $(document).ready(function () {
 			},
 			onBefore	: function( data ) {
 				isScrolling = true;
- 
+
 				$(this).delay(900);	//	delay the onafter
- 
+
 				data.items.old.find('img.img-front')
 					.animate({
 						left: left.imgFront
 					});
- 
+
 				data.items.old.find('img.img-back')
 					.delay(100)
 					.animate({
 						left: left.imgBack
 					});
- 
+
 				data.items.old.find('h3')
 					.delay(200)
 					.animate({
 						left: left.h3
 					});
- 
+
 				data.items.old.find('p')
 					.delay(300)
 					.animate({
 						left: left.p
 					});
- 
+
 				data.items.old.find('a')
 					.delay(400)
 					.animate({
@@ -371,27 +371,27 @@ $(document).ready(function () {
 					.css({
 						left: current.imgFront
 					});
- 
+
 				data.items.old.find('img.img-back')
 					.css({
 						left: current.imgBack
 					});
- 
+
 				data.items.old.find('h3')
 					.animate({
 						left: current.h3
 					});
- 
+
 				data.items.old.find('p')
 					.css({
 						left: current.p
 					});
- 
+
 				data.items.old.find('a')
 					.css({
 						left: current.a
 					});
- 
+
 				data.items.visible.find('img.img-front')
 					.css({
 						left: right.imgFront
@@ -399,7 +399,7 @@ $(document).ready(function () {
 					.animate({
 						left: current.imgFront
 					});
- 
+
 				data.items.visible.find('img.img-back')
 					.css({
 						left: right.imgBack
@@ -407,7 +407,7 @@ $(document).ready(function () {
 					.animate({
 						left: current.imgBack
 					});
- 
+
 				data.items.visible.find('h3')
 					.css({
 						left: right.h3
@@ -415,7 +415,7 @@ $(document).ready(function () {
 					.animate({
 						left: current.h3
 					});
- 
+
 				data.items.visible.find('p')
 					.css({
 						left: right.p
@@ -423,7 +423,7 @@ $(document).ready(function () {
 					.animate({
 						left: current.p
 					});
- 
+
 				data.items.visible.find('a')
 					.css({
 						left: right.a

@@ -41,7 +41,10 @@ exports.index = function (req, res) {
                 }));
             },
             contests: function(cb) {
-                Contest.actualList(function(err, contests) {
+                var date = new Date();
+                date.setMonth(date.getMonth()-1);
+
+                Contest.list({criteria: {dueDate: {'$gt' : Date.now()}}}, function(err, contests) {
                     if(err){
                         cb(err);
                     }
