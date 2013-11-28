@@ -53,6 +53,12 @@ module.exports = function (app, passport, auth, config) {
     app.post('/contests/:contestId/images', auth.requiresLogin, validate.createImage, images.create);
     app.param('contestId', contests.contest);
 
+    //groups routes
+    var groups = require('../controllers/groups');
+    app.get('/groups', auth.adminAccess, groups.list);
+    app.post('/groups', auth.adminAccess, groups.addGroup);
+    app.delete('/groups/:groupId', auth.adminAccess, groups.removeGroup);
+
 
     // home route
     var root = require('../controllers/root');

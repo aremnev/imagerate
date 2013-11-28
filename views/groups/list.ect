@@ -1,0 +1,45 @@
+<!-- list.ect -->
+<% extend 'layouts/home.ect' %>
+
+<script type="text/javascript" src="js/ng-groups.js"></script>
+<script type="text/javascript">
+    function getGroups(){
+        return <%- @groups %>;
+    }
+</script>
+
+
+<h2><%= @title  %></h2>
+
+<div ng-controller="GroupsCtrl">
+    <button class="bth span2 " ng-click="addGroup()"><i class="icon-plus"></i>Add new group</button>
+
+    <div class="groups-wrapper span6 row-fluid" >
+
+        <!-- group repeat block -->
+        <div class="group span4 container" ng-repeat="group in groups">
+            <div class="row-fluid" ng-click="group.maskShow = !group.maskShow">
+                <div class="group_title offset1 span10" >{{group.title}}</div>
+                <span class="span1"><i class="icon-chevron-down"></i></span>
+            </div>
+            <!-- masks repeat block -->
+            <div class="masks" ng-show="group.maskShow">
+                <div class="mask row-fluid" ng-repeat="mask in group.mailMasks">
+                    <div class="input-append offset1">
+                        <input type="email" disabled class="input-xlarge" value="{{mask}}">
+                        <button class="btn btn-danger" ng-click="removeMask(group, mask)"><i class="icon-remove"></i></button>
+                    </div>
+                </div>
+                <form class="form-horizontal new_mask_form row-fluid">
+                    <fieldset class="offset1 span10">
+                        <legend></legend>
+                        <input type="email" placeholder="*@example.com" ng-model="group.new_mask">
+                        <button class="btn btn-info" ng-click="addMask(group)"><i class="icon-plus"></i></button>
+                    </fieldset>
+                </form>
+            </div><!-- end mask repeat block -->
+            <button ng-show="group.maskShow" class="btn btn-danger" ng-click="removeGroup(group)">Remove this group</button>
+        </div><!-- end group repeat block -->
+
+    </div>
+</div>
