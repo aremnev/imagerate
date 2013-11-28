@@ -10,12 +10,12 @@ function RatingController($scope, $http) {
     $scope.likes = [];
 
     $scope.initRating = function(rating) {
-        console.log(rating)
         this.rating.id = rating.id;
         if (rating.value) {
             this.rating.value = rating.value;
             this.rating.count = rating.count;
         }
+        this.rating.byUser = rating.byUser || 0;
         if (rating.byUser) {
             this.rating.stars = $scope.renderStars(rating.byUser);
             this.rating.state = this.rating.defaultState = 'rated';
@@ -32,13 +32,17 @@ function RatingController($scope, $http) {
         var url = ['/images', this.rating.id, 'rate', rateValue].join('/');
         $http.post(url).success(function(data) {
             $scope.rating.value = data.rating; 
-            $scope.rating.count = data.count; 
-
+            $scope.rating.count = data.count;
+            $scope.rating.byUser = rateValue;
             $scope.rating.stars = $scope.renderStars(rateValue);
             $scope.rating.state = 'thanks-for-vote';
             $scope.rating.defaultState = 'rated';
 
             if (data.newLike) {
+                for (key in $scope.likes) {
+                    $scope.likes[key]._id == data.newLike._id;
+                    return;
+                }
                 $scope.likes.unshift(data.newLike);
             }
         });

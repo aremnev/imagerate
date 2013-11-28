@@ -135,18 +135,24 @@ ImageSchema.methods = {
      */
     saveNewRateValue: function(rateValue, user, callback) {
         var contest = this.contest;
-        var count = contest.evaluationsCount;
 
-        var newRating = (contest.ratingSum || 0) + rateValue;
-
-        contest.ratingSum = newRating;
-        contest.evaluationsCount = count + 1;
-
-        this.contest.evaluations.push({
-            user: user._id,
-            rating: rateValue
+        var evaluation = _.find(this.contest.evaluations, function(evaluation) {
+            var user_id = user._id || evaluation.user;
+            return user_id + '' === user._id + '';
         });
 
+        if (evaluation) {
+            var newRating = contest.ratingSum - evaluation.rating + rateValue;
+            evaluation.rating = rateValue;
+        } else {
+            var newRating = (contest.ratingSum || 0) + rateValue;
+            contest.evaluationsCount++;
+            this.contest.evaluations.push({
+                user: user._id,
+                rating: rateValue
+            });
+        }
+        contest.ratingSum = newRating;
         this.save(callback);
     },
 

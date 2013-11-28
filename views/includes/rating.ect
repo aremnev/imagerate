@@ -24,7 +24,16 @@
                 <% end %>
             </span>
             <span ng-switch-when="thanks-for-vote" class="rating-message"><%= @t('Thank you for your vote!') %></span>
-            <span ng-switch-when="rated" class="star">{{rating.stars}}</span>
+            <span ng-switch-when="rated">
+              <% for i in [1..5] : %>
+                  <span class="star"
+                        ng-click="rateIt(<%- i %>);"
+                        ng-mouseenter="starHover = <%- i %>;"
+                        ng-mouseleave="starHover = rating.byUser"
+                        ng-init="starHover = rating.byUser"
+                        ng-bind="(starHover >= <%- i %>) &&  '★' || '☆';"></span>
+              <% end %>
+            </span>
         </div>
     <% end %>
 </div>
