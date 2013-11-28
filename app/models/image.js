@@ -137,7 +137,7 @@ ImageSchema.methods = {
         var contest = this.contest;
 
         var evaluation = _.find(this.contest.evaluations, function(evaluation) {
-            var user_id = user._id || evaluation.user;
+            var user_id = evaluation.user;
             return user_id + '' === user._id + '';
         });
 
