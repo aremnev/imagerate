@@ -23,7 +23,7 @@ module.exports = function (app, passport, auth, config) {
     var images = require('../controllers/images');
     app.get('/images/recent', images.recentList);
     //app.get('/images/rated', images.ratedList);
-    app.get('/images/viewed', auth.restrictedAccess, images.viewedList);
+    app.get('/images/viewed', images.viewedList);
     app.get('/images/:imageId', auth.restrictedAccess, images.show);
     app.del('/images/:imageId',  auth.requiresLogin, auth.image.hasAuthorization, images.remove);
     app.get('/images/:imageId/raw', auth.adminAccess, images.raw);

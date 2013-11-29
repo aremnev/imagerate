@@ -8,23 +8,24 @@
     <link href="/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
     <link href="/css/datepicker.min.css" rel="stylesheet" type="text/css"/>
     <link href="/css/style.css" rel="stylesheet" type="text/css"/>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <!-- <script src="/js/libs/jquery.min.js" type="text/javascript"></script> -->
     <script src="/js/libs/bootstrap.min.js" type="text/javascript"></script>
     <script src="/js/libs/jquery.roundabout.min.js" type="text/javascript"></script>
     <script src="/js/libs/jquery.masonry.min.js" type="text/javascript"></script>
 <!----><script src="/js/libs/jquery.jscroll.js" type="text/javascript"></script>
-<!----><script src="/js/libs/jquery.carouFredSel-6.2.1-packed.js" type="text/javascript"></script>
+    <script src="/js/libs/jquery.carouFredSel-6.2.1-packed.js" type="text/javascript"></script>
     <script src="/js/common.js" type="text/javascript"></script>
+    <script src="/js/thumbnails.js" type="text/javascript"></script>
     
     <link rel="shortcut icon" href="/img/favicon.png">
 
     <% content 'scripts' %>
 </head>
-<body <% if @req.isAuthenticated() : %>class="logged-in waiting"<% end %>>
+<body <% if @req.isAuthenticated() : %>class="logged-in waiting"<% end %> >
     <div class="wrapper">
         <% include 'includes/navbar.ect' %>
-		<!-- if all of photos are private, include "Login", else include <article>...</article> -->
+        <!-- if all of photos are private, include "Login", else include <article>...</article> -->
         <article>
             <div class="container">
                     <div class="span12 pull-center homepage">

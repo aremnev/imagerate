@@ -26,7 +26,7 @@ module.exports = function(cfg) {
             function(callback){
                 var options = {perPage: 5};
                 Contest.list(options, function(err, contests){
-                    res.locals.extra = res.locals.extra || {}
+                    res.locals.extra = res.locals.extra || {};
                     res.locals.extra.contests = contests;
                     callback();
                 });

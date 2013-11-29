@@ -163,8 +163,8 @@ ImageSchema.methods = {
     getCdnId: function() {
         return  this.image.data.public_id + '.' + this.image.data.format;
     },
-	
-	getData: function() {
+
+    getData: function() {
         return  this.image.data.public_id;
     },
 
@@ -234,7 +234,6 @@ ImageSchema.statics = {
 
         this.find(criteria)
             .populate('user', 'name google')
-            .populate('contest.contest')
             .populate('comments.user')
             .sort(sort)
             .limit(options.perPage)
@@ -263,13 +262,13 @@ ImageSchema.statics = {
             .sort({'createdAt': -1})
             .exec(cb)
     },
-	
-	getByContest : function(contest, callback) {
-		this.find()
+
+    getByContest : function(contest, callback) {
+        this.find()
             .where('contest.contest').equals(contest)
-			.limit(2)
+            .limit(2)
             .exec(callback)
-	}
+    }
 
 }
 

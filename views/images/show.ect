@@ -5,6 +5,7 @@
     <script src="/js/libs/jquery.lightbox.js" type="text/javascript"></script>
 <% end %>
 
+
 <% block 'aside-top' : %>
     <h2><%- @req.image.title %></h2>
     <% if @req.isAdmin or @req.image.contest.contest.showAuthor or @h.isPastDate(@req.image.contest.contest.dueDate) : %>

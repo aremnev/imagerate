@@ -24,8 +24,9 @@ exports.image = function(req, res, next, id){
         }
         req.image = image;
         next();
-    })
-}
+
+    });
+};
 
 exports.raw = function(req, res){
     var type = mime.lookup(req.image.image.cdnUri);
@@ -34,7 +35,7 @@ exports.raw = function(req, res){
     x.on('response', function (response) {
         response.headers['content-type'] = type;
     });
-}
+};
 
 /**
  * Image page
@@ -101,7 +102,7 @@ exports.show = function (req, res) {
             locals.image.next = next;
         }));
     }
-}
+};
 
 /**
  * Create an image
@@ -111,7 +112,7 @@ exports.create = function (req, res) {
         contest: {contest: req.contest},
         title: req.body.title,
         private: req.body.private || req.contest.private
-    })
+    });
     image.user = req.user;
     res.set('Content-Type', 'text/plain');
     if (req.body.url) {
@@ -151,7 +152,7 @@ exports.create = function (req, res) {
             res.send(savedImage._id);
         })
     }
-}
+};
 
 /**
  * Remove image
@@ -168,7 +169,7 @@ exports.remove = function (req, res) {
     image.remove(function(err){
         res.send({ image: { _id: req.image._id, deleted: true }});
     })
-}
+};
 
 exports.editTitle = function (req, res) {
     var image = req.image; 
@@ -181,21 +182,20 @@ exports.editTitle = function (req, res) {
 }
 
 function imageList(req, res, type, usePagination) {
-	if (usePagination) {
-		var page = parseInt(req.param('page') > 0 ? req.param('page') : 1),
-			perPage = 15;
-		var soptions = {
-			perPage: perPage,
-			page: page - 1
-		};
-	}
-	else {
-		var perPage = 15, page = 0;
-		var soptions = {
-			perPage: perPage
-		};
-	}
-    var criteria = {'private': {$ne : true}};
+    var perPage = 15,
+        page = 1,
+        soptions = {perPage: perPage},
+        criteria = {'private': {$ne : true}};
+
+    if (usePagination) {
+        page = parseInt(req.param('page') > 0 ? req.param('page') : 1);
+        perPage = 15;
+        soptions = {
+            perPage: perPage,
+            page: page - 1
+        };
+    }
+
     if(req.user){
        delete criteria.private;
     }
@@ -240,7 +240,7 @@ function imageList(req, res, type, usePagination) {
 
 exports.ratedList = function (req, res) {
     imageList(req, res, 'rated', true);
-}
+};
 
 /**
  * Most recent image list
@@ -248,7 +248,8 @@ exports.ratedList = function (req, res) {
 
 exports.recentList = function (req, res) {
     imageList(req, res, 'recent', true);
-}
+};
+
 
 /**
  * Most viewed image list
@@ -256,4 +257,4 @@ exports.recentList = function (req, res) {
 
 exports.viewedList = function (req, res) {
     imageList(req, res, 'viewed', false);
-}
+};

@@ -18,45 +18,66 @@ exports.index = function (req, res) {
         criteria: {
             private : {$ne : true}
         }
-    }
+    };
     if(req.user){
         delete options.criteria.private
     }
-    var locals = { title: 'Main Page'}
+    var locals = { title: 'Main Page' };
 
-    async.parallel([
-            function(cb){
+    async.auto({
+            recent_images: function(cb) {
                 Image.list(options, safe(cb, function(images) {
-                    locals.recent_images = images;
+                    cb(null, images);
                 }));
             },
-            function(cb){
+            viewed_images: function(cb) {
                 Image.list(_.extend(options, {perPage: 6, sort: {'viewsCount': -1}}),  safe(cb, function(images) {
-                    locals.viewed_images = images;
+                    cb(null, images);
                 }));
             },
-			function(cb){
-                Contest.actualList(safe(cb, function(contests) {
-					locals.contests = contests;
-                    locals.contests.map(function(contest){
-                        Image.getByContest(contest, safe(cb, function(images){
-                            contest.firstImage = images[0];
-							contest.secondImage = images[1];
-                        }, true));
-                    });
-				}));
-            },
-			function(cb){
+            images: function(cb) {
                 Image.list({}, safe(cb, function(images) {
-                    locals.images = images;
+                    cb(null, images);
                 }));
             },
-        ],
-        function(err) {
+            contests: function(cb) {
+                Contest.actualList(function(err, contests) {
+                    if(err){
+                        cb(err);
+                    }
+                    cb(null, contests);
+                });
+            },
+            contests_images: ['contests', function(cb, result) {
+                var contests = result.contests;
+                if (contests && contests.length) {
+                    var opts = {
+                        query: { 'contest.contest': { $in: contests} },
+                        map: function() {
+                            emit(this.contest.contest, this);
+                        },
+                        reduce: function(key, values) {
+                            return { images: values.slice(0, 2) };
+                        }
+                    };
+                    Image.mapReduce(opts, function(err, results) {
+                        _.each(results, function(result){
+                            var contest = _.findWhere(contests, {'id': result._id + ''});
+                            contest.images = result.value.images ? result.value.images : [result.value];
+                        });
+                        cb();
+                    });
+                } else {
+                    cb();
+                }
+            }]
+        },
+        function(err, results) {
+            locals = _.defaults(locals, results);
             if (err) {
                 return req.render('500');
             }
             res.render('root/index.ect', locals);
         }
     );
-}
+};
