@@ -9,16 +9,16 @@
       <% if !@h.isPastDate(contest.dueDate) and (!contest.private or @req.isAuthenticated()): %>
         <div>
           <% if contest.images and contest.images.length: %>
-            <img class="img-front" src="<%= @h.imageUrl(contest.images[0].image, {width: 400, height: 300, crop: 'fill', gravity: 'faces'}) %>" <% if contest.images.length == 1: %>style="margin-left: 100px;"<% end %> />
+              <img onclick="location.href='/images/<%- contest.images[0]._id %>'" class="img-front" src="<%= @h.imageUrl(contest.images[0].image, {width: 400, height: 300, crop: 'fill', gravity: 'faces'}) %>" <% if contest.images.length == 1: %>style="margin-left: 100px;"<% end %> />
             <% for image in contest.images.slice(1, contest.images.length): %>
-              <img class="img-back" src="<%= @h.imageUrl(image.image, {width: 300, height: 250, crop: 'fill', gravity: 'faces'}) %>" />
+              <img onclick="location.href='/images/<%- contest.images[0]._id %>'" class="img-back" src="<%= @h.imageUrl(image.image, {width: 300, height: 250, crop: 'fill', gravity: 'faces'}) %>" />
             <% end %>
           <% else: %>
-            <img class="img-front" src="http://lorempixel.com/400/300/abstract/4/no%20images/" style="margin-left: 100px;"/>
+            <img class="img-front inactive" src="http://lorempixel.com/400/300/abstract/4/no%20images/" style="margin-left: 100px;"/>
           <% end %>
           <h3><%= contest.title %></h3>
           <p><%= contest.description %></p>
-          <a href="/contests/<%- contest.link %>" >Show</a>
+          <a href="/contests/<%- contest.link %>" ><%= @t('Show') %></a>
         </div>
       <% end %>
     <% end %>
