@@ -11,8 +11,6 @@ var mongoose = require('mongoose'),
  */
 exports.list = function(req, res){
     Group.find({}, function(err, groups){
-        groups.push({title : 'Admins', mailMasks : ['*', '*@thumbtack.net']});
-        groups.push({title : 'Thumbtack', mailMasks : ['*', '*@thumbtack.net']});
         var locals = {
             title: 'User groups',
             groups: JSON.stringify(groups)
@@ -29,11 +27,13 @@ exports.list = function(req, res){
  */
 exports.addGroup = function(req, res){
     if(req.xhr){
-        var group = new Group();
-        group.title = req.title;
-        group.save(function(err){
-            if (err) res.status(500).render('500.ect');
-            res.json(200, group);
+        var group = new Group({title: req.body.title});
+        group.save(function(err, group){
+            if (err) {
+                res.status(500).end({error: err.code});
+                console.log(err);
+            }
+            res.json(group);
         });
     }else{
         res.status(404).render('404.ect');
@@ -47,7 +47,8 @@ exports.addGroup = function(req, res){
  */
 exports.removeGroup = function(req, res){
     if(req.xhr){
-        Group.findAndRemove({_id : req.group.id}, function(err){
+        var id = req.param('groupId');
+        Group.findByIdAndRemove(id, function(err){
             if(err) res.status(500).render('500.ect');
             res.status(200).json({'removed': true});
         });
