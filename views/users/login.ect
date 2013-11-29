@@ -1,0 +1,18 @@
+<!-- login.ect -->
+<% extend 'layouts/layout.ect' %>
+<div class="row">
+    <div class="well span7">
+    <% if @message and @message.length: %>
+    <div class="alert alert-error">
+        <%- @f(@t(@message), [@contest.title]) %>
+    </div>
+    <% end %>
+    <fieldset>
+        <legend><%= @t('Sign-in') %></legend>
+        <a href="/auth/google" class="google pull-center">
+            <img src="/img/google.png" alt="google" />
+            <span><%= @t('Sign in with google account') %></span>
+        </a>
+    </fieldset>
+    </div>
+</div>

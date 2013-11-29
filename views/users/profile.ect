@@ -1,0 +1,47 @@
+<!-- profile.ect -->
+<% extend 'layouts/layout.ect' %>
+
+
+<% block 'scripts' : %>
+    <script src="/js/profile.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/js/rating.js"></script>
+<% end %>
+
+<% block 'aside-top' : %>
+    <span class="profile-image userpic">
+        <img src="<%- @h.profileLink(@req.profile) %>" width="110" height="110" />
+    </span>
+    <div class="profile-info">
+        <h3><%= @req.profile.name %></h3>
+        <ul class="photos">
+        <li><i>Contests:</i> <%- @contests.length %></li>
+        <li><i>Images uploaded:</i> <%- @imagesCount %></li>
+        <li><i>Images rated:</i> <%- @ratedImagesCount %></li>
+    </ul>
+    </div>
+<% end %>
+
+<h2><%= @t('My Images') %></h2>
+<form action="<%- @req._parsedUrl.pathname %>" class="well well-small form-search">
+    <label>Sort photos  &nbsp;</label>
+	<select name="contest">
+        <option value="">All contests</option>
+        <% for contest in @contests: %>
+            <option <% if @req.param('contest') == contest._id + '': %>selected="selected"<% end %> value="<%- contest._id %>"><%= contest.title %></option>
+        <% end %>
+    </select>
+    <button type="submit" class="btn">Show</button>
+</form>
+
+
+<div class="my-images">
+	<% if @images.length > 0 : %>
+	<% include 'images/list.ect', {images: @images, pages: @pages, page: @page, url: @req._parsedUrl.pathname, h: @h, remove: true, user: @req.user, hideAnon: true, req: @req, flagRate: true, t: @t } %>
+	<% else : %>
+	<h3><%= @t('You have not uploaded any photo...') %></h3>
+	<% end %>
+</div>
+
+
+
+

@@ -1,0 +1,43 @@
+{
+  "name": "imagerate",
+  "description": "Imagerate",
+  "version": "0.0.2",
+  "private": false,
+  "engines": {
+    "node": "0.10",
+    "npm": "1.2"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "test": "make test"
+  },
+  "dependencies": {
+    "express": "latest",
+    "less-middleware": "latest",
+    "express-validator": "latest",
+    "ect": "latest",
+    "mongoose": "latest",
+    "connect-mongo": "latest",
+    "connect-flash": "latest",
+    "passport": "latest",
+    "passport-local": "latest",
+    "passport-google-oauth": "latest",
+    "underscore": "latest",
+    "gzippo": "latest",
+    "async": "latest",
+    "forms": "latest",
+    "cloudinary": "latest",
+    "express-params": "latest",
+    "moment": "latest",
+    "winston": "latest",
+    "knox": "latest",
+    "request": "latest",
+    "i18n-abide": "0.0.14"
+  },
+  "devDependencies": {
+    "mocha": "latest",
+    "should": "latest",
+    "supertest": "latest",
+    "jscoverage": "latest"
+  }
+}

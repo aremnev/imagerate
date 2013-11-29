@@ -1,0 +1,16 @@
+<!-- index.ect -->
+<% extend 'layouts/layout.ect' %>
+<div class="row">
+    <div class="span6 well">
+        <form class="login form-horizontal" action="/users" method="post">
+            <h2>Signup</h2>
+            <p class="error"><%= @message %></p>
+            <% include 'includes/form/element.ect', {id: 'email', value: @user.email, type: 'email', label: 'Email'} %>
+            <% include 'includes/form/element.ect', {id: 'password', type: 'password', label: 'Password'} %>
+            <% include 'includes/form/element.ect', {id: 'name', value: @user.name, label: 'Full name'} %>
+            <div class="form-actions">
+                <button class="btn btn-primary btn-large" type="submit">Sign in</button>&nbsp;&nbsp;or  <a href="/auth/google"><img width="60" src="/img/google.png" alt="google" /></a>
+            </div>
+        </form>
+    </div>
+</div>

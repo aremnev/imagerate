@@ -1,0 +1,46 @@
+<!-- Modal -->
+<div id="uploadModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="uploadModalLabel"><%= @t('Upload image') %></h3>
+    </div>
+    <form class="form-upload" action="/contests/<%- @contest._id %>/images" method="post" enctype="multipart/form-data">
+        <div class="modal-body">
+            <div class="hidden alert alert-error"></div>
+            <div class="inputs row-fluid">
+                <input type="text" id="image_title" name="title" placeholder="Add title..." required class="span11" />
+            </div>
+            <div class="inputs type">
+                <label class="radio inline"><input type="radio" data-ref="type-upload" name="type" checked="checked" /> <%= @t('Upload') %></label>
+                <label class="radio inline"><input type="radio" data-ref="type-url" name="type" /> <%= @t('Add Url') %></label>
+            </div>
+
+            <div class="clearfix"></div>
+            <div id="type-upload" class="inputs type-ref">
+                <div class="image-upload">
+                    <span class="btn">
+                        <%= @t('Add file') %>...
+                        <input type="file" id="image" name="image" maxlength="1">
+                    </span>
+                    <span class="text"></span>
+                </div>
+            </div>
+            <div id="type-url" class="inputs type-ref hidden row-fluid">
+                <input type="text" id="image_url" name="url" placeholder="<%= @t('Image url') %>..." class="span11" />
+            </div>
+            <div class="inputs <% if @contest.private : %> hidden <% end %>">
+                <label class="checkbox inline"><input type="checkbox"  checked  name="private"><%= @t('Don\'t show for anonymous') %></label>
+            </div>
+            <div class="progress progress-striped active">
+                <div class="bar bar-warning" style="width: 0%;"></div>
+            </div>
+        </div>
+        <div class="inputs form-actions">
+            <button class="btn btn-success" type="submit"><%= @t('Upload') %></button>
+        </div>
+    </form>
+    <script src="/js/libs/jquery.ui.widget.js"></script>
+    <script src="/js/libs/jquery.iframe-transport.js"></script>
+    <script src="/js/libs/jquery.fileupload.js"></script>
+    <script src="/js/upload.js" type="text/javascript"></script>
+</div>

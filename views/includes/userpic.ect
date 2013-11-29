@@ -1,0 +1,3 @@
+<a class="userpic" href="/users/<%- @user._id %>">
+    <img title="<%= @user.name %>" src="<%- @h.profileLink(@user) %>" alt="<%= @user.name %>" width="<%= @size || 40 %>" height="<%= @size || 40 %>" />
+</a>

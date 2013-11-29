@@ -1,0 +1,19 @@
+<div class="comments">
+    <ul class="results unstyled <%  if @comments.length > 3 : %> more-comments<% end %>">
+        
+		<% for comment in @comments : %>
+            <li class="clearfix">
+                <% include 'includes/userpic.ect', {user: comment.user, h: @h, size: 32} %>
+                <span class="title">
+                    <a href="/users/<%- comment.user._id %>"><%= comment.user.name %></a>
+                </span>
+                <span class="time"><i><%= @h.formatTime(comment.createdAt) %></i></span>
+                <p><%= comment.body %></p>
+            </li>
+        <% end %>
+    
+	<a data-show="&nbsp; — See All —" data-hide="&nbsp; — Hide —" class="see-all clearfix" href="#" 
+		<% if @comments.length < 4 : %> style="display:none;" <% end %> >
+		&nbsp; — See All —</a>
+	</ul>
+</div>

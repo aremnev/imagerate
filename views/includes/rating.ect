@@ -1,0 +1,30 @@
+<div  class="rating-container">
+    <% if @rated : %>
+        <% if @rating : %>
+            <div class="rating" ng-init="stars['<%- @id %>'] = renderStars(<%- @rating %>)">
+                <span class="star">{{stars['<%- @id %>']}}</span>
+            </div>
+        <% end %>
+    <% else : %>
+        <div class="rating" ng-switch on="rating.state">
+            <span ng-switch-when="rate-it">
+                <% for i in [1..5] : %>
+                    <span class="star"
+                          ng-click="rateIt(<%- i %>);"
+                          ng-mouseenter="starHover = <%- i %>;"
+                          ng-bind="(starHover >= <%- i %>) &&  '★' || '☆';"></span>
+                <% end %>
+            </span>
+            <span ng-switch-when="not-rated" class="rating-message">
+                <% if @isPast: %>
+                    <%= @t('Contest has finished. You can\'t rate this image.') %>
+                <% else : %>
+                    <%= @t('You haven\'t rated this image yet.') %>
+                    <a href ng-click="rating.state = 'rate-it';"><%= @t('Rate it!') %></a>
+                <% end %>
+            </span>
+            <span ng-switch-when="thanks-for-vote" class="rating-message"><%= @t('Thank you for your vote!') %></span>
+            <span ng-switch-when="rated" class="star">{{rating.stars}}</span>
+        </div>
+    <% end %>
+</div>

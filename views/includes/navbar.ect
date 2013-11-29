@@ -1,0 +1,40 @@
+<div class="navbar">
+    <div class="container">
+        <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="brand logo" href="/">ImageRate</a>
+        <div class="nav-collapse collapse">
+            <ul class="nav">
+                <li class="dropdown">
+                    <a href="/contests/"><%= @t('Contests') %></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= @t('Photos') %><b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/images/recent"><%= @t('Most recent') %></a></li>
+                        <li><a href="/images/viewed"><%= @t('Most viewed') %></a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav pull-right">
+                <% if @req.isAuthenticated() : %>
+                    <li>
+                        <a class="link_profile" href="/users/<%= @req.user.id %>">
+                            <span class="userpic"><img src="<%- @h.profileLink(@req.user) %>" alt="<%= @req.user.name %>" height="40" width="40" /></span>
+                             <%= @req.user.name %></a>
+                    </li>
+                    <li>
+                        <a href="/logout"><%= @t('Logout') %></a>
+                    </li>
+                <% else : %>
+                    <li>
+                        <a href="/auth/google"><img style="height: 40px;" height="40" width="40" src="/img/google.png" alt="google" /> <%= @t('Sign in') %></a>
+                    </li>
+                <% end %>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
