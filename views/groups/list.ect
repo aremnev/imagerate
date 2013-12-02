@@ -43,11 +43,11 @@
                             <button class="btn btn-danger" ng-click="removeMask(group, mask)"><i class="icon-remove"></i></button>
                         </div>
                     </div>
-                    <form class="form-horizontal new_mask_form row-fluid">
+                    <form class="form-horizontal new_mask_form row-fluid" ng-submit="addMask(group, group.new_mask)">
                         <fieldset class="offset1 span10">
                             <legend></legend>
-                            <input type="email" placeholder="*@example.com" ng-model="group.new_mask">
-                            <button class="btn btn-info" ng-click="addMask(group)"><i class="icon-plus"></i></button>
+                            <input type="text" ng-pattern="/.+@.+/" placeholder="*@example.com" ng-model="group.new_mask" required>
+                            <button type="submit" class="btn btn-info" ><i class="icon-plus"></i></button>
                         </fieldset>
                     </form>
                 </div><!-- end mask repeat block -->

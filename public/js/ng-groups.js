@@ -1,5 +1,5 @@
 function GroupsCtrl($scope, $http, $timeout){
-    $scope.groups = typeof getGroups ? getGroups() : [];
+    $scope.groups = typeof getGroups == "function" ? getGroups() : [];
 
     var base_url = '/groups';
 
@@ -12,7 +12,6 @@ function GroupsCtrl($scope, $http, $timeout){
                 showAlert('success', 'New group was added');
             })
             .error(function(data, status){
-                console.log(data);
                 showAlert('error', 'Something wrong. Please try again');
             })
     };
@@ -29,12 +28,30 @@ function GroupsCtrl($scope, $http, $timeout){
             })
     };
 
-    $scope.addMask = function(group, maks){
-
+    $scope.addMask = function(group, mask){
+        if(group && group._id && mask){
+            var url = [base_url, group._id, 'masks'].join('/');
+            $http.post(url, {mask: mask})
+                .success(function(){
+                    group.mailMasks.push(mask);
+                })
+                .error(function(){
+                    showAlert('error', 'Something wrong. Please try again');
+                })
+        }else{
+            showAlert('error', 'Email mask is incorrect');
+        }
     };
 
     $scope.removeMask = function(group, mask){
-
+        var url = [base_url, group._id, 'masks', mask].join('/');
+        $http.delete(url)
+            .success(function(data, status){
+                group.mailMasks = data.group.mailMasks;
+            })
+            .error(function(){
+                showAlert('error', 'Something wrong. Please try again');
+            })
     };
 
     function showAlert(type, text, time){

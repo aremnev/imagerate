@@ -58,6 +58,8 @@ module.exports = function (app, passport, auth, config) {
     app.get('/groups', auth.adminAccess, groups.list);
     app.post('/groups', auth.adminAccess, groups.addGroup);
     app.delete('/groups/:groupId', auth.adminAccess, groups.removeGroup);
+    app.post('/groups/:groupId/masks', auth.adminAccess, groups.addMask); //add mask to group
+    app.delete('/groups/:groupId/masks/:mask', auth.adminAccess, groups.removeMask); //remove mask from group
 
 
     // home route
