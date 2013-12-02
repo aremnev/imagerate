@@ -262,7 +262,7 @@ ImageSchema.statics = {
     /**
      * returns prev image for the same contest
      */
-    prev : function(image, auth, cb){
+    prev : function(image, cb){
         this.findOne()
             .where('contest.contest').equals(image.contest.contest)
             .where('createdAt').lt(image.createdAt)
