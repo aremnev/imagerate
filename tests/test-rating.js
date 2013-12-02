@@ -55,13 +55,15 @@ describe('Rating for images', function() {
         });
 
         it('POST /images/:imageId/rate/:rateValue twice should response with error message', function(done) {
-            var url = ['/images', locals.image._id, 'rate', 4].join('/');
+            var url = ['/images', locals.image._id, 'rate', 3].join('/');
             var req = request(app).post(url);
             req.cookies = loginer.cookies;
             req
-                .expect(403)
+                .expect(200)
                 .end(function(err, res) {
-                    assert.ok(res.body.error);
+                    var data = res.body;
+                    assert.equal(data.id, locals.image._id);
+                    assert.equal(data.rating, 3);
                     done();
                 });
         });
@@ -76,7 +78,7 @@ describe('Rating for images', function() {
                     .end(function(err, res) {
                         var data = res.body;
                         assert.equal(data.id, locals.image._id);
-                        assert.equal(data.rating, 9);
+                        assert.equal(data.rating, 8);
                         assert.equal(data.newLike.user._id, locals.user2._id);
                         done();
                     });

@@ -45,6 +45,7 @@ module.exports = {
 	},
 
     isOwner: function(image, user) {
+        if (!user || !image) return false;
         return (image.user._id + '' == user._id + '');
     },
 

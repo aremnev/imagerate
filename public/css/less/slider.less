@@ -35,17 +35,23 @@
 #carousel div > * {
 	position: absolute;
 }
-#carousel img.img-front {
+#carousel .img-front {
 	left: 30px;
 	top: 30px;
 	z-index: 4;
 	box-shadow: 3px 1px 10px 2px rgba(0,0,0,0.5);
+    cursor: pointer;
+
+    &.inactive {
+      cursor: default;
+    }
 }
-#carousel img.img-back {
+#carousel .img-back {
 	left: 300px;
 	top: 50px;
 	z-index: 3;
 	box-shadow: 3px 1px 10px 2px rgba(0,0,0,0.5);
+    cursor: pointer;
 }
 #carousel h3 {
 	font-size: 25px;
@@ -164,7 +170,7 @@
     left: 465px;
   }
   #carousel p {
-    width: 260px;
+    width: 255px;
     left: 465px;
   }
   #carousel a {

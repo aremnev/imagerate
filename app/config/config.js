@@ -90,7 +90,8 @@ const CONFIG = {
                 'epashkevich@thumbtack.net',
                 'aIvanov@thumbtack.net'
             ]
-        }
+        },
+        allowedDomains: ['thumbtack.net', 'aldigit.com']
     }
 }
 
