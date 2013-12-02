@@ -54,7 +54,7 @@
                 <% if @req.isAdmin(): %>
                     <a href="/images/<%- @req.image._id %>/raw" target="_blank">
                 <% else: %>
-                    <a href="/images/<%- @req.image._id %>/raw" data-lightbox="image" title="<%= @req.image.title %>" >
+                    <a href="<%- @h.imageUrl(@req.image.image, {}) %>" data-lightbox="image" title="<%= @req.image.title %>" >
                 <% end %>
                         <img class="show-image img-polaroid big wait" ref="/images/<%- @req.image._id %>/raw" title="<%= @req.image.title %>"
                             src="<%- @h.imageUrl(@req.image.image, {width: 952, height: 580, crop: 'limit'}) %>" />
