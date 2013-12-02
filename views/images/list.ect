@@ -37,9 +37,9 @@
             </span>
           <% end %>
           <div class="image-caption caption">
-            <% if @h.authCondition(@h.dateCondition(@winners, image.contest.contest.dueDate), true, 'admin'): %>
+            <% if @winners and @h.authCondition(@h.dateCondition(true, image.contest.contest.dueDate), true, 'admin'): %>
               <span class="stats">
-                <span ng-bind="reloadPage(); '<%= @t('Rating') %>: ' + rating.value"></span>
+                <span><%= @t('Rating') %>: {{rating.value}}</span>
                 <span><%= @t('Rank') %>: <%- (i + 1) + ((@page - 1) * 15) %></span>
               </span>
             <% end %>
