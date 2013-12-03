@@ -55,14 +55,18 @@ exports.index = function (req, res) {
                 var contests = result.contests;
                 if (contests && contests.length) {
                     var opts = {
-                        query: { 'contest.contest': { $in: contests} },
+                        query: { 'contest.contest': { $in: contests}, private: {$ne: true} },
                         map: function() {
                             emit(this.contest.contest, this);
                         },
                         reduce: function(key, values) {
                             return { images: values.slice(0, 2) };
                         }
-                    };
+                    };  
+                    if (req.user) {
+                      opts.query = { 'contest.contest': { $in: contests} }
+                    }
+                    
                     Image.mapReduce(opts, function(err, results) {
                         _.each(results, function(result){
                             var contest = _.findWhere(contests, {'id': result._id + ''});

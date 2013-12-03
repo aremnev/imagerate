@@ -3,6 +3,7 @@
  */
 
 var mongoose = require('mongoose'),
+    User = mongoose.model('User'),
     Contest = mongoose.model('Contest'),
     Image = mongoose.model('Image'),
     async = require('async'),
@@ -134,8 +135,6 @@ exports.list = function (req, res) {
             res.render('contests/list.ect', locals);
         }
     );
-
-
 };
 
 exports.detail = function(req, res) {
@@ -148,8 +147,12 @@ exports.detail = function(req, res) {
     var imageOptions = {
         perPage: 15,
         page: page - 1,
-        criteria: {'contest.contest': contest._id}
+        criteria: {'contest.contest': contest._id, 'private': {$ne : true}}
     };
+    
+    if(req.user){
+       imageOptions = {'contest.contest': contest._id};
+    }
 
     if(helpers.isPastDate(contest.dueDate)) {
         imageOptions.sort = {'contest.ratingSum': -1}
