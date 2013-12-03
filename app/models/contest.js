@@ -26,7 +26,8 @@ var ContestSchema = new Schema({
     showComments : {type : Boolean, default : false},
     private : {type : Boolean, default : false},
     exhibition : {type : Boolean, default : false},
-    maxPhotos : {type : Number, default : 3}
+    maxPhotos : {type : Number, default : 3},
+    group : {type: Schema.ObjectId, ref : 'Group'}
 });
 
 ContestSchema.index({alias : 1});

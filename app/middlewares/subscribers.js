@@ -4,7 +4,8 @@
 var mongoose = require('mongoose'),
     Contest = mongoose.model('Contest'),
      _ = require('underscore'),
-    async = require('async');
+    async = require('async'),
+    Group = mongoose.model('Group');
 
 
 module.exports = function(cfg) {
@@ -12,16 +13,26 @@ module.exports = function(cfg) {
     return function(req, res, next) {
         async.series([
             function(callback) {
-                req.isAdmin = function() {
-                    var emails = cfg.admin.emails || [],
-                        regexp = cfg.admin.regexp;
-                    if (!req.isAuthenticated() ||
-                        (emails.indexOf(req.user.email) == -1 && (!regexp || !req.user.email.match(regexp, 'ig')))) {
-                        return false;
-                    }
-                    return true;
-                }
-                callback();
+//                Group.isAdmin(req.user.email, function(group){
+//                    req.isAdmin = function(){
+//                        return !!group;
+//                    };
+//                    callback();
+//                });
+                Group.list({isAdmins: true}, function(err, groups){
+                    req.isAdmin = function() {
+                        var isAdmin = false;
+                        if (req.isAuthenticated()) {
+                            for(var i in groups){
+                                if(groups[i].checkEmail(req.user.email)){
+                                    isAdmin = true;
+                                }
+                            }
+                        }
+                        return isAdmin;
+                    };
+                    callback();
+                });
             },
             function(callback){
                 var options = {perPage: 5};

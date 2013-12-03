@@ -91,7 +91,7 @@ const CONFIG = {
                 'aIvanov@thumbtack.net'
             ]
         },
-        allowedDomains: ['thumbtack.net', 'aldigit.com']
+        allowedDomains: ['thumbtack.net', 'aldigit.com', 'gmail.com']
     }
 }
 

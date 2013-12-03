@@ -43,7 +43,7 @@ module.exports = function (passport, config, app) {
     function(accessToken, refreshToken, profile, done) {
         var profile = profile._json;
         if(config.allowedDomains.indexOf(profile.hd) === -1) {
-            return done(null, false, { message: 'Users of this domain are not allowed' });
+            //return done(null, false, { message: 'Users of this domain are not allowed' });
         }
         User.findOne({$or:[
             { 'google.id': profile.id },

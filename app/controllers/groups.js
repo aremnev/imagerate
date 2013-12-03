@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
  * @param res
  */
 exports.list = function(req, res){
-    Group.find({}, null, {sort : { _id : 1}}, function(err, groups){
+    Group.list({}, function(err, groups){
         var locals = {
             title: 'User groups',
             groups: JSON.stringify(groups)
@@ -48,9 +48,11 @@ exports.addGroup = function(req, res){
 exports.removeGroup = function(req, res){
     if(req.xhr){
         var id = req.param('groupId');
-        Group.findByIdAndRemove(id, function(err){
-            if(err) res.status(500).render('500.ect');
-            res.status(200).json({'removed': true});
+        Group.findOneAndRemove({_id:id, isAdmins: false}, function(err, doc){
+            if(err || !doc){
+                res.json(500, {removed:false});
+            }
+            res.json({'removed': true});
         });
     }else{
         res.status(404).render('404.ect');
@@ -94,14 +96,10 @@ exports.removeMask = function(req, res){
         if(groupId && mask){
             Group.findById(groupId, function(err, group){
                 if(err) res.status(500).render('500.ect');
-                var index = group.mailMasks.indexOf(mask);
-                if(index > -1){
-                    group.mailMasks.splice(index, 1);
-                    group.save(function(err){
-                        if(err) res.status(500).render('500.ect');
-                        res.json({'group': group});
-                    });
-                }
+                group.removeMask(mask, function(err){
+                    if(err) res.status(500).render('500.ect');
+                    res.json({'group': group});
+                });
             });
         }else{
             res.status(500).render('500.ect');

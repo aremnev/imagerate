@@ -17,7 +17,7 @@
         }
     </script>
     <h3><%= @t('Update') %> <a href="/contests/<%- @contest.link %>"><%= @contest.title %></a></h3>
-    <form class="well well-small" action="/contests/<%- @contest._id %>" method="post">
+    <form class="well well-small" action="/contests/<%- @contest.link %>" method="post">
         <div class="controls row-fluid" ng-controller="ContestsCtrl">
 
             <input type="text" pattern="^(?=\s*\S).*$" name="title" ng-model="title" ng-change="createAlias()" ng-init="check()" placeholder="<%= @t('Title') %>" maxlength="60" value="<%= @contest.title %>" class="span12" required/><br>
@@ -54,6 +54,18 @@
 
             <div class="controls">
                 <label class="checkbox"><input type="checkbox" name="exhibition" <% if @contest.exhibition : %> checked <% end %> > <%= @t('Exhibition') %></label>
+            </div>
+
+            <div class="controls">
+                <label>Available for
+                    <select name="group">
+                        <% for group in @groups : %>
+                            <option value="<%- group._id %>"
+                                <% if group.title == @contest.group?.title: %> selected <% end %> ><%= group.title %> <!-- show selected -->
+                            </option>
+                        <% end %>
+                    </select>
+                </label>
             </div>
 
             <div class="form-actions">

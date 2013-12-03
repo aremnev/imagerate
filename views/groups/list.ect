@@ -51,7 +51,7 @@
                         </fieldset>
                     </form>
                 </div><!-- end mask repeat block -->
-                <button ng-show="group.maskShow" class="btn btn-danger" ng-click="removeGroup(group, $index)">Remove this group</button>
+                <button ng-show="group.maskShow && !group.isAdmins" class="btn btn-danger" ng-click="removeGroup(group, $index)">Remove this group</button>
             </div><!-- end group repeat block -->
 
         </div>
