@@ -65,6 +65,11 @@ module.exports = function (app, passport, auth, config) {
     // home route
     var root = require('../controllers/root');
     app.get('/', root.index);
-    
-    
+
+
+    //install route
+    var install = require('../controllers/install');
+    app.get('/install', install.validate, install.settings);
+    app.post('/install', install.validate, install.run);
+
 }
