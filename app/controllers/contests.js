@@ -130,11 +130,10 @@ exports.list = function (req, res) {
                 locals.contests = contests;
             }));
         },
-        function loadImagesForContests(callback) {
-            callback();
-        },
-        function loadUserStats(callback) {
-            callback();
+        function(callback){
+            Group.list({}, safe(callback, function(groups){
+                locals.groups = groups;
+            }));
         }], function(err) {
             if (err) {
                 return req.render('500');

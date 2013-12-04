@@ -33,6 +33,16 @@ module.exports = function (cfg) {
                 return ifOr ? condition || auth : auth && condition;
             }
         }(req);
+        //check user can participate in contest
+        res.locals.h.canParticipate = function(contest, mail){
+            var can = false;
+            mail = mail || req.user.email;
+            contest = contest || req.contest;
+            if(contest.group.checkEmail(mail) || req.isAdmin()){
+                can = true;
+            }
+            return can;
+        };
         res.locals.t = req.gettext;
         res.locals.f = req.format;
         res.locals.h.isActive = function(req) {

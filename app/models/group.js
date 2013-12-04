@@ -54,24 +54,29 @@ GroupSchema.statics = {
     list : function(criteria, cd){
         criteria = criteria || {};
         this.find(criteria, null, {sort : { _id : 1}}, cd);
-    }
+    },
 
-//    findInGroups : function(mail, criteria, cb){
-//        criteria = criteria || {};
-//        this.find(criteria, function(err, groups){
-//            var result = false;
-//            for(var i in groups){
-//                if(groups[i].checkEmail(mail)){
-//                    result = groups[i];
-//                }
-//            }
-//            cb(result);
-//        });
-//    },
-//
-//    isAdmin : function(mail, cb){
-//        this.findInGroups(mail, {isAdmins:true}, cb);
-//    }
+    findInGroups : function(mail, criteria, cb){
+        if(mail){
+            criteria = criteria || {};
+            this.find(criteria, function(err, groups){
+                var result = false;
+                for(var i in groups){
+                    if(groups[i].checkEmail(mail)){
+                        result = groups[i];
+                    }
+                }
+                cb(result);
+            });
+        }else{
+            cb();
+        }
+
+    },
+
+    isAdmin : function(mail, cb){
+        this.findInGroups(mail, {isAdmins:true}, cb);
+    }
 };
 
 

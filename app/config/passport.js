@@ -3,7 +3,8 @@ var mongoose = require('mongoose')
     LocalStrategy = require('passport-local').Strategy,
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
     _ = require('underscore'),
-    User = mongoose.model('User');
+    User = mongoose.model('User'),
+    Group = mongoose.model('Group');
 
 
 module.exports = function (passport, config, app) {
@@ -42,23 +43,26 @@ module.exports = function (passport, config, app) {
     },
     function(accessToken, refreshToken, profile, done) {
         var profile = profile._json;
-        if(config.allowedDomains.indexOf(profile.hd) === -1) {
-            //return done(null, false, { message: 'Users of this domain are not allowed' });
-        }
-        User.findOne({$or:[
-            { 'google.id': profile.id },
-            { 'email': profile.email }]}, function (err, user) {
-            if(!user) user = new User({email: profile.email});
-            if(user.google && _.isEqual(user.google, profile)) {
-                return done(err, user);
+        Group.findInGroups(profile.email,{}, function(group){
+            if(!group){
+                return done(null, false, { message: 'Users of this domain are not allowed' });
+            }else{
+                User.findOne({$or:[
+                    { 'google.id': profile.id },
+                    { 'email': profile.email }]}, function (err, user) {
+                    if(!user) user = new User({email: profile.email});
+                    if(user.google && _.isEqual(user.google, profile)) {
+                        return done(err, user);
+                    }
+                    user.name = profile.name;
+                    user.provider = 'google';
+                    user.google = profile;
+                    user.save(function (err) {
+                        if (err) console.log(err)
+                        return done(err, user);
+                    })
+                });
             }
-            user.name = profile.name;
-            user.provider = 'google';
-            user.google = profile;
-            user.save(function (err) {
-                if (err) console.log(err)
-                return done(err, user);
-            })
         });
     }
     ));

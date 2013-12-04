@@ -7,7 +7,8 @@ var mongoose = require('mongoose'),
     fs = require('fs'),
     User = mongoose.model('User'),
     Contest = mongoose.model('Contest'),
-    Image = mongoose.model('Image');
+    Image = mongoose.model('Image'),
+    Group = mongoose.model('Group');
 
 /**
  * Clear database
@@ -27,7 +28,7 @@ exports.resetDb = function (done) {
     });
     async.waterfall([
         function (cb) {
-            async.map([User, Contest, Image], dropCollection, function(err, res){
+            async.map([User, Contest, Image, Group], dropCollection, function(err, res){
                 cb();
             });
         },

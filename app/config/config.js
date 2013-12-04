@@ -13,8 +13,7 @@ const CONFIG = {
             cloud_name: 'imagerate-local',
             api_key: '451142758477939',
             api_secret: 'mz_x6GCybvpFlpFRF5phG4VN8fU'
-        },
-        admin: { regexp: '.*' }
+        }
     },
 
     test: {
@@ -32,7 +31,6 @@ const CONFIG = {
             api_key: '451142758477939',
             api_secret: 'mz_x6GCybvpFlpFRF5phG4VN8fU'
         },
-        admin: { regexp: '.*' },
         test: true
     },
 
@@ -82,16 +80,7 @@ const CONFIG = {
             scope: 'https://www.google.com/m8/feeds https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
             photoLink: 'https://profiles.google.com/s2/photos/profile/{0}?sz={1}',
             photoPlaceholder : '/img/user_{0}.png'
-        },
-        admin: {
-            emails: [
-                'dsedelnikov@thumbtack.net',
-                'aremnev@thumbtack.net',
-                'epashkevich@thumbtack.net',
-                'aIvanov@thumbtack.net'
-            ]
-        },
-        allowedDomains: ['thumbtack.net', 'aldigit.com', 'gmail.com']
+        }
     }
 }
 

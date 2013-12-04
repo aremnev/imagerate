@@ -33,7 +33,7 @@
 
 <% block 'aside-bottom' : %>
     <div class="contest-actions">
-        <% if @req.isAuthenticated() and @imageAddedCount < @req.contest.maxPhotos and not @h.isPastDate(@req.contest.dueDate): %>
+        <% if @req.isAuthenticated() and @imageAddedCount < @req.contest.maxPhotos and not @h.isPastDate(@req.contest.dueDate) and @h.canParticipate(): %>
             <a href="#uploadModal" role="button" data-toggle="modal" class="btn btn-success"><%= @t('Add image to contest') %></a>
         <% end %>
         <% if @req.isAdmin() : %>

@@ -53,96 +53,86 @@
                     <label class="checkbox"><input type="checkbox" name="exhibition"> <%= @t('Exhibition') %></label>
                 </div>
 
+                <div class="controls">
+                    <label>Available for
+                        <select name="group">
+                            <% for group in @groups : %>
+                            <option value="<%- group._id %>"><%= group.title %></option>
+                            <% end %>
+                        </select>
+                    </label>
+                </div>
+
                 <div class="form-actions">
                     <input type="submit" class="btn" value="<%= @t('Create') %>" />
                 </div>
             </div>
         </form>
-	
-	<% else : %>
-		<script>
-			$('body').addClass('contests-page');
-		</script>
-	<% end %>
+    <% else : %>
+        <script>
+            $('body').addClass('contests-page');
+        </script>
+    <% end %>
 <% end %>
 
 
 <% block 'aside-bottom' : %>
 <% end %>
 
-
-<!-- <h2><%= @t('Contests') %></h2>
-<ul class="row-fluid">
-    <% for contest, i in @contests: %>
-        <li class="span4">
-            <h3>
-                <a href="/contests/<%- contest.link %>"><%= contest.title %></a>
-                <% if @req.isAdmin() : %>
-                    <a href="/contests/<%- contest.link %>/edit" title="<%= @t('Edit') %>">
-                        <span class="add-on"><i class="icon-pencil"></i></span>
-                    </a>
-                <% end %>
-            </h3>
-            <span class="date"><%- @h.formatDate(contest.startDate) %> &ndash; <%- @h.formatDate(contest.dueDate) %> <% if @h.isPastDate(contest.dueDate): %><strong>(finished)</strong><% end %></span>
-        </li>
-    <% end %>
-</ul> -->
-
-
 <h2><%= @t('Current contests') %></h2>
 <ul class="contests-list">
-	<% for contest, i in @contests: %>
-		<% if !contest.exhibition and !@h.isPastDate(contest.dueDate) : %>
-			<li>
-            <h3>
-                <a href="/contests/<%- contest.link %>"><%= contest.title %></a>
-                <% if @req.isAdmin() : %>
-                    <a href="/contests/<%- contest.link %>/edit" title="<%= @t('Edit') %>">
-                        <span class="add-on"><i class="icon-pencil"></i></span>
-                    </a>
-                <% end %>
-            </h3>
-            <span class="date"><%- @h.formatDate(contest.startDate) %> &ndash; <%- @h.formatDate(contest.dueDate) %> <% if @h.isPastDate(contest.dueDate): %><strong>(finished)</strong><% end %></span>
-        </li>
-		<% end %>
-	<% end %>
+    <% for contest, i in @contests: %>
+        <% if !contest.exhibition and !@h.isPastDate(contest.dueDate) : %>
+            <li>
+                <h3>
+                    <a href="/contests/<%- contest.link %>"><%= contest.title %></a>
+                    <% if @req.isAdmin() : %>
+                        <a href="/contests/<%- contest.link %>/edit" title="<%= @t('Edit') %>">
+                            <span class="add-on"><i class="icon-pencil"></i></span>
+                        </a>
+                    <% end %>
+                </h3>
+                <span class="date"><%- @h.formatDate(contest.startDate) %> &ndash; <%- @h.formatDate(contest.dueDate) %> <% if @h.isPastDate(contest.dueDate): %><strong>(finished)</strong><% end %></span>
+            </li>
+        <% end %>
+    <% end %>
 </ul>
 
 <h2 class="contests-list__title"><%= @t('Exhibitions') %></h2>
 <ul class="contests-list">
-	<% for contest, i in @contests: %>
-		<% if contest.exhibition : %>
-			<li>
-            <h3>
-                <a href="/contests/<%- contest.link %>"><%= contest.title %></a>
-                <% if @req.isAdmin() : %>
-                    <a href="/contests/<%- contest.link %>/edit" title="<%= @t('Edit') %>">
-                        <span class="add-on"><i class="icon-pencil"></i></span>
-                    </a>
-                <% end %>
-            </h3>
+    <% for contest, i in @contests: %>
+        <% if contest.exhibition : %>
+            <li>
+                <h3>
+                    <a href="/contests/<%- contest.link %>"><%= contest.title %></a>
+                    <% if @req.isAdmin() : %>
+                        <a href="/contests/<%- contest.link %>/edit" title="<%= @t('Edit') %>">
+                            <span class="add-on"><i class="icon-pencil"></i></span>
+                        </a>
+                    <% end %>
+                </h3>
             <span class="date"><%- @h.formatDate(contest.startDate) %> &ndash; <%- @h.formatDate(contest.dueDate) %> <% if @h.isPastDate(contest.dueDate): %><strong>(finished)</strong><% end %></span>
         </li>
-		<% end %>
-	<% end %>
+        <% end %>
+    <% end %>
 </ul>
 
 <h2 class="contests-list__title"><%= @t('Finished contests') %></h2>
 <ul class="contests-list">
-	<% for contest, i in @contests: %>
-		<% if @h.isPastDate(contest.dueDate) : %>
-			<li>
-            <h3>
-                <a href="/contests/<%- contest.link %>"><%= contest.title %></a>
-                <% if @req.isAdmin() : %>
-                    <a href="/contests/<%- contest.link %>/edit" title="<%= @t('Edit') %>">
-                        <span class="add-on"><i class="icon-pencil"></i></span>
-                    </a>
-                <% end %>
-            </h3>
+    <% for contest, i in @contests: %>
+        <% if @h.isPastDate(contest.dueDate) : %>
+            <li>
+                <h3>
+                    <a href="/contests/<%- contest.link %>"><%= contest.title %></a>
+                    <% if @req.isAdmin() : %>
+                        <a href="/contests/<%- contest.link %>/edit" title="<%= @t('Edit') %>">
+                            <span class="add-on"><i class="icon-pencil"></i></span>
+                        </a>
+                    <% end %>
+                </h3>
             <span class="date"><%- @h.formatDate(contest.startDate) %> &ndash; <%- @h.formatDate(contest.dueDate) %> <% if @h.isPastDate(contest.dueDate): %><strong>(finished)</strong><% end %></span>
         </li>
-		<% end %>
-	<% end %>
+        <% end %>
+    <% end %>
 </ul>
 

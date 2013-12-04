@@ -13,23 +13,10 @@ module.exports = function(cfg) {
     return function(req, res, next) {
         async.series([
             function(callback) {
-//                Group.isAdmin(req.user.email, function(group){
-//                    req.isAdmin = function(){
-//                        return !!group;
-//                    };
-//                    callback();
-//                });
-                Group.list({isAdmins: true}, function(err, groups){
-                    req.isAdmin = function() {
-                        var isAdmin = false;
-                        if (req.isAuthenticated()) {
-                            for(var i in groups){
-                                if(groups[i].checkEmail(req.user.email)){
-                                    isAdmin = true;
-                                }
-                            }
-                        }
-                        return isAdmin;
+                var mail = req.user ? req.user.email : false;
+                Group.isAdmin(mail, function(group){
+                    req.isAdmin = function(){
+                        return !!group;
                     };
                     callback();
                 });
