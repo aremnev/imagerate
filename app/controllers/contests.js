@@ -8,7 +8,8 @@ var mongoose = require('mongoose'),
     Image = mongoose.model('Image'),
     async = require('async'),
     helpers = require('../helpers'),
-    safe = helpers.safe;
+    safe = helpers.safe,
+    Group = mongoose.model('Group');
 
 
 /**
@@ -22,6 +23,7 @@ exports.contest = function(req, res, next, id){
     }else{
         query.where('alias').equals(id);
     }
+    query.populate('group');
     query.exec(function (err, contest) {
         if (!contest) {
             return res.status(404).render('404.ect');
@@ -102,7 +104,12 @@ exports.update = function (req, res) {
  */
 exports.editPage = function(req, res){
     var locals = {contest : req.contest};
-    res.render('contests/edit.ect', locals);
+    Group.list({}, function(err, groups){
+        if(err) res.status(500).render('500.ect');
+        locals.groups = groups;
+        res.render('contests/edit.ect', locals);
+    });
+
 };
 
 /**
@@ -123,11 +130,10 @@ exports.list = function (req, res) {
                 locals.contests = contests;
             }));
         },
-        function loadImagesForContests(callback) {
-            callback();
-        },
-        function loadUserStats(callback) {
-            callback();
+        function(callback){
+            Group.list({}, safe(callback, function(groups){
+                locals.groups = groups;
+            }));
         }], function(err) {
             if (err) {
                 return req.render('500');

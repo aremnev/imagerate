@@ -17,8 +17,9 @@ describe('Contests pages', function () {
             loginer.login(done);
         })
         it('POST: /contests without fields should respond with error message', function (done) {
-            var req = request(app).post('/contests')
-            req.cookies = loginer.cookies
+            var req = request(app).post('/contests');
+            req.cookies = loginer.cookies;
+
             req
                 .expect(401)
                 .end(function (err, res) {

@@ -1,0 +1,59 @@
+<!-- list.ect -->
+<% extend 'layouts/groups.ect' %>
+
+<% block 'angular-scripts' : %>
+<script type="text/javascript" src="js/ng-groups.js"></script>
+<script type="text/javascript">
+    function getGroups(){
+        return <%- @groups %>;
+    }
+</script>
+<% end %>
+
+<h2><%= @title  %></h2>
+
+<div ng-controller="GroupsCtrl" class="container-fluid">
+    <div class="row-fluid">
+        <div class="span2">
+            <div class="new_group_block">
+                <form ng-submit="addGroup(new_group_title)">
+                    <fieldset>
+                        <legend>Add new group</legend>
+                        <input type="text" ng-model="new_group_title" required placeholder="Group title">
+                        <button class="bth"><i class="icon-plus"></i>Add new group</button>
+                    </fieldset>
+                </form>
+                <div class="alert {{alert.type}}" ng-show="alert">
+                    {{alert.message}}
+                </div>
+            </div>
+        </div>
+        <div class="groups-wrapper span10 row-fluid" >
+            <!-- group repeat block -->
+            <div class="group span3 container" ng-repeat="group in groups">
+                <div class="row-fluid" ng-click="group.maskShow = !group.maskShow">
+                    <div class="group_title offset1 span10" >{{group.title}}</div>
+                    <span class="span1"><i class="icon-chevron-down"></i></span>
+                </div>
+                <!-- masks repeat block -->
+                <div class="masks" ng-show="group.maskShow">
+                    <div class="mask row-fluid" ng-repeat="mask in group.mailMasks">
+                        <div class="input-append offset1">
+                            <input type="email" disabled class="input-large" value="{{mask}}">
+                            <button class="btn btn-danger" ng-click="removeMask(group, mask)"><i class="icon-remove"></i></button>
+                        </div>
+                    </div>
+                    <form class="form-horizontal new_mask_form row-fluid" ng-submit="addMask(group, group.new_mask)">
+                        <fieldset class="offset1 span10">
+                            <legend></legend>
+                            <input type="text" ng-pattern="/.+@.+/" placeholder="*@example.com" ng-model="group.new_mask" required>
+                            <button type="submit" class="btn btn-info" ><i class="icon-plus"></i></button>
+                        </fieldset>
+                    </form>
+                </div><!-- end mask repeat block -->
+                <button ng-show="group.maskShow && !group.isAdmins" class="btn btn-danger" ng-click="removeGroup(group, $index)">Remove this group</button>
+            </div><!-- end group repeat block -->
+
+        </div>
+    </div>
+</div>

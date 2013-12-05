@@ -8,9 +8,7 @@
         <a class="brand logo" href="/">ImageRate</a>
         <div class="nav-collapse collapse">
             <ul class="nav">
-                <li class="dropdown">
-                    <a href="/contests/"><%= @t('Contests') %></a>
-                </li>
+                <li><a href="/contests/"><%= @t('Contests') %></a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= @t('Photos') %><b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -18,6 +16,9 @@
                         <li><a href="/images/viewed"><%= @t('Most viewed') %></a></li>
                     </ul>
                 </li>
+                <% if @req.isAdmin() : %>
+                <li><a href="/groups"><%= @t('Groups') %></a></li>
+                <% end %>
             </ul>
             <ul class="nav pull-right">
                 <% if @req.isAuthenticated() : %>

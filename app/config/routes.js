@@ -53,10 +53,23 @@ module.exports = function (app, passport, auth, config) {
     app.post('/contests/:contestId/images', auth.requiresLogin, validate.createImage, images.create);
     app.param('contestId', contests.contest);
 
+    //groups routes
+    var groups = require('../controllers/groups');
+    app.get('/groups', auth.adminAccess, groups.list);
+    app.post('/groups', auth.adminAccess, groups.addGroup);
+    app.delete('/groups/:groupId', auth.adminAccess, groups.removeGroup);
+    app.post('/groups/:groupId/masks', auth.adminAccess, groups.addMask); //add mask to group
+    app.delete('/groups/:groupId/masks/:mask', auth.adminAccess, groups.removeMask); //remove mask from group
+
 
     // home route
     var root = require('../controllers/root');
     app.get('/', root.index);
-    
-    
+
+
+    //install route
+    var install = require('../controllers/install');
+    app.get('/install', install.validate, install.settings);
+    app.post('/install', install.validate, install.run);
+
 }
