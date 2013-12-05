@@ -2,7 +2,7 @@
     <div class="pagination <%- @class %>">
         <ul>
             <% for i in [1..@pages]: %>
-                <li class="<% if i == @page: %>active<% end %>"><a  href="<%- @url %>?page=<%- i %>"><%- i %></a></li>
+                <li class="<% if i == (@page + 1): %>active<% end %>"><a  href="<%- @url %>?page=<%- (i-1) %>"><%- i %></a></li>
             <% end %>
         </ul>
     </div>

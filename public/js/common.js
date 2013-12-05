@@ -48,7 +48,7 @@ $(document).ready(function () {
                 loaded++;
                 if(loaded == wait.length) {
                     $('.waiting').removeClass('waiting');
-                    Thumbnails.init();
+                    Thumbnails.reload();
                 }
             }).each(function() {
                 if(this.complete) $(this).load();

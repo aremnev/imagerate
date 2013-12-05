@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
     cloudinary = require('cloudinary'),
     _ = require('underscore'),
     knox = require('../config/knox'),
+    async = require('async'),
     Schema = mongoose.Schema;
 
 var Image;
@@ -275,6 +276,40 @@ ImageSchema.statics = {
             .where('contest.contest').equals(contest)
             .limit(2)
             .exec(callback)
+    },
+
+    paginableList: function(options, callback) {
+        options = options || {};
+        options.perPage = options.perPage || 15;
+        options.page = options.page || 0;
+
+        var criteria = options.criteria || {};
+
+        var result = {
+            pageInfo: {
+                page: options.page,
+                perPage: options.perPage,
+                count: 0
+            },
+            images: []
+        };
+
+        async.waterfall([
+            function(cb) {
+                Image.count(criteria, cb);
+            },
+            function(count, cb) {
+                if(count) {
+                    Image.list(options, function(err, images) {
+                        result.pageInfo.count = count;
+                        result.images = images;
+                        cb(null, result);
+                    });
+                } else {
+                    cb(null, result);
+                }
+            }
+        ], callback);
     }
 
 }

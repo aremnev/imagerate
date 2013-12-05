@@ -71,24 +71,6 @@
 <% end %>
 
 
-<!-- <h2><%= @t('Contests') %></h2>
-<ul class="row-fluid">
-    <% for contest, i in @contests: %>
-        <li class="span4">
-            <h3>
-                <a href="/contests/<%- contest.link %>"><%= contest.title %></a>
-                <% if @req.isAdmin() : %>
-                    <a href="/contests/<%- contest.link %>/edit" title="<%= @t('Edit') %>">
-                        <span class="add-on"><i class="icon-pencil"></i></span>
-                    </a>
-                <% end %>
-            </h3>
-            <span class="date"><%- @h.formatDate(contest.startDate) %> &ndash; <%- @h.formatDate(contest.dueDate) %> <% if @h.isPastDate(contest.dueDate): %><strong>(finished)</strong><% end %></span>
-        </li>
-    <% end %>
-</ul> -->
-
-
 <h2><%= @t('Current contests') %></h2>
 <ul class="contests-list">
 	<% for contest, i in @contests: %>

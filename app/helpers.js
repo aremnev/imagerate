@@ -53,15 +53,24 @@ module.exports = {
         return (image.user._id + '' == user._id + '');
     },
 
+    paginationOps: function (perPage, page) {
+        return {
+            perPage: perPage || 15,
+            page: parseInt(page && page > 0 ? page : 0)
+        }
+    },
+
     //Async helpers
-    safe: function (callback, func, isExecuteCallback) {
+    safe: function (callback, func, stop) {
         return function(err) {
             if (err) {
                 return callback(err);
             }
             var args = Array.prototype.slice.call(arguments, 1);
-            func.apply(null, args);
-            if (!isExecuteCallback && callback) {
+            if (typeof func == 'function') {
+                func.apply(null, args);
+            }
+            if (callback) {
                 args.unshift(null);
                 callback.apply(this, args);
             }

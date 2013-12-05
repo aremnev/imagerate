@@ -16,7 +16,7 @@
         <h3><%= @req.profile.name %></h3>
         <ul class="photos">
         <li><i>Contests:</i> <%- @contests.length %></li>
-        <li><i>Images uploaded:</i> <%- @imagesCount %></li>
+        <li><i>Images uploaded:</i> <%- @uploadImagesCount %></li>
         <li><i>Images rated:</i> <%- @ratedImagesCount %></li>
     </ul>
     </div>
@@ -36,8 +36,8 @@
 
 
 <div class="my-images">
-    <% if @images.length > 0 : %>
-        <% include 'images/list.ect', {images: @images, pages: @pages, page: @page, url: @req._parsedUrl.pathname, h: @h, remove: true, user: @req.user, hideAnon: true, req: @req, flagRate: true, t: @t } %>
+    <% if @imagesResult and @imagesResult.pageInfo.count > 0 : %>
+        <% include 'images/list.ect', {imagesResult: @imagesResult, url: @req._parsedUrl.pathname, h: @h, remove: true, user: @req.user, hideAnon: true, req: @req, flagRate: true, t: @t } %>
     <% else : %>
         <h3><%= @t('You have not uploaded any photo...') %></h3>
     <% end %>

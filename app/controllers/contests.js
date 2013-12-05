@@ -140,61 +140,54 @@ exports.list = function (req, res) {
 };
 
 exports.detail = function(req, res) {
-    var contest = req.contest;
-    var locals = {title: contest.title, contest: contest};
-    var page = parseInt(req.param('page'));
+    var contest = req.contest,
+        imageOptions = helpers.paginationOps(15, req.param('page'));
 
-    page = locals.page = page > 0 ? page : 1;
-
-    var imageOptions = {
-        perPage: 15,
-        page: page - 1,
-        criteria: {'contest.contest': contest._id}
-    };
+    imageOptions.criteria = {'contest.contest': contest._id};
 
     if(helpers.isPastDate(contest.dueDate)) {
         imageOptions.sort = {'contest.ratingSum': -1}
     }
 
-    async.parallel([
-            loadContestImages,
-            loadRatedCountForCurrentUser,
-            loadImageCountForCurrentUser,
-            function(callback) {
-                async.series([
-                    countImagesInContest,
-                    loadUsersStatsRegardingContest
-                ], callback);
-            }
-        ], function render(err) {
+    async.auto({
+            'imageAddedCount': function(cb) {
+                if (!req.isAuthenticated()) {
+                    return cb(null, 0);
+                }
+
+                var criteria = {
+                    'contest.contest': contest._id,
+                    'user': req.user._id
+                };
+                Image.count(criteria).exec(cb);
+            },
+            'ratedImagesCount': function(cb) {
+                if (!req.isAuthenticated()) {
+                    return cb(null, 0);
+                }
+                var criteria = {
+                    'contest.contest': contest._id,
+                    'contest.evaluations.user': req.user._id
+                };
+                Image.count(criteria).exec(cb);
+            },
+            'imagesResult': function (cb) {
+                Image.paginableList(imageOptions, cb);
+            },
+            'usersCount': ['imagesResult', userStatsForContest]
+        },
+        function render(err, results) {
             if (err) {
                 return res.render('500');
             }
+            var locals = _.extend({title: contest.title, contest: contest}, results);
             res.render('contests/detail.ect', locals);
         }
     );
 
-    function loadContestImages(callback) {
-        Image.list(imageOptions, safe(callback, function(images){
-            images.forEach(function(image) {
-                image.getRatingByUser(req.user, function(err, ratingByUser) {
-                    image.ratingByUser = ratingByUser;
-                });
-            });
-            locals.images = images;
-        }));
-    }
-
-    function countImagesInContest(callback) {
-        Image.count(imageOptions.criteria).exec(safe(callback, function (count) {
-            locals.pages = Math.ceil(count / imageOptions.perPage);
-            locals.imagesTotalCount = count;
-        }));
-    }
-
-    function loadUsersStatsRegardingContest(callback) {
-        if (locals.imagesTotalCount === 0) {
-            return callback();
+    function userStatsForContest(cb, results) {
+        if (results.imagesResult.pageInfo.count === 0) {
+            return cb(null, 0);
         }
 
         var opts = {
@@ -203,37 +196,9 @@ exports.detail = function(req, res) {
             reduce: function(key, values) { return values.length; }
         };
 
-        Image.mapReduce(opts, safe(callback, function(result) {
-            locals.usersCount = result.length;
-        }));
-    }
-
-    function loadRatedCountForCurrentUser(callback) {
-        if (!req.isAuthenticated()) {
-            return callback();
-        }
-
-        var criteria = {
-            'contest.contest': contest._id,
-            'contest.evaluations.user': req.user._id
-        };
-        Image.count(criteria).exec(safe(callback, function (count) {
-            locals.ratedImagesCount = count;
-        }));
-    }
-
-    function loadImageCountForCurrentUser(callback) {
-        if (!req.isAuthenticated()) {
-            return callback();
-        }
-
-        var criteria = {
-            'contest.contest': contest._id,
-            'user': req.user._id
-        };
-        Image.count(criteria).exec(safe(callback, function (count) {
-            locals.imageAddedCount = count;
-        }));
+        Image.mapReduce(opts, function(err, result){
+            cb(err, result.length);
+        });
     }
 };
 

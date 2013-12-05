@@ -148,9 +148,10 @@ describe('Images', function() {
                 .expect(200)
                 .end(function (err, res) {
                     var data = res.body;
-                    assert.ok(data.images.length);
-                    assert.ok(data.pages);
-                    assert.ok(data.page);
+                    assert.ok(data.imagesResult.images.length);
+                    assert.ok(data.imagesResult.pageInfo.count);
+                    assert.equal(data.imagesResult.pageInfo.page, 0);
+                    assert.ok(data.imagesResult.pageInfo.perPage);
                     done();
                 });
         })
@@ -168,9 +169,10 @@ describe('Images', function() {
                 .expect(200)
                 .end(function (err, res) {
                     var data = res.body;
-                    assert.ok(data.images.length);
-                    assert.ok(data.pages);
-                    assert.ok(data.page);
+                    assert.ok(data.imagesResult.images.length);
+                    assert.ok(data.imagesResult.pageInfo.count);
+                    assert.equal(data.imagesResult.pageInfo.page, 0);
+                    assert.ok(data.imagesResult.pageInfo.perPage);
                     done();
                 });
         })

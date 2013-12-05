@@ -8,6 +8,7 @@ var mongoose = require('mongoose'),
     Contest = mongoose.model('Contest'),
     Image = mongoose.model('Image'),
     async = require('async'),
+    helpers = require('../helpers'),
     safe = require('../helpers').safe;
 
 exports.signin = function (req, res) {}
@@ -88,16 +89,10 @@ exports.create = function (req, res) {
 
 exports.profile = function (req, res) {
     var user = req.profile,
-        page = parseInt(req.param('page') > 0 ? req.param('page') : 1),
         contestId = req.param('contest'),
-        perPage = 16,
-        locals = {title: user.name, page: page};
-
-    var options = {
-        perPage: perPage,
-        page: page - 1,
-        criteria: { user: user.id }
-    }
+        locals = {title: user.name};
+    var options = helpers.paginationOps(15, req.param('page'));
+    options.criteria = { user: user.id };
 
     if(contestId) {
         options.criteria['contest.contest'] = contestId
@@ -105,26 +100,10 @@ exports.profile = function (req, res) {
 
     async.parallel([
         function(cb) {
-            async.waterfall([
-                function (callback) {
-                    Image.count({user: user.id}).exec(safe(callback, function (count) {
-                        locals.pages = Math.ceil(count / perPage);
-                        locals.imagesCount = count;
-                    }));
-                },
-                function (count, callback) {
-                    if(count) {
-                        Image.list(options, safe(callback, function (images) {
-                            locals.images = images;
-                        }));
-                    } else {
-                        locals.images = [];
-                        callback(null, locals.images)
-                    }
-                }], function(err) {
-                    cb();
-                }
-            );
+            Image.paginableList(options, function(err, result){
+                locals.imagesResult = result;
+                cb();
+            });
         },
         function(cb) {
             var criteria = {
@@ -132,6 +111,14 @@ exports.profile = function (req, res) {
             };
             Image.count(criteria).exec(safe(cb, function (count) {
                 locals.ratedImagesCount = count;
+            }));
+        },
+        function(cb) {
+            var criteria = {
+                'user': req.user._id
+            };
+            Image.count(criteria).exec(safe(cb, function (count) {
+                locals.uploadImagesCount = count;
             }));
         },
         function(cb) {

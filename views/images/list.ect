@@ -8,8 +8,8 @@
   <% end %>
 <% end %>
 
-<ul class="thumbnails">
-  <% for image, i in @images: %>
+<ul class="thumbnails" data-info="<%= JSON.stringify(@imagesResult.pageInfo) %>">
+  <% for image, i in @imagesResult.images: %>
     <% if not @hideAnon or @h.isOwner(image, @user) or @h.dateCondition(image.contest.contest.showAuthor, image.contest.contest.dueDate): %>
       <li class="item">
         <div class="thumbnail <% if image.getRating() and @winners: %>winner-<%- (i + 1) + ((@page - 1) * 15) %> <%end %>"
@@ -40,7 +40,7 @@
             <% if @winners and @h.authCondition(@h.dateCondition(true, image.contest.contest.dueDate), true, 'admin'): %>
               <span class="stats">
                 <span><%= @t('Rating') %>: {{rating.value}}</span>
-                <span><%= @t('Rank') %>: <%- (i + 1) + ((@page - 1) * 15) %></span>
+                <span><%= @t('Rank') %>: <%- (i + 1) + (@imagesResult.pageInfo.page * @imagesResult.pageInfo.perPage) %></span>
               </span>
             <% end %>
 
@@ -66,7 +66,9 @@
     <% end %>
   <% end %>
 </ul>
-<% if @pages : %>
-  <% include 'includes/pagination.ect', {pages: @pages, page: @page || 1, url: @url || ''} %>
+<!--
+<% if @imagesResult.count : %>
+  <% include 'includes/pagination.ect', {pages: @imagesResult.count, page: @imagesResult.page || 0, url: @url || ''} %>
 <% end %>
+ -->
 

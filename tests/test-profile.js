@@ -36,7 +36,7 @@ describe('Profile page', function () {
                     assert.equal(data.extra.user._id, loginer.current._id);
                     assert.ok(data.contests.length);
                     assert.ok(data.extra.contests.length);
-                    assert.ok(data.images.length);
+                    assert.ok(data.imagesResult.images.length);
                     done();
                 });
         })

@@ -14,12 +14,13 @@ window.Thumbnails = {
                 isResizable: true,
                 isAnimated: true
             });
+            self.setColumns();
+            self.initScroll();
         }
-        self.setColumns();
     },
     reload: function(){
         var elements = this.getElements();
-        if(elements && elements.length) {
+        if(elements && elements.data('masonry')) {
             elements.masonry('reload');
         }
     },
@@ -29,6 +30,34 @@ window.Thumbnails = {
     },
     getElements: function() {
         return $('.thumbnails');
+    },
+    initScroll: function() {
+        var self = this,
+            elements = self.getElements(),
+            info = elements.data('info');
+
+        if (info) {
+            elements.off('pageScroll').on('pageScroll', getItems);
+            function getItems(){
+                if (elements.hasClass('process')) return;
+                elements.addClass('process');
+                if ((info.page + 1) * info.perPage < info.count) {
+                    var bottom = $(document).scrollTop() + $(window).height();
+                    if (elements.position().top + elements.height() <= bottom) {
+                        $.get(location.path, {page: info.page + 1}, function(d) {
+                            var newEls = $(d).find('.thumbnails');
+                            elements.append(newEls.children());
+                            info = newEls.data('info');
+                            self.reload();
+                            elements.removeClass('process');
+                            getItems();
+                            angular.bootstrap($('.ng-scope'));
+                        });
+                    }
+                }
+            }
+            getItems();
+        }
     }
 }
 
@@ -38,6 +67,10 @@ $(window).on('load', function(){
 
 $(window).on('resize', function(){
     Thumbnails.setColumns();
+});
+
+$(window).on('scroll', function() {
+    $('.thumbnails').trigger('pageScroll');
 });
 
 $(document).ready(function(){
@@ -56,7 +89,7 @@ $(document).ready(function(){
         Thumbnails.reload();
     });
 
-    $('.edit-title__link').on('click', function() {
+    $(document).on('click', '.edit-title__link', function() {
         $(this).hide()
             .siblings('.edit-title')
             .show()
@@ -66,7 +99,7 @@ $(document).ready(function(){
         Thumbnails.reload();
     });
 
-    $('.edit-title__submit').on('click', function(e) {
+    $(document).on('click', '.edit-title__submit', function(e) {
         e.preventDefault();
         var input = $('.edit-title__input'),
             form = $(this).parent('.edit-title');
@@ -81,9 +114,5 @@ $(document).ready(function(){
                 form.siblings('.title').html(d);
             }
         });
-    });
-
-    $.each($('.thumbnail .more-comments'), function () {
-        $(this).find('li:gt(2)').hide();
     });
 })
