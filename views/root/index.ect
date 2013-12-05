@@ -11,10 +11,11 @@
 <% if @viewed_images.length > 0 : %>
   <div class="list-wrapper">
     <h2><%= @t('Most Viewed Images') %></h2>
-    <% include 'images/list.ect', {images: @viewed_images, h: @h, hideComments: true, req: @req, flagRate: true, t: @t} %>
+    <% include 'images/list.ect', {imagesResult: {images: @viewed_images}, h: @h, hideComments: true, req: @req, flagRate: true, t: @t} %>
   </div>
 <% else : %>
-  <% if @req.isAuthenticated() : %> <h3>Contests don't exist. Create it :)</h3>
+  <% if @req.isAuthenticated() : %>
+    <h3>Contests don't exist. Create it :)</h3>
   <% else : %>
   <div class="row">
   <div class="well span7 pull-center">
