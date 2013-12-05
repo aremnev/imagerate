@@ -24,6 +24,7 @@ exports.image = function(req, res, next, id){
         }
         req.image = image;
         next();
+
     });
 };
 
@@ -211,6 +212,7 @@ exports.recentList = function (req, res) {
     var locals = {title: 'Most recent photos'};
     imageList(_.extend(helpers.paginationOps(15, req.param('page')), {criteria: {}}), !req.user, locals, res);
 };
+
 
 /**
  * Most viewed image list

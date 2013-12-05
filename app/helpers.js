@@ -14,10 +14,6 @@ module.exports = {
         options.secure = true;
         return cloudinary.url(image.data.public_id, options) + '.jpg'
     },
-    imageUrl2: function (image, options) {
-        options.secure = true;
-        return cloudinary.url(image.getData, options) + '.jpg'
-    },
 
     //Date helpers
     formatTime: function(date, format) {
@@ -77,3 +73,4 @@ module.exports = {
         };
     }
 };
+

@@ -2,6 +2,10 @@
 <% extend 'layouts/layout.ect' %>
 <% block 'body-class' : %>show-page<% end %>
 
+<% block 'scripts' : %>
+    <script src="/js/libs/jquery.lightbox.js" type="text/javascript"></script>
+<% end %>
+
 <!-- Adds controller to container tag !-->
 <% block 'container-attrs' : %>
   ng-controller="RatingController"
@@ -50,18 +54,19 @@
 
 <div class="image-large image-to-rate" <% if @req.isAuthenticated() : %>ng-mouseleave="rating.state = rating.defaultState"<% end %> >
   <div class="wrap-photo">
-    <% if @req.isAdmin(): %><a href="/images/<%- @req.image._id %>/raw" target="_blank"><% end %>
+    <% if @req.isAdmin(): %><a href="/images/<%- @req.image._id %>/raw" target="_blank">
+    <% else: %><a href="<%- @h.imageUrl(@req.image.image, {}) %>" data-lightbox="image" title="<%= @req.image.title %>" ><% end %>
       <img class="show-image img-polaroid big wait" ref="/images/<%- @req.image._id %>/raw" title="<%= @req.image.title %>"
            src="<%- @h.imageUrl(@req.image.image, {width: 952, height: 580, crop: 'limit'}) %>" />
-    <% if @req.isAdmin(): %></a><% end %>
+    </a>
     <% if @req.isAuthenticated() and @req.image.user._id + '' != @req.user._id + '' : %>
       <% include 'includes/rating.ect', { rating: @req.image.getRating(), thumbnail: false, isPast: @h.isPastDate(@req.image.contest.contest.dueDate), t: @t } %>
     <% end %>
     <% if @req.image.next : %>
-      <a href="/images/<%- @req.image.next._id %>" class="link-arrow next">&#10095;</a>
+      <a href="/images/<%- @req.image.next._id %>" class="link-arrow-left"></a>
     <% end %>
     <% if @req.image.prev : %>
-      <a href="/images/<%- @req.image.prev._id %>" class="link-arrow prev">&#10094;</a>
+      <a href="/images/<%- @req.image.prev._id %>" class="link-arrow-right"></a>
     <% end %>
   </div>
 </div>

@@ -1,50 +1,28 @@
 <!-- index.ect -->
 <% extend 'layouts/home.ect' %>
 
-<h2 class="slider-title"><%= @t('Current contests') %></h2>
-<div id="wrapper">
-  <div id="bg"></div>
-  <div id="carousel">
-    <% for contest in @contests: %>
-      <% if !@h.isPastDate(contest.dueDate) and (!contest.private or @req.isAuthenticated()): %>
-        <div>
-          <% if contest.images and contest.images.length: %>
-              <img onclick="location.href='/images/<%- contest.images[0]._id %>'" class="img-front" src="<%= @h.imageUrl(contest.images[0].image, {width: 400, height: 300, crop: 'fill', gravity: 'faces'}) %>" <% if contest.images.length == 1: %>style="margin-left: 100px;"<% end %> />
-            <% for image in contest.images.slice(1, contest.images.length): %>
-              <img onclick="location.href='/images/<%- contest.images[0]._id %>'" class="img-back" src="<%= @h.imageUrl(image.image, {width: 300, height: 250, crop: 'fill', gravity: 'faces'}) %>" />
-            <% end %>
-          <% else: %>
-            <img class="img-front inactive" src="http://lorempixel.com/400/300/abstract/4/no%20images/" style="margin-left: 100px;"/>
-          <% end %>
-          <h3><%= contest.title %></h3>
-          <p><%= contest.description %></p>
-          <a href="/contests/<%- contest.link %>" ><%= @t('Show') %></a>
-        </div>
-      <% end %>
-    <% end %>
-  </div>
-  <a id="prev" href="#"><span></span></a>
-  <a id="next" href="#"><span></span></a>
-</div>
-
-
-
+<% if @contests.length > 0 : %>
+    <h2 class="slider-title"><%= @t('Current contests') %></h2>
+    <% include 'includes/slider.ect', {contests:  @contests, h: @h, req: @req, t: @t} %>
+<% else : %>
+    <h2 class="slider-title"><%= @t('There are no current contests') %></h2>
+<% end %>
 
 <% if @viewed_images.length > 0 : %>
-<div class="list-wrapper">
-  <h2><%= @t('Most Viewed Images') %></h2>
-  <% include 'images/list.ect', {imagesResult: {images: @viewed_images}, h: @h, hideComments: true, req: @req, flagRate: true, t: @t} %>
-</div>
+  <div class="list-wrapper">
+    <h2><%= @t('Most Viewed Images') %></h2>
+    <% include 'images/list.ect', {images: @viewed_images, h: @h, hideComments: true, req: @req, flagRate: true, t: @t} %>
+  </div>
 <% else : %>
-<% if @req.isAuthenticated() : %> <h3>Contests don't exist. Create it :)</h3>
-<% else : %>
-<div class="row">
+  <% if @req.isAuthenticated() : %> <h3>Contests don't exist. Create it :)</h3>
+  <% else : %>
+  <div class="row">
   <div class="well span7 pull-center">
     <% if @message and @message.length: %>
     <div class="alert alert-error">
       <%- @message %>
     </div>
-    <% end %>
+  <% end %>
     <fieldset>
       <legend>Please login to see all photos</legend>
       <a href="/auth/google" class="google pull-center">
@@ -53,7 +31,7 @@
       </a>
     </fieldset>
   </div>
-</div>
+  </div>
 <% end %>
 <% end %>
 

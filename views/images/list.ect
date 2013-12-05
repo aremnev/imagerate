@@ -11,6 +11,7 @@
 <ul class="thumbnails" data-info="<%= JSON.stringify(@imagesResult.pageInfo) %>">
   <% for image, i in @imagesResult.images: %>
     <% if not @hideAnon or @h.isOwner(image, @user) or @h.dateCondition(image.contest.contest.showAuthor, image.contest.contest.dueDate): %>
+    
       <li class="item">
         <div class="thumbnail <% if image.getRating() and @winners: %>winner-<%- (i + 1) + ((@page - 1) * 15) %> <%end %>"
              ng-controller="RatingController"
@@ -63,6 +64,7 @@
           <% end %>
         </div>
       </li>
+    
     <% end %>
   <% end %>
 </ul>
