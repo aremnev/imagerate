@@ -245,7 +245,7 @@ article {
   .item {
     width: 31%;
     margin-left: 2%;
-    margin-bottom: 2%;
+    margin-bottom: 2em;
   }
 
   li {
@@ -751,15 +751,25 @@ article {
 }
 
 .edit-title {
-  display: none;
+  margin: 0;
+  .title {
+    line-height: 26px;
+  }
+  .edit-title__input {
+    width: 70%;
+    margin: 0;
+    padding: 0 0 0 3px;
+    height: 22px;
+  }
+  .edit-title__btn {
+    padding: 2px 8px;
+    &:active, &:active:hover {
+      padding: 2px 8px;
+    }
+  }
 }
-.edit-title__input {
-  width: 50%;
-}
-.edit-title__submit {
-  padding: 3px 10px !important;
-  vertical-align: top;
-}
+
+
 
 @media (min-width: 1200px) {
   .container,

@@ -2,14 +2,14 @@
 <% if not @flagRate and not @req.xhr : %>
   <!-- Not xhr, include layout -->
   <% extend 'layouts/layout.ect' %>
-
+  
   <% block 'aside-top' : %>
     <h2><%= @title || 'Photos' %></h2>
   <% end %>
 <% end %>
 
-<ul class="thumbnails">
-  <% for image, i in @images: %>
+<ul class="thumbnails" data-info="<%= JSON.stringify(@imagesResult.pageInfo) %>">
+  <% for image, i in @imagesResult.images: %>
     <% if not @hideAnon or @h.isOwner(image, @user) or @h.dateCondition(image.contest.contest.showAuthor, image.contest.contest.dueDate): %>
     
       <li class="item">
@@ -41,20 +41,33 @@
             <% if @winners and @h.authCondition(@h.dateCondition(true, image.contest.contest.dueDate), true, 'admin'): %>
               <span class="stats">
                 <span><%= @t('Rating') %>: {{rating.value}}</span>
-                <span><%= @t('Rank') %>: <%- (i + 1) + ((@page - 1) * 15) %></span>
+                <span><%= @t('Rank') %>: <%- (i + 1) + (@imagesResult.pageInfo.page * @imagesResult.pageInfo.perPage) %></span>
               </span>
             <% end %>
 
-            <span class="title"><%= image.title %></span>
-            <% if @remove and @user and (image.user._id + '' == @user._id + ''): %>
-              <a href="" class="edit-title__link" title="<%= @t('Edit') %>">
-                <span class="add-on"><i class="icon-pencil"></i></span>
-              </a>
-              <form action="/images/<%- image.id %>" method="post" class="edit-title">
-                <input type="text" name="edit-title" class="edit-title__input" value="<%= image.title %>">
-                <input type="submit" class="edit-title__submit btn btn-success" value="Save">
-              </form>
-            <% end %>
+            <div class="edit-title" ng-controller="EditTitle">
+                <span class="title" 
+                    ng-show="!edit"
+                    ng-init="title='<%= image.title %>';"
+                    ng-bind="title"></span>
+                <% if @remove and @user and (image.user._id + '' == @user._id + ''): %>
+                  <a href="" class="edit-title__link" title="<%= @t('Edit') %>"
+                    ng-click="show()"
+                    ng-show="!edit">
+                    <span class="add-on"><i class="icon-pencil"></i></span>
+                  </a>
+                  <form class="edit-title" name="editForm"
+                    ng-submit="save(title);"
+                    ng-show="edit"
+                    ng-init="url='/images/<%- image.id %>'">
+                    <input type="text" pattern="^(?=\s*\S).*$" name="edit-title" class="edit-title__input" value="<%= image.title %>" ng-model="title" required>
+                    <input type="submit" class="btn btn-success edit-title__btn" value="Save"
+                      ng-click="show()"
+                      ng-show="edit"
+                      ng-click="show(); save(title);">
+                  </form>
+                <% end %>
+            </div>
           </div>
           <% if @h.authCondition(@user and image.user._id + '' != @user._id + ''): %>
             <% include 'includes/rating.ect', { rating: image.getRating(), thumbnail: false, isPast: @h.isPastDate(image.contest.contest.dueDate), t: @t} %>
@@ -64,11 +77,13 @@
           <% end %>
         </div>
       </li>
-    
+
     <% end %>
   <% end %>
 </ul>
-<% if @pages : %>
-  <% include 'includes/pagination.ect', {pages: @pages, page: @page || 1, url: @url || ''} %>
+<!--
+<% if @imagesResult.count : %>
+  <% include 'includes/pagination.ect', {pages: @imagesResult.count, page: @imagesResult.page || 0, url: @url || ''} %>
 <% end %>
+ -->
 
