@@ -38,7 +38,7 @@ module.exports = function (cfg) {
             var can = false;
             mail = mail || req.user.email;
             contest = contest || req.contest;
-            if(contest.group.checkEmail(mail) || req.isAdmin()){
+            if(req.isAdmin() || (contest.group && contest.group.checkEmail(mail))){
                 can = true;
             }
             return can;
