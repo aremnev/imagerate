@@ -34,10 +34,7 @@ module.exports = function (app, config, passport) {
 
     app.configure(function () {
         // less should be placed before express.static
-        app.use(require('less-middleware')({
-            src: config.root + '/public',
-            compress: true
-        }));
+        app.use(require('less-middleware')(config.root + '/public', null, null, {compress: true}));
         app.use(express.static(config.root + '/public'));
 
         // cookieParser should be above session

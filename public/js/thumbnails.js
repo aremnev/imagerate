@@ -23,6 +23,7 @@ window.Thumbnails = {
         if(elements && elements.data('masonry')) {
             elements.masonry('reload');
         }
+        elements.height(elements.height());
     },
     setColumns: function() {
         this.options.columns = $(window).width() > 1200 ? 3 : $( window ).width() > 900 ? 2 : $( window ).width() > 767 ? 1 : $( window ).width() > 320 ? 2 : 1 ;
@@ -40,18 +41,24 @@ window.Thumbnails = {
             elements.off('pageScroll').on('pageScroll', getItems);
             function getItems(){
                 if (elements.hasClass('process')) return;
-                elements.addClass('process');
                 if ((info.page + 1) * info.perPage < info.count) {
                     var bottom = $(document).scrollTop() + $(window).height();
                     if (elements.position().top + elements.height() <= bottom) {
+                        elements.addClass('process');
                         $.get(location.path, {page: info.page + 1}, function(d) {
                             var newEls = $(d).find('.thumbnails');
                             elements.append(newEls.children());
+                            elements.masonry('appended', newEls.children());
                             info = newEls.data('info');
+                            elements.removeClass('process');
+                            angular.bootstrap($('.ng-scope'));
+                            getItems();
+                            setTimeout(function() {
+                                self.reload();
+                            }, 350);
+                        }).error(function(){
                             self.reload();
                             elements.removeClass('process');
-                            getItems();
-                            angular.bootstrap($('.ng-scope'));
                         });
                     }
                 }
