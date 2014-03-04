@@ -50,7 +50,7 @@ window.Thumbnails = {
                             elements.append(newEls.children());
                             info = newEls.data('info');
                             elements.removeClass('process');
-                            angular.bootstrap($('.ng-scope'));
+                            angular.bootstrap(newEls.children().find('.ng-scope'));
                             self.reload();
                             getItems();
                             setTimeout(function() {
