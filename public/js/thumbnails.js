@@ -47,11 +47,11 @@ window.Thumbnails = {
                         elements.addClass('process');
                         $.get(location.path, {page: info.page + 1}, function(d) {
                             var newEls = $(d).find('.thumbnails');
-                            elements.append(newEls.children());
+                            var children = newEls.children();
+                            elements.append(children);
                             info = newEls.data('info');
                             elements.removeClass('process');
-                            console.log(newEls.children().find('.ng-scope'));
-                            angular.bootstrap(newEls.children().find('.ng-scope'));
+                            angular.bootstrap(children);
                             self.reload();
                             getItems();
                             setTimeout(function() {
