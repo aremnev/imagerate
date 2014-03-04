@@ -12,7 +12,7 @@ window.Thumbnails = {
                     return containerWidth / self.options.columns;
                 },
                 isResizable: true,
-                isAnimated: true
+                isAnimated: false
             });
             self.setColumns();
             self.initScroll();
@@ -48,10 +48,10 @@ window.Thumbnails = {
                         $.get(location.path, {page: info.page + 1}, function(d) {
                             var newEls = $(d).find('.thumbnails');
                             elements.append(newEls.children());
-                            elements.masonry('appended', newEls.children());
                             info = newEls.data('info');
                             elements.removeClass('process');
                             angular.bootstrap($('.ng-scope'));
+                            self.reload();
                             getItems();
                             setTimeout(function() {
                                 self.reload();
