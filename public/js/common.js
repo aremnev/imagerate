@@ -2,6 +2,24 @@ String.prototype.repeat = function(num) {
     return new Array(num + 1).join(this);
 }
 
+function waitForPictures() {
+    var wait = $('.wait');
+    if(wait.length) {
+        var loaded = 0;
+        wait.one('load', function(e){
+            loaded++;
+            if(loaded == wait.length) {
+                $('.waiting').removeClass('waiting');
+                Thumbnails.reload();
+            }
+        }).each(function() {
+                if(this.complete) $(this).load();
+            });
+    } else {
+        $('.waiting').removeClass('waiting');
+    }
+}
+
 $(document).ready(function () {
     if (/*@cc_on!@*/false && document.documentMode === 10) {
         $('.modal.fade').removeClass('fade');
@@ -41,21 +59,7 @@ $(document).ready(function () {
     }());
 
     (function(){
-        var wait = $('.wait');
-        if(wait.length) {
-            var loaded = 0;
-            wait.one('load', function(e){
-                loaded++;
-                if(loaded == wait.length) {
-                    $('.waiting').removeClass('waiting');
-                    Thumbnails.reload();
-                }
-            }).each(function() {
-                if(this.complete) $(this).load();
-            });
-        } else {
-            $('.waiting').removeClass('waiting');
-        }
+        waitForPictures();
         setTimeout(function(){
             $('.waiting').removeClass('waiting');
         }, 10000);

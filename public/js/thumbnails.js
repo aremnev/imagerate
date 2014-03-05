@@ -56,6 +56,7 @@ window.Thumbnails = {
                             getItems();
                             setTimeout(function() {
                                 self.reload();
+                                waitForPictures();
                             }, 350);
                         }).error(function(){
                             self.reload();

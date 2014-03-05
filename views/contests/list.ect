@@ -84,7 +84,7 @@
                     </a>
                 <% end %>
             </h3>
-            <span class="date"><%- @h.formatDate(contest.startDate) %> &ndash; <%- @h.formatDate(contest.dueDate) %> <% if @h.isPastDate(contest.dueDate): %><strong>(finished)</strong><% end %></span>
+            <span class="date"><%- @h.formatDate(contest.startDate) %> &ndash; <%- @h.formatDate(contest.dueDate) %> <% if @h.isPastDate(contest.dueDate): %><strong>(<%= @t('finished') %>)</strong><% end %></span>
         </li>
 		<% end %>
 	<% end %>
@@ -103,7 +103,7 @@
                     </a>
                 <% end %>
             </h3>
-            <span class="date"><%- @h.formatDate(contest.startDate) %> &ndash; <%- @h.formatDate(contest.dueDate) %> <% if @h.isPastDate(contest.dueDate): %><strong>(finished)</strong><% end %></span>
+            <span class="date"><%- @h.formatDate(contest.startDate) %> &ndash; <%- @h.formatDate(contest.dueDate) %> <% if @h.isPastDate(contest.dueDate): %><strong>(<%= @t('finished') %>)</strong><% end %></span>
         </li>
 		<% end %>
 	<% end %>
