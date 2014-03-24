@@ -172,7 +172,14 @@ exports.detail = function(req, res) {
                 Image.count(criteria).exec(cb);
             },
             'imagesResult': function (cb) {
-                Image.paginableList(imageOptions, cb);
+                Image.paginableList(imageOptions, function(err, res) {
+                    res.images.forEach(function(image) {
+                        image.getRatingByUser(req.user, function(err, ratingByUser) {
+                            image.ratingByUser = ratingByUser;
+                        });
+                    });
+                    cb(err, res);
+                });
             },
             'usersCount': ['imagesResult', userStatsForContest]
         },

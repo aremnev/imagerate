@@ -34,10 +34,7 @@ module.exports = function (app, config, passport) {
 
     app.configure(function () {
         // less should be placed before express.static
-        app.use(require('less-middleware')({
-            src: config.root + '/public',
-            compress: true
-        }));
+        app.use(require('less-middleware')(config.root + '/public', null, null, {compress: true}));
         app.use(express.static(config.root + '/public'));
 
         // cookieParser should be above session
@@ -97,7 +94,7 @@ module.exports = function (app, config, passport) {
             if (res.statusCode == 404 || ~err.message.indexOf('not found')) return next()
 
             // log it
-            console.error(err.message);
+            console.error(err.stack);
 
             // error page
             res.status(500).render('500.ect', {
@@ -110,5 +107,8 @@ module.exports = function (app, config, passport) {
         app.use(function(req, res, next){
             res.status(404).render('404.ect');
         })
+    });
+    process.on("uncaughtException", function(error){
+        console.error(error);
     });
 }
