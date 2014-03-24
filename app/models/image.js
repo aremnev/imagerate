@@ -111,8 +111,26 @@ ImageSchema.methods = {
                 var client = knox.instance();
                 if(client) {
                     client.putFile(image.path, self.getCdnId(), { 'x-amz-acl': 'public-read' }, function (err, res) {
-                        self.image.cdnUri = 'http://' + client.urlBase + '/' + self.getCdnId();
-                        self.save(cb)
+                        if (err || res.statusCode != 200) {
+                            if (err || !res) {
+                                console.log('S3 Error:' + err || 'no response from Amazon S3');
+                            } else {
+                                res.on('data', function(data){
+                                    console.log('S3 Error:' + data);
+                                });
+                            }
+                            cloudinary.uploader.destroy(self.image.data.public_id, function(data){
+                                cb({ image: "Something goes wrong. Image hasn't been uploaded"});
+                            });
+                        } else {
+                            self.image.cdnUri = 'http://' + client.urlBase + '/' + self.getCdnId();
+                            self.save(cb)
+                        }
+                    }).on('error', function(err){
+                        if(err.code!= 'ECONNRESET') {
+                            throw err;
+                        }
+                        // We don't do anything. It happens because we request the statusCode of response.
                     });
                 }  else {
                     self.image.cdnUri = '';
