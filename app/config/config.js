@@ -74,8 +74,8 @@ const CONFIG = {
         port : process.env.PORT || process.env.VCAP_APP_PORT || 3000,
         root: require('path').normalize(__dirname + '/../..'),
         storage: {
-            key: 'AKIAINXYBJLOQFJ66FIQ',
-            secret: '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',
+            key: 'AKIAJPWAIROYUDN4L5UA',
+            secret: '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',
             bucket: 'net_thumbtack_contest'
         },
         google: {

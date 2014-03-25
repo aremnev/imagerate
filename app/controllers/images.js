@@ -29,6 +29,7 @@ exports.image = function(req, res, next, id){
 };
 
 exports.raw = function(req, res){
+    console.log('Requesting: ' + req.image.image.cdnUri);
     var type = mime.lookup(req.image.image.cdnUri);
     var x = new request(req.image.image.cdnUri);
     x.pipe(res);
