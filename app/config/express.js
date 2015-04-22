@@ -6,7 +6,12 @@
 var express = require('express'),
     expressParams = require('express-params'),
     expressValidator = require('express-validator'),
-    mongoStore = require('connect-mongo')(express),
+
+    methodOverride = require('method-override');
+    bodyParser = require('body-parser'),
+    expressSession = require('express-session'),
+    mongoStore = require('connect-mongo')(expressSession),
+    //mongoStore = require('connect-mongo')(express),
     flash = require('connect-flash'),
     cloudinary = require('cloudinary'),
     helpers = require('../middlewares/view_helpers'),
@@ -31,7 +36,7 @@ module.exports = function (app, config, passport) {
     app.engine('.ect', ectRenderer.render);
     app.set('views', config.root + '/views');
 
-    app.configure(function () {
+    //app.configure(function () {
         // less should be placed before express.static
         app.use(require('less-middleware')({
             src: config.root + '/public',
@@ -40,16 +45,18 @@ module.exports = function (app, config, passport) {
         app.use(express.static(config.root + '/public'));
 
         // cookieParser should be above session
-        app.use(express.cookieParser())
+        //app.use(express.cookieParser())
+        app.use(bodyParser);
 
-        // bodyParser should be above methodOverride
-        app.use(express.bodyParser())
-        app.use(express.methodOverride())
+
+         //bodyParser should be above methodOverride
+        //app.use(express.bodyParser())
+        app.use(methodOverride);
 
         app.use(expressValidator());
 
         // express/mongo session storage
-        app.use(express.session({
+        app.use(expressSession({
             secret: 'secret_mongo',
             store: new mongoStore({
                 url: config.db,
@@ -99,6 +106,6 @@ module.exports = function (app, config, passport) {
         // assume 404 since no middleware responded
         app.use(function(req, res, next){
             res.status(404).render('404.ect');
-        })
-    });
+        });
+    //});
 }
