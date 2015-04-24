@@ -70,7 +70,7 @@ const CONFIG = {
     },
 
     default: {
-        mongo: { hostname: 'localhost', port: 27017, username: '', password: '', name: '', db: 'imagerate' },
+        //mongo: { hostname: 'localhost', port: 27017, username: '', password: '', name: '', db: 'imagerate' },
         port : process.env.PORT || process.env.VCAP_APP_PORT || 3000,
         root: require('path').normalize(__dirname + '/../..'),
         storage: {

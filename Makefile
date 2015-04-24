@@ -28,7 +28,7 @@ node-virtual: ;@echo "Prepare nodeenv....."; \
 	virtualenv env && \
 	source env/bin/activate && \
 	easy_install nodeenv && \
-	nodeenv env/node --node=0.10.25 --npm=1.3.24;
+	nodeenv env/node --node=0.10.15 --npm=1.2.18;
 	@echo "*** Nodeenv with node-0.10.15 is created."
 	@echo "*** Now you can execute 'install', 'test' and 'start' commands."
 
