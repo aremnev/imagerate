@@ -5,8 +5,8 @@ const CONFIG = {
         },
         log: 'dev',
         google: {
-            clientID: '163368963370.apps.googleusercontent.com',
-            clientSecret: 'rSsPMMP6MyWsIcnW6ksTg2dR',
+            clientID: '142945879228-b6iu505oas5ltj2hbcd7v5v3mvkr7vde.apps.googleusercontent.com',
+            clientSecret: 'wx0gJWUohEps94SVzi6v0VTR',
             callbackURL: 'http://localhost:3000/auth/google/callback'
         },
         cloudinary: {
@@ -23,8 +23,8 @@ const CONFIG = {
         },
         mongo: { db: 'test-imagerate' },
         google: {
-            clientID: '163368963370.apps.googleusercontent.com',
-            clientSecret: 'rSsPMMP6MyWsIcnW6ksTg2dR',
+            clientID: '142945879228-b6iu505oas5ltj2hbcd7v5v3mvkr7vde.apps.googleusercontent.com',
+            clientSecret: 'wx0gJWUohEps94SVzi6v0VTR',
             callbackURL: 'http://localhost:3000/auth/google/callback'
         },
         cloudinary: {
@@ -41,9 +41,9 @@ const CONFIG = {
             name: 'ImageRate - staging'
         },
         google: {
-            clientID: '163368963370-5qcnvj9oorl0cjmn5noi8jpj0tgriid9.apps.googleusercontent.com',
-            clientSecret: '3WsFl4iXUpI4KyrqZi7fp6ZU',
-            callbackURL: 'https://contest-app.aws.af.cm/auth/google/callback'
+            clientID: '142945879228-b6iu505oas5ltj2hbcd7v5v3mvkr7vde.apps.googleusercontent.com',
+            clientSecret: 'wx0gJWUohEps94SVzi6v0VTR',
+            callbackURL: 'http://photo.dev.thumbtack.net:8080/auth/google/callback'
         }
     },
 
@@ -52,8 +52,8 @@ const CONFIG = {
             name: 'ImageRate'
         },
         google: {
-            clientID: '163368963370-3reqk668cm11vfc3td5rqc2603knb5ca.apps.googleusercontent.com',
-            clientSecret: 'yCH74X40e4-mERo4CkNxk3d3',
+            clientID: '142945879228-b6iu505oas5ltj2hbcd7v5v3mvkr7vde.apps.googleusercontent.com',
+            clientSecret: 'wx0gJWUohEps94SVzi6v0VTR',
             callbackURL: 'http://photo.dev.thumbtack.net/auth/google/callback'
         }
     },
@@ -75,7 +75,8 @@ const CONFIG = {
             emails: [
                 'dsedelnikov@thumbtack.net',
                 'aremnev@thumbtack.net',
-                'epashkevich@thumbtack.net'
+                'epashkevich@thumbtack.net',
+                'mkolganov@thumbtack.net'
             ]
         }
     }
@@ -96,4 +97,3 @@ module.exports = function(env) {
     };
     return deepMerge(CONFIG.default, CONFIG[env]);
 }
-
