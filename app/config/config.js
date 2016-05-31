@@ -68,8 +68,7 @@ const CONFIG = {
             bucket: 'net_thumbtack_contest'
         },
         google: {
-            scope: 'https://www.google.com/m8/feeds https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
-            photoLink: 'https://profiles.google.com/s2/photos/profile/{0}?sz={1}'
+            scope: 'https://www.google.com/m8/feeds https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile'
         },
         admin: {
             emails: [
