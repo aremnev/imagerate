@@ -42,17 +42,17 @@ module.exports = function (passport, config) {
     },
     function(accessToken, refreshToken, profile, done) {
         var profile = profile._json;
-        if(['thumbtack.net', 'aldigit.com'].indexOf(profile.hd) === -1) {
+        if(['thumbtack.net', 'aldigit.com'].indexOf(profile.domain) === -1) {
             return done(null, false, { message: 'Only Thumbtack and Al Digit users are allowed.' });
         }
         User.findOne({$or:[
             { 'google.id': profile.id },
             { 'email': profile.email }]}, function (err, user) {
-            if(!user) user = new User({email: profile.email});
+            if(!user) user = new User({email: profile.emails[0].value});
             if(user.google && _.isEqual(user.google, profile)) {
                 return done(err, user);
             }
-            user.name = profile.name;
+            user.name = profile.displayName;
             user.provider = 'google';
             user.google = profile;
             user.save(function (err) {
