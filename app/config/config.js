@@ -40,6 +40,11 @@ const CONFIG = {
         app: {
             name: 'ImageRate - staging'
         },
+        cloudinary: {
+            cloud_name: 'dvytjllqu',
+            api_key: '312159288999829',
+            api_secret: 'TrmB5kj4OzIP9cvXE9XWfhpxORg'
+        },
         google: {
             clientID: '142945879228-b6iu505oas5ltj2hbcd7v5v3mvkr7vde.apps.googleusercontent.com',
             clientSecret: 'wx0gJWUohEps94SVzi6v0VTR',
@@ -50,6 +55,11 @@ const CONFIG = {
     production: {
         app: {
             name: 'ImageRate'
+        },
+        cloudinary: {
+            cloud_name: 'dvytjllqu',
+            api_key: '312159288999829',
+            api_secret: 'TrmB5kj4OzIP9cvXE9XWfhpxORg'
         },
         google: {
             clientID: '142945879228-b6iu505oas5ltj2hbcd7v5v3mvkr7vde.apps.googleusercontent.com',
