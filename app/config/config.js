@@ -40,6 +40,7 @@ const CONFIG = {
         app: {
             name: 'ImageRate - staging'
         },
+        mongo: { db: 'imagerate-staging' },
         cloudinary: {
             cloud_name: 'dvytjllqu',
             api_key: '312159288999829',
@@ -56,6 +57,7 @@ const CONFIG = {
         app: {
             name: 'ImageRate'
         },
+        mongo: { db: 'imagerate-production' },
         cloudinary: {
             cloud_name: 'dvytjllqu',
             api_key: '312159288999829',
