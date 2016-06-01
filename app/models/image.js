@@ -99,30 +99,28 @@ ImageSchema.methods = {
         var self = this,
             transformation = {format: 'png', width: 1024, height: 1024, crop: 'limit'};
 
-        var imageStream = fs.createReadStream(image.path, { encoding: 'binary' }),
-            cloudStream = cloudinary.uploader.upload_stream(function(data) {
-
-                if (data.error) {
-                    return cb({ image: 'Invalid file'});
-                }
-                self.image.data = data;
-                var client = knox.instance();
-                if(client) {
-                    client.putFile(image.path, self.getCdnId(), { 'x-amz-acl': 'public-read' }, function (err, res) {
-                        self.image.cdnUri = 'http://' + client.urlBase + '/' + self.getCdnId();
-                        self.save(cb)
-                    });
-                }  else {
-                    self.image.cdnUri = '';
+        var cloudStream = cloudinary.uploader.upload_stream(function(data) {
+            if (data.error) {
+                return cb({ image: 'Invalid file'});
+            }
+            self.image.data = data;
+            var client = knox.instance();
+            if(client) {
+                client.putFile(image.path, self.getCdnId(), { 'x-amz-acl': 'public-read' }, function (err, res) {
+                    self.image.cdnUri = 'http://' + client.urlBase + '/' + self.getCdnId();
                     self.save(cb)
-                }
-            }, {transformation: transformation,
-                eager: [
-                {width: 600, height: 360, crop: 'fill'},
-                {height: 800, width: 952, crop: 'limit'}
-            ]});
+                });
+            }  else {
+                self.image.cdnUri = '';
+                self.save(cb)
+            }
+        }, {transformation: transformation,
+            eager: [
+            {width: 600, height: 360, crop: 'fill'},
+            {height: 800, width: 952, crop: 'limit'}
+        ]});
 
-        imageStream.on('data', cloudStream.write).on('end', cloudStream.end);
+      fs.createReadStream(image.path).pipe(cloudStream);
     },
 
     /**
