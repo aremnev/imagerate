@@ -72,10 +72,10 @@ const CONFIG = {
         },
         admin: {
             emails: [
-                'dsedelnikov@thumbtack.net',
                 'aremnev@thumbtack.net',
                 'epashkevich@thumbtack.net',
-                'mkolganov@thumbtack.net'
+                'mkolganov@thumbtack.net',
+                'keremenko@thumbtack.net'
             ]
         }
     }
