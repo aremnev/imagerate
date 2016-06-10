@@ -1,9 +1,10 @@
 var helpers = require('../helpers');
+var gravatar = require('gravatar');
 
 module.exports = function (cfg) {
 
     function profileLink(size, user) {
-        return user.google.image.url + '&sz=' + (size || 50);
+        return gravatar.url(user.email, { s: size || 50 });
     }
 
     return function (req, res, next) {
